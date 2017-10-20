@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - NetCloud@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="NetCloud">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="blogs"/>
+    <schema id="3" name="boards"/>
+    <schema id="4" name="bookstore"/>
+    <schema id="5" name="date0916"/>
+    <schema id="6" name="db0602"/>
+    <schema id="7" name="db0602HomeWork"/>
+    <schema id="8" name="hitest"/>
+    <schema id="9" name="homeWork"/>
+    <schema id="10" name="homework0916"/>
+    <schema id="11" name="homeWork12"/>
+    <schema id="12" name="information_schema"/>
+    <schema id="13" name="lanou"/>
+    <schema id="14" name="lanou0914"/>
+    <schema id="15" name="mybd1"/>
+    <schema id="16" name="myblogs"/>
+    <schema id="17" name="mydb1"/>
+    <schema id="18" name="mysql"/>
+    <schema id="19" name="orders"/>
+    <schema id="20" name="performance_schema"/>
+    <schema id="21" name="perhou"/>
+    <schema id="22" name="practice0915"/>
+    <schema id="23" name="share"/>
+    <schema id="24" name="sshpractice"/>
+    <schema id="25" name="sshproject"/>
+    <schema id="26" name="sys"/>
+    <schema id="27" name="teams"/>
+    <table id="28" parent="1" name="cost"/>
+    <column id="29" parent="28" name="cost_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="30" parent="28" name="name">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="31" parent="28" name="base_duration">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="32" parent="28" name="base_cost">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="33" parent="28" name="unit_cost">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="34" parent="28" name="status">
+      <data-type>char(1)|0</data-type>
+    </column>
+    <column id="35" parent="28" name="descr">
+      <data-type>varchar(100)|0</data-type>
+    </column>
+    <column id="36" parent="28" name="creatime">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="37" parent="28" name="startime">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="38" parent="28" name="cost_type">
+      <data-type>char(1)|0</data-type>
+    </column>
+    <key id="39" parent="28" name="PRIMARY">
+      <columns>cost_id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>

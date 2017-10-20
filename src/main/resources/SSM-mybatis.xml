@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--这个文件是spring用来创建sqlSessionFactory的基础，
+        这个配置文件包含了所有MyBatis的配置-->
+
+    <!--1、加载properties文件-->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+        <!--value的值是：classthpath：properties文件的文件名-->
+        <property name="location" value="classpath:db.properties"/>
+    </bean>
+
+
+    <!--2、配置连接池-->
+    <!--主要是property-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+
+    <!--3、配置sqlSessionFactory-->
+    <!--来自Mybatis－spring-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+
+        <!--给工厂指定数据源-->
+        <!--ref指向第二步的id-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--xml文件的配置路径－－指向这个package下的所有xml文件-->
+        <property name="mapperLocations" value="classpath:com/lanou/mapper/*.xml"/>
+
+        <!--可以读取现成的config.xml文件，即原来的mybatis配置文件－－config.xml-->
+
+    </bean>
+
+    <!--4、Mapper扫描器-->
+    <!--静态方法注入，不需要id；扫描接口interface-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--接口文件的位置-->
+        <property name="basePackage" value="com.lanou.mapper"/>
+        <!--指定工厂bean的名字－－指向第三步的id-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+    <!--5、事务管理器-->
+    <!--DataSourceTransactionManager：数据源事务管理器-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--指向第二步的id-->
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+
+</beans>
