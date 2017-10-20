@@ -3,6 +3,7 @@ package com.lanou.bean;
 import java.util.Date;
 
 public class Cost {
+    // Cost：花费
 
     private Integer costId;
 

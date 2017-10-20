@@ -116,6 +116,14 @@
       <version>2.8.6</version>
     </dependency>
 
+
+    <!--分页的插件-->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>4.0.0</version>
+    </dependency>
+
   </dependencies>
 
 
@@ -147,6 +155,5 @@
     </resources>
 
   </build>
-
 
 </project>
