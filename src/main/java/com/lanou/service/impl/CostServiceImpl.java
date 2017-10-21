@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.lanou.bean.Cost;
 import com.lanou.mapper.CostMapper;
 import com.lanou.service.CostService;
-import com.lanou.service.PageInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,14 +14,13 @@ import java.util.List;
  * Created by dllo on 17/10/20.
  */
 @Service
-public class CostServiceImpl implements CostService,PageInfoService<Cost> {
+public class CostServiceImpl implements CostService {
 
     @Resource
     private CostMapper costMapper;
 
-
+    // 查询全部的cost
     public List<Cost> findAllCost() {
-
 
         List<Cost> costList = costMapper.findAllCost();
 
@@ -48,9 +46,9 @@ public class CostServiceImpl implements CostService,PageInfoService<Cost> {
     // 参数是要查询的表所对应的实体类
     public PageInfo<Cost> queryCostByPage(Integer pageNo, Integer pageSize) {
 
-        // 判断参数合法性：默认页数1 默认每页大小6
+        // 判断参数合法性：默认页数1 默认每页大小2
         pageNo = pageNo == null ? 1 : pageNo;
-        pageSize = pageSize == null ? 6 : pageSize;
+        pageSize = pageSize == null ? 2 : pageSize;
 
 
         PageHelper.startPage(pageNo, pageSize);

@@ -13,10 +13,12 @@
         <result column="startime" jdbcType="TIMESTAMP" property="startime"/>
         <result column="cost_type" jdbcType="CHAR" property="costType"/>
     </resultMap>
+
     <sql id="Base_Column_List">
     cost_id, name, base_duration, base_cost, unit_cost, status, descr, creatime, startime, 
     cost_type
-  </sql>
+    </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -25,7 +27,7 @@
     </select>
 
     <!--查询全部的cost-->
-    <select id="findAllCost" resultType="com.lanou.bean.Cost">
+    <select id="findAllCost" resultMap="BaseResultMap">
         SELECT *FROM cost
     </select>
 
