@@ -31,7 +31,7 @@
         SELECT *FROM cost
     </select>
 
-
+    <!--通过主键删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from cost
     where cost_id = #{costId,jdbcType=INTEGER}

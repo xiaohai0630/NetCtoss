@@ -5,6 +5,7 @@ import com.lanou.bean.Cost;
 import java.util.List;
 
 public interface CostMapper {
+    // 通过主键删除
     int deleteByPrimaryKey(Integer costId);
 
     // 保存
