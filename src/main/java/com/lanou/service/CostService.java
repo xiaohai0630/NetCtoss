@@ -13,6 +13,8 @@ public interface CostService{
     // 查询全部的cost
     List<Cost> findAllCost();
 
+    Integer saveCost(Cost cost);
+
     // 分页
     List<Cost> findWithPageInfo(Integer pageNo, Integer pageSize);
 

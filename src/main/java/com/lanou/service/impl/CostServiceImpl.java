@@ -27,6 +27,13 @@ public class CostServiceImpl implements CostService {
         return costList;
     }
 
+    // 保存
+    public Integer saveCost(Cost cost) {
+
+        Integer save = costMapper.insert(cost);
+        return save;
+    }
+
 
     // 分页
     // 目标：PageInfo对象

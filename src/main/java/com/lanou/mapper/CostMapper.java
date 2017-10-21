@@ -7,6 +7,7 @@ import java.util.List;
 public interface CostMapper {
     int deleteByPrimaryKey(Integer costId);
 
+    // 保存
     int insert(Cost record);
 
     int insertSelective(Cost record);

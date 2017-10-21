@@ -36,7 +36,9 @@
     delete from cost
     where cost_id = #{costId,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="com.lanou.bean.Cost">
+
+    <!--保存-->
+    <insert id="insert">
     insert into cost (cost_id, name, base_duration, 
       base_cost, unit_cost, status, 
       descr, creatime, startime, 
@@ -45,7 +47,10 @@
       #{baseCost,jdbcType=INTEGER}, #{unitCost,jdbcType=INTEGER}, #{status,jdbcType=CHAR}, 
       #{descr,jdbcType=VARCHAR}, #{creatime,jdbcType=TIMESTAMP}, #{startime,jdbcType=TIMESTAMP}, 
       #{costType,jdbcType=CHAR})
-  </insert>
+    </insert>
+
+
+
     <insert id="insertSelective" parameterType="com.lanou.bean.Cost">
         insert into cost
         <trim prefix="(" suffix=")" suffixOverrides=",">
