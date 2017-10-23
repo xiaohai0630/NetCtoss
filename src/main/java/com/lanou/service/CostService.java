@@ -11,7 +11,7 @@ import java.util.List;
 public interface CostService{
 
     // 查询全部的cost
-    List<Cost> findAllCost();
+    List<Cost> findAllCost(Cost cost);
 
     // 添加cost
     Integer saveCost(Cost cost);

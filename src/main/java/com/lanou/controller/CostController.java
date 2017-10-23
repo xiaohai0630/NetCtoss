@@ -6,6 +6,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -61,12 +62,40 @@ public class CostController {
         return "fee/fee_add";
     }
 
+    // 跳转详细信息
+    @RequestMapping(value = "/fee_detail")
+    public String detail(){
+        return "fee/fee_detail";
+    }
+
     // 显示全部的租赁信息
     @ResponseBody
     @RequestMapping(value = "/showAllCost")
-    public List<Cost> showAllCost() {
+    public List<Cost> showAllCost(Cost cost) {
 
-        List<Cost> costList = costService.findAllCost();
+        List<Cost> costList = costService.findAllCost(cost);
+
+        return costList;
+    }
+
+    // 调用显示当前cost
+    @RequestMapping(value = "/showThisCost")
+    public String showThisCost(Cost cost,HttpServletRequest request,HttpServletResponse response){
+
+        HttpSession session = request.getSession();
+        session.setAttribute("thisCost",cost);
+
+        return "fee/fee_detail";
+    }
+    // 显示当前cost
+    @ResponseBody
+    @RequestMapping(value = "/showThisCostList")
+    public List<Cost> showThisCostList(HttpServletRequest request,HttpServletResponse response){
+
+        HttpSession session = request.getSession();
+        Cost cost = (Cost) session.getAttribute("thisCost");
+
+        List<Cost> costList = costService.findAllCost(cost);
 
         return costList;
     }
@@ -90,10 +119,15 @@ public class CostController {
 
     // 二、删除
     @RequestMapping(value = "/delCost")
-    public void delCost(Cost cost){
+    public Integer delCost(Cost cost){
+//         = new Cost();
+//        cost.setCostId(id);
 
+        // 删除成功之后返回1
         Integer del = costService.delCost(cost.getCostId());
 
         // 返回什么？
+        return del;
     }
+
 }

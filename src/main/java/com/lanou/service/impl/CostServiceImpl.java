@@ -19,10 +19,10 @@ public class CostServiceImpl implements CostService {
     @Resource
     private CostMapper costMapper;
 
-    // 查询全部的cost
-    public List<Cost> findAllCost() {
+    // 查询全部的cost，按照id查询cost
+    public List<Cost> findAllCost(Cost cost) {
 
-        List<Cost> costList = costMapper.findAllCost();
+        List<Cost> costList = costMapper.findAllCost(cost);
 
         return costList;
     }
@@ -68,8 +68,9 @@ public class CostServiceImpl implements CostService {
 
         PageHelper.startPage(pageNo, pageSize);
 
+        Cost cost = new Cost();
         // 获取全部的学员信息
-        List<Cost> costList = costMapper.findAllCost();
+        List<Cost> costList = costMapper.findAllCost(cost);
 
         // 使用PageInfo对结果进行包装
         // 参数：全部信息的集合

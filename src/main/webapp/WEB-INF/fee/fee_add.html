@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>添加</title>
+    <title>添加资费</title>
 
     <link type="text/css" rel="stylesheet" media="all" href="../styles/global.css"/>
     <link type="text/css" rel="stylesheet" media="all" href="../styles/global_color.css"/>
@@ -14,12 +14,14 @@
 
         // 保存结果的提示
         function showResult() {
+
             $.ajax({
                 type:"POST",
                 url:"/addCost",
                 data:{
+
                     name: $("#costName").val(),
-                    costType: null,
+                    costType: $("input:radio[name='radFeeType']:checked").value,
                     baseDuration: $("#baseDuration").val(),
                     baseCost: $("#baseCost").val(),
                     unitCost: $("#unitCost").val(),
@@ -52,7 +54,7 @@
                 divResult.style.display = "none";
         }
 
-        // 切换资费类型
+        // 切换资费类型－－不同的资费类型有不同的选择条件
         function feeTypeChange(type) {
             var inputArray = document.getElementById("main").getElementsByTagName("input");
             if (type == 1) {
@@ -88,6 +90,8 @@
         // 返回资费展示页面
         function returnCost() {
 
+//            window.location.href = '/fee_list';
+
             $.ajax({
                 url: "/fee_list"
             })
@@ -106,6 +110,7 @@
     <a href="#">[退出]</a>
 </div>
 <!--Logo区域结束-->
+
 <!--导航区域开始-->
 <div id="navi">
     <ul id="menu">
@@ -114,7 +119,7 @@
         <li><a href="../role/role_list.html" class="role_off"></a></li>
         <li><a href="../admin/admin_list.html" class="admin_off"></a></li>
 
-        <!--cost展示-->
+        <!--cost列表-->
         <li><a href="/fee_list" class="fee_on"></a></li>
 
 
@@ -134,8 +139,6 @@
 <div id="main">
     <div id="save_result_info" class="save_fail"><span id="errorMsg">保存失败，资费名称重复！</span></div>
 
-    <!--<form action="/addCost" method="POST" class="main_form">-->
-
         <div class="text_info clearfix"><span>资费名称：</span></div>
 
         <div class="input_info">
@@ -147,11 +150,10 @@
 
         <div class="text_info clearfix"><span>资费类型：</span></div>
 
-        <div class="input_info fee_type">
+        <div class="input_info fee_type" id="costTypes">
             <input type="radio" name="radFeeType" id="monthly" onclick="feeTypeChange(1);" value="包月"/>
             <label for="monthly">包月</label>
-            <input type="radio" name="radFeeType" checked="checked" id="package" onclick="feeTypeChange(2);"
-                   value="套餐"/>
+            <input type="radio" name="radFeeType" checked="checked" id="package" onclick="feeTypeChange(2);" value="套餐"/>
             <label for="package">套餐</label>
             <input type="radio" name="radFeeType" id="timeBased" onclick="feeTypeChange(3);" value="计时"/>
             <label for="timeBased">计时</label>
@@ -195,8 +197,6 @@
             <input type="button" value="保存" class="btn_save" onclick="showResult()"/>
             <input type="button" value="取消" class="btn_save" onclick="returnCost()"/>
         </div>
-
-    <!--</form>-->
 
 </div>
 

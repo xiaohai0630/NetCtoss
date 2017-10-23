@@ -26,9 +26,14 @@
         where cost_id = #{costId,jdbcType=INTEGER}
     </select>
 
-    <!--查询全部的cost-->
+    <!--查询全部的cost，根据id查询-->
     <select id="findAllCost" resultMap="BaseResultMap">
         SELECT *FROM cost
+        <where>
+            <if test="costId != null">
+                AND cost_id=#{costId}
+            </if>
+        </where>
     </select>
 
     <!--通过主键删除-->

@@ -20,5 +20,5 @@ public interface CostMapper {
     int updateByPrimaryKey(Cost record);
 
     // 查询全部花费信息
-    List<Cost> findAllCost();
+    List<Cost> findAllCost(Cost cost);
 }
