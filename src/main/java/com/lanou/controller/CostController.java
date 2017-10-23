@@ -118,13 +118,12 @@ public class CostController {
     }
 
     // 二、删除
+    @ResponseBody
     @RequestMapping(value = "/delCost")
-    public Integer delCost(Cost cost){
-//         = new Cost();
-//        cost.setCostId(id);
+    public int delCost(Cost cost){
 
         // 删除成功之后返回1
-        Integer del = costService.delCost(cost.getCostId());
+        int del = costService.delCost(cost.getCostId());
 
         // 返回什么？
         return del;

@@ -66,41 +66,6 @@
         // 展示全部
         showAllCost();
 
-        // 循环添加新一行
-        function addNewTr(cost) {
-
-            var td1 = $("<td></td>").html(cost.costId);
-            var td2 = $("<td></td>");
-
-            // 展示详情
-            $("<a href='###' onclick='showThisCost()'></a>").html(cost.name).appendTo(td2).attr("showId", cost.costId);
-            var td3 = $("<td></td>").html(cost.baseDuration);
-            var td4 = $("<td></td>").html(cost.baseCost + " 元/小时");
-            var td5 = $("<td></td>").html(cost.unitCost);
-            var td6 = $("<td></td>").html(cost.creatime);
-            var td7 = $("<td></td>").html(cost.startime);
-            var td8 = $("<td></td>").html("未开通");
-
-            // 启用、修改、删除－－id
-            var td9 = $("<td></td>");
-
-            var use = $("<input type='button' value='启用' class='btn_start' onclick='startFee();'/>")
-                    .attr("useId", cost.costId);
-
-            var change = $("<input type='button' value='修改' class='btn_modify'/>")
-                    .attr("changeId", cost.costId);
-
-            var del = $("<input type='button' value='删除' class='btn_delete' onclick='deleteFee()'/>")
-                    .attr("delId", cost.costId);
-
-            td9.append(use).append(change).append(del);
-
-            var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6)
-                    .append(td7).append(td8).append(td9);
-
-            $("#datalist").append(trob);
-        }
-
         // 添加
         function add() {
             window.location.href = '/fee_add';
@@ -216,10 +181,8 @@
 //      var r = window.confirm("确定要删除此资费吗？");
 //      document.getElementById("operate_result_info").style.display = "block";
 
-        // 怎么获取id？？？
+        // 获取id
         var delId = $(this).attr("delId");
-
-        alert(delId);
 
         $.ajax({
             url: "/delCost",
@@ -238,6 +201,41 @@
 
         })
 
+    }
+
+    // 循环添加新一行数据
+    function addNewTr(cost) {
+
+        var td1 = $("<td></td>").html(cost.costId);
+        var td2 = $("<td></td>");
+
+        // 展示详情
+        $("<a href='###' onclick='showThisCost()'></a>").html(cost.name).appendTo(td2).attr("showId", cost.costId);
+        var td3 = $("<td></td>").html(cost.baseDuration);
+        var td4 = $("<td></td>").html(cost.baseCost + "元/小时");
+        var td5 = $("<td></td>").html(cost.unitCost);
+        var td6 = $("<td></td>").html(cost.creatime);
+        var td7 = $("<td></td>").html(cost.startime);
+        var td8 = $("<td></td>").html("未开通");
+
+        // 启用、修改、删除－－id
+        var td9 = $("<td></td>");
+
+        var use = $("<input type='button' value='启用' class='btn_start' onclick='startFee();'/>")
+                .attr("useId", cost.costId);
+
+        var change = $("<input type='button' value='修改' class='btn_modify'/>")
+                .attr("changeId", cost.costId);
+
+        var del = $("<input type='button' value='删除' class='btn_delete' onclick='deleteFee.call(this)'/>")
+                .attr("delId", cost.costId);
+
+        td9.append(use).append(change).append(del);
+
+        var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6)
+                .append(td7).append(td8).append(td9);
+
+        $("#datalist").append(trob);
     }
 
 </script>
