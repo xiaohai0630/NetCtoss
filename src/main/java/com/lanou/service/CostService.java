@@ -21,6 +21,5 @@ public interface CostService{
 
     // 分页
     List<Cost> findWithPageInfo(Integer pageNo, Integer pageSize);
-
     PageInfo<Cost> getPageinfo(Integer pageSize);
 }

@@ -26,7 +26,10 @@
             document.getElementById("operate_result_info").style.display = "block";
         }
 
-        // 展示全部的信息
+        /**
+         * 展示全部的信息
+         * 获取到信息之后就添加新的一行
+         */
         function showAllCost() {
 
             $.ajax({
@@ -45,7 +48,11 @@
 
         }
 
-        // 显示详细信息
+        /**
+         * 显示详细信息
+         * 先把当前这一条的id存在session中，跳转页面之后再从session
+         * 中取出cost，用id从数据库中查询
+         */
         function showThisCost() {
 
             $.ajax({
@@ -210,7 +217,7 @@
         var td2 = $("<td></td>");
 
         // 展示详情
-        $("<a href='###' onclick='showThisCost()'></a>").html(cost.name).appendTo(td2).attr("showId", cost.costId);
+        $("<a href='###' onclick='showThisCost.call(this)'></a>").html(cost.name).appendTo(td2).attr("showId", cost.costId);
         var td3 = $("<td></td>").html(cost.baseDuration);
         var td4 = $("<td></td>").html(cost.baseCost + "元/小时");
         var td5 = $("<td></td>").html(cost.unitCost);
@@ -221,7 +228,7 @@
         // 启用、修改、删除－－id
         var td9 = $("<td></td>");
 
-        var use = $("<input type='button' value='启用' class='btn_start' onclick='startFee();'/>")
+        var use = $("<input type='button' value='启用' class='btn_start' onclick='startFee.call(this)'/>")
                 .attr("useId", cost.costId);
 
         var change = $("<input type='button' value='修改' class='btn_modify'/>")
