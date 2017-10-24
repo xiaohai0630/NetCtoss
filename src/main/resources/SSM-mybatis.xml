@@ -39,6 +39,27 @@
 
         <!--可以读取现成的config.xml文件，即原来的mybatis配置文件－－config.xml-->
 
+        <!--！！！-->
+        <!--分页 －－ 复数形式的plugins，说明是数组-->
+        <!--多个插件，就写多个bean来导入-->
+        <property name="plugins">
+
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+
+                    <!--需要指定使用的是什么数据库 dialect方言＝数据库名字-->
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+
+        </property>
+
+
+
     </bean>
 
     <!--4、Mapper扫描器-->

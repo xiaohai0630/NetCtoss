@@ -26,29 +26,42 @@
 
             $.ajax({
                 url: "/showAllAccount",
+
+                data: {
+                    no: 1,
+                    size: 3
+                },
+
                 success: function (datas) {
 
                     $.each(datas, function (i, data) {
                         addNewTr(data)
                     })
+
                 }
+
             })
+
         }
 
         showAllAccount();
 
-
         // 删除账号信息
         function deleteAccount() {
+            var delId = $(this).attr("delId");
 
             $.ajax({
 
-                url:"/",
+                url: "/delAccount",
 
-                data:{
-
+                data: {
+                    accountId: delId
                 },
-                success:function (data) {
+                success: function (data) {
+
+                    if (data == 1) {
+                        window.location.href = '/account_list'
+                    }
 
                 }
 
@@ -63,16 +76,16 @@
             var td2 = $("<td></td>");
 
             // 展示详情
-            $("<a href='###' onclick=''></a>").html(account.realName).appendTo(td2).attr("showId", account.accountId);
+            $("<a href='###' onclick='showThisAccount.call(this)'></a>").html(account.realName).appendTo(td2).attr("showId", account.accountId);
 
             var td3 = $("<td></td>").html(account.idcardNo);
             var td4 = $("<td></td>").html(account.loginName);
 
             // 状态是1的时候是开通
             var status = '';
-            if (account.status == 1){
+            if (account.status == 1) {
                 status = "开通"
-            }else {
+            } else {
                 status = "暂停"
             }
             var td5 = $("<td></td>").html(status);
@@ -90,7 +103,7 @@
             var change = $("<input type='button' value='修改' class='btn_modify'/>")
                     .attr("changeId", account.accountId);
 
-            var del = $("<input type='button' value='删除' class='btn_delete' onclick=''/>")
+            var del = $("<input type='button' value='删除' class='btn_delete' onclick='deleteAccount.call(this)'/>")
                     .attr("delId", account.accountId);
 
             td8.append(use).append(change).append(del);
@@ -125,7 +138,25 @@
 
         }
 
+        // 显示详细信息
+        function showThisAccount() {
+
+            $.ajax({
+
+                url:"/showThisAccount",
+                data:{
+                    accountId:$(this).attr("showId")
+                },
+                success:function (data) {
+                    window.location.href = '/account_detail'
+                }
+
+            })
+
+        }
+
     </script>
+
 </head>
 
 
@@ -170,7 +201,7 @@
     <div class="search_add">
         <div>身份证：<input type="text" value="不验证" class="text_search"/></div>
         <div>姓名：<input type="text" class="width70 text_search" value="不验证"/></div>
-        <div>登录名：<input type="text" value="不验证" class="text_search"" /></div>
+        <div>登录名：<input type="text" value="不验证" class="text_search"/></div>
         <div>
             状态：
             <select class="select_search">
@@ -244,7 +275,6 @@
 
 </div>
 <!--主要区域结束-->
-
 
 <div id="footer">
     <p>[源自北美的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</p>

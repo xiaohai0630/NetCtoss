@@ -72,14 +72,9 @@ public class CostServiceImpl implements CostService {
         Cost cost = new Cost();
         List<Cost> costList = costMapper.findAllCost(cost);
 
-        System.out.println("costList：---" + costList);
-
         // 使用PageInfo对结果进行包装
         // 参数：全部信息的集合
         PageInfo<Cost> pageInfo = new PageInfo<Cost>(costList);
-
-        // list＝null
-        System.out.println(pageInfo);
 
         return pageInfo;
     }

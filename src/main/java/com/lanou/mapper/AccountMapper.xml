@@ -40,11 +40,13 @@
         SELECT *FROM account
     </select>
 
-
+    <!--删除-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from account
     where account_id = #{accountId,jdbcType=INTEGER}
   </delete>
+
+
     <insert id="insert" parameterType="com.lanou.bean.Account">
     insert into account (account_id, recommender_id, login_name, 
       login_passwd, status, create_date, 

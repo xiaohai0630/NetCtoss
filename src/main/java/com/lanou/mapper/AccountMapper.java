@@ -6,6 +6,7 @@ import com.sun.org.apache.xalan.internal.utils.XMLSecurityManager;
 import java.util.List;
 
 public interface AccountMapper {
+    // 删除
     int deleteByPrimaryKey(Integer accountId);
 
     int insert(Account record);

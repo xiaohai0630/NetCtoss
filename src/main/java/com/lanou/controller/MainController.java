@@ -30,21 +30,28 @@ public class MainController {
 
     // 跳转添加资费页面
     @RequestMapping(value = "/fee_add")
-    public String add() {
+    public String addCost() {
         return "fee/fee_add";
     }
 
     // 跳转详细信息
     @RequestMapping(value = "/fee_detail")
-    public String detail(){
+    public String detailCost(){
         return "fee/fee_detail";
     }
 
+
     // 账务账号相关跳转：
+    // 跳转账号列表页面
     @RequestMapping(value = "/account_list")
     public String accountShow(){
         return "account/account_list";
     }
 
+    // 跳转详细信息
+    @RequestMapping(value = "/account_detail")
+    public String detailAccount(){
+        return "account/account_detail";
+    }
 
 }

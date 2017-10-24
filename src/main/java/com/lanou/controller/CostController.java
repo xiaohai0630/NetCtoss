@@ -38,12 +38,8 @@ public class CostController {
     public List<Cost> showAllCost(@RequestParam("no") Integer pageNo,
                                   @RequestParam("size") Integer pageSize) {
 
-        // 显示全部
-//        List<Cost> costList = costService.findAllCost(cost);
-
+        // 加载页面的时候直接显示第一页
         return costService.findWithPageInfo(pageNo,pageSize);
-
-//        return costList;
     }
 
     // 分页
@@ -53,7 +49,7 @@ public class CostController {
         return costService.getPageinfo(pageSize);
     }
 
-    // 调用显示当前cost
+    // 显示详细信息1－－把id存在session中
     @ResponseBody
     @RequestMapping(value = "/showThisCost")
     public String showThisCost(Cost cost,HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
@@ -67,7 +63,7 @@ public class CostController {
         return "redirect:fee/fee_detail";
     }
 
-    // 显示当前cost
+    // 显示详细信息2－－跳转页面之后调用
     @ResponseBody
     @RequestMapping(value = "/showThisCostList")
     public Cost showThisCostList(HttpServletRequest request,HttpServletResponse response){

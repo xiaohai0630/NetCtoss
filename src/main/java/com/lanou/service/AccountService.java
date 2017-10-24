@@ -1,5 +1,6 @@
 package com.lanou.service;
 
+import com.github.pagehelper.PageInfo;
 import com.lanou.bean.Account;
 
 import java.util.List;
@@ -13,5 +14,10 @@ public interface AccountService {
     List<Account> findAllAccount(Account account);
 
     // 删除
+    Integer delAccount(Integer id);
 
+    // 两个参数：pageNo 第几页；pageSize 每一页的大小
+    List<Account> findWithPageInfo(Integer pageNo, Integer pageSize);
+
+    PageInfo<Account> getPageinfo(Integer pageSize);
 }

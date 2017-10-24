@@ -33,22 +33,21 @@
          */
         function showAllCost() {
             $.ajax({
-//                method:"POST",
-
                 url: "/showAllCost",
 
-                data:{
-                    no:1,
-                    size:3
+                data: {
+                    no: 1,
+                    size: 3
                 },
 
                 success: function (datas) {
 
-                    $.each(datas.list, function (i, data) {
-
+                    $.each(datas, function (i, data) {
+                        // 添加新的一行，三行
                         addNewTr(data);
-                    })
+                    });
 
+                    addNewPages(data)
                 }
 
             })
@@ -87,22 +86,25 @@
         }
 
         // 点击页码，显示不同的内容
-//        function pages() {
-//
-//            $.ajax({
-//
-//                url: "/pageinfo",
-//                data: {},
-//                success: function (data) {
-//
-//                    var datas = data.list;
-//
-//                    addNewTr(datas)
-//                }
-//
-//            })
-//
-//        }
+        function pages() {
+
+            $.ajax({
+
+                url: "/showThisCost",
+                data: {
+                    no: $(this).attr("id"),
+                    size: 3
+                },
+                success: function (data) {
+
+                    $("#datalist").html(addNewTr(data));
+
+                    // 给当前页加一个属性
+                }
+
+            })
+
+        }
 
         // 将时间戳修改为日期类型
         function getLocalTime(jsondate) {
@@ -153,7 +155,6 @@
 
         <!--账号展示-->
         <li><a href="/account_list" class="account_off"></a></li>
-
 
 
         <li><a href="../service/service_list.html" class="service_off"></a></li>
@@ -213,13 +214,15 @@
 
     <!--分页-->
     <div id="pages">
-        <a href="#">上一页</a>
-        <a href="#" class="current_page">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">下一页</a>
+        <!--<a href="###" onclick="pages.call(this)" id="up">上一页</a>-->
+
+        <!--<a href="#" class="current_page">1</a>-->
+
+        <!--<a href="#">2</a>-->
+        <!--<a href="#">3</a>-->
+        <!--<a href="#">4</a>-->
+        <!--<a href="#">5</a>-->
+        <!--<a href="###" onclick="pages.call(this)" id="down">下一页</a>-->
     </div>
 
 </div>
@@ -243,6 +246,7 @@
         // 获取id
         var delId = $(this).attr("delId");
 
+        // 删除之后刷新页面
         $.ajax({
             url: "/delCost",
 
@@ -296,6 +300,25 @@
                 .append(td7).append(td8).append(td9);
 
         $("#datalist").append(trob);
+    }
+
+    // 添加页码
+    function addNewPages(data) {
+
+        var a1 = $("<a></a>");
+
+        var aUp = $("<a href='###' onclick='pages.call(this)'>上一页</a>");
+        var aDown = $("<a href='###' onclick='pages.call(this)'>下一页</a>");
+
+        $("#pages").append(aUp);
+
+        for (var i = 0; i < data.pages; i++) {
+            // 添加页码
+            a1.html("1");
+            $("#pages").append(a1);
+        }
+
+        $("#pages").append(a1).append(aDown)
     }
 
 </script>

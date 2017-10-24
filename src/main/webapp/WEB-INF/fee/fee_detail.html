@@ -20,8 +20,6 @@
                 url: "/showThisCostList",
 
                 success: function (data) {
-                    var time = data.creatime;
-                    var creatTime = getLocalTime(time);
 
                     // 资费id
                     $("#costId").attr("value", data.costId);
