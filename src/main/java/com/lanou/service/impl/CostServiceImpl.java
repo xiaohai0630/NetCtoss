@@ -8,6 +8,7 @@ import com.lanou.service.CostService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,11 +72,16 @@ public class CostServiceImpl implements CostService {
         Cost cost = new Cost();
         List<Cost> costList = costMapper.findAllCost(cost);
 
+        System.out.println("costList：---" + costList);
+
         // 使用PageInfo对结果进行包装
         // 参数：全部信息的集合
-        PageInfo<Cost> costPageInfo = new PageInfo<Cost>(costList);
+        PageInfo<Cost> pageInfo = new PageInfo<Cost>(costList);
 
-        return costPageInfo;
+        // list＝null
+        System.out.println(pageInfo);
+
+        return pageInfo;
     }
 
 }

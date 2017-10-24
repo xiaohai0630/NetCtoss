@@ -26,66 +26,30 @@ import java.util.List;
 public class CostController {
 
     /**
-     * 登录直接跳转index页面：/
-     * 跳转cost展示页面：/fee_list
-     * 跳转index页面：/fee_index
-     * 跳转添加页面：/fee_add
-     * 展示全部：/showAllCost
-     * 添加cost：/addCost
+     * 资费信息：
      */
 
     @Resource
     private CostService costService;
 
-    // 登录直接到index页面
-    @RequestMapping(value = "/")
-    public String home() {
-        return "index";
-    }
-
-    // 跳转资费展示页面
-    @RequestMapping(value = "/fee_list")
-    public String costShow() {
-        return "fee/fee_list";
-    }
-
-    // 跳转主页
-    @RequestMapping(value = "/fee_index")
-    public String index() {
-        return "index";
-    }
-
-    // 跳转添加资费页面
-    @RequestMapping(value = "/fee_add")
-    public String add() {
-        return "fee/fee_add";
-    }
-
-    // 跳转详细信息
-    @RequestMapping(value = "/fee_detail")
-    public String detail(){
-        return "fee/fee_detail";
-    }
-
     // 显示全部的租赁信息－－分页之后的第一页
     @ResponseBody
     @RequestMapping(value = "/showAllCost")
-    public List<Cost> showAllCost(Cost cost) {
+    public List<Cost> showAllCost(@RequestParam("no") Integer pageNo,
+                                  @RequestParam("size") Integer pageSize) {
 
         // 显示全部
-        List<Cost> costList = costService.findAllCost(cost);
+//        List<Cost> costList = costService.findAllCost(cost);
 
-        return costList;
+        return costService.findWithPageInfo(pageNo,pageSize);
 
-//        return costService.getPageinfo(pageSize);
-
-//        return costService.findWithPageInfo(pageNo,pageSize);
+//        return costList;
     }
 
     // 分页
     @ResponseBody
     @RequestMapping(value = "/pageinfo")
-    public PageInfo<Cost> pageInfo(@RequestParam("pages") Integer pageSize){
+    public PageInfo<Cost> pageInfo(@RequestParam("pagesize") Integer pageSize){
         return costService.getPageinfo(pageSize);
     }
 
@@ -111,6 +75,7 @@ public class CostController {
         HttpSession session = request.getSession();
         Integer id = (Integer) session.getAttribute("thisCost");
 
+        // 查询这个id对应的cost
         Cost cost = new Cost();
         cost.setCostId(id);
         List<Cost> costList = costService.findAllCost(cost);
@@ -123,13 +88,9 @@ public class CostController {
     @ResponseBody
     @RequestMapping(value = "/addCost",method = RequestMethod.POST)
     public Integer addCost(Cost cost) throws ServletException, IOException {
-        // 改时间的格式？
-        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-
-        // 默认状态是1；创建时间是系统当前时间
+        // 默认状态是1；创建时间是系统当前时间，展示的时候需要改变格式
         cost.setStatus("1");
-        cost.setCreatime(date);
+        cost.setCreatime(new Date());
 
         Integer save = costService.saveCost(cost);
 
@@ -140,7 +101,6 @@ public class CostController {
     @ResponseBody
     @RequestMapping(value = "/delCost")
     public Integer delCost(Cost cost){
-
         // 删除成功之后返回1
         Integer del = costService.delCost(cost.getCostId());
         return del;

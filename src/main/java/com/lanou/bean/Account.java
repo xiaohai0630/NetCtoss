@@ -3,30 +3,29 @@ package com.lanou.bean;
 import java.util.Date;
 
 public class Account {
-    // 账号管理
+    // 账号
 
-    private Integer accountId;
-    private Integer recommenderId;
-    private String loginName;
-    private String loginPasswd;
-    private String status;
-    private Date createDate;
-    private Date pauseDate;
-    private Date closeDate;
-    private String realName;
-    private String idcardNo;
-    private Date birthdate;
-    private String gender;
-    private String occupation;
-    private String telephone;
-    private String email;
-    private String mailaddress;
-    private String zipcode;
-    private String qq;
-    private Date lastLoginTime;
+    private Integer accountId;      // 账号id
+    private Integer recommenderId;  // 推荐人id
+    private String loginName;       // 登录名
+    private String loginPasswd;     // 登录密码
+    private String status;          // 状态－－1
+    private Date createDate;        // 创建时间
+    private Date pauseDate;         // 暂停时间
+    private Date closeDate;         // 关闭时间
+    private String realName;        // 真实姓名
+    private String idcardNo;        // 身份证号码
+    private Date birthdate;         // 生日
+    private String gender;          // 性别
+    private String occupation;      // 职业
+    private String telephone;       // 电话
+    private String email;           // 邮箱
+    private String mailaddress;     // 邮件地址
+    private String zipcode;         // 邮政编码
+    private String qq;              // qq
+    private Date lastLoginTime;     // 上一次登录时间
+    private String lastLoginIp;     // 上次登录ip
 
-
-    private String lastLoginIp;
 
     public Integer getAccountId() {
         return accountId;

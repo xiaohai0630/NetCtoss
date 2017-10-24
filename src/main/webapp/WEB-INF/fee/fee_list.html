@@ -33,16 +33,18 @@
          */
         function showAllCost() {
             $.ajax({
+//                method:"POST",
+
                 url: "/showAllCost",
 
-//                data:{
-//                    no:1,
-//                    size:3
-//                },
+                data:{
+                    no:1,
+                    size:3
+                },
 
                 success: function (datas) {
 
-                    $.each(datas, function (i, data) {
+                    $.each(datas.list, function (i, data) {
 
                         addNewTr(data);
                     })
@@ -122,6 +124,7 @@
                 var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
                 return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
             }
+
         }
 
     </script>
@@ -148,8 +151,11 @@
         <!--当前页面：展示全部cost-->
         <li><a href="" class="fee_on"></a></li>
 
+        <!--账号展示-->
+        <li><a href="/account_list" class="account_off"></a></li>
 
-        <li><a href="../account/account_list.html" class="account_off"></a></li>
+
+
         <li><a href="../service/service_list.html" class="service_off"></a></li>
         <li><a href="../bill/bill_list.html" class="bill_off"></a></li>
         <li><a href="../report/report_list.html" class="report_off"></a></li>

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Cost {
     /**
+     * 资费信息：
      * Cost：资费
      * costId：资费id
      * name：资费名称

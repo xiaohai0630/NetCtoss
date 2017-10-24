@@ -19,9 +19,8 @@ public interface CostService{
     // 删除cost
     Integer delCost(Integer id);
 
-    // 分页
-    // pageNo：页码；pageSize：页面大小
-    List<Cost> findWithPageInfo(Integer pageNo, Integer pageSize);
-    // 获取pageInfo
+    // 两个参数：pageNo 第几页；pageSize 每一页的大小
+    List<Cost> findWithPageInfo(Integer pageNo,Integer pageSize);
+
     PageInfo<Cost> getPageinfo(Integer pageSize);
 }
