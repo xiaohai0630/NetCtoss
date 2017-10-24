@@ -67,32 +67,40 @@ public class CostController {
         return "fee/fee_detail";
     }
 
-    // 显示全部的租赁信息
+    // 显示全部的租赁信息－－分页之后的第一页
     @ResponseBody
     @RequestMapping(value = "/showAllCost")
     public List<Cost> showAllCost(Cost cost) {
 
+        // 显示全部
         List<Cost> costList = costService.findAllCost(cost);
 
         return costList;
+
+//        return costService.getPageinfo(pageSize);
+
+//        return costService.findWithPageInfo(pageNo,pageSize);
+    }
+
+    // 分页
+    @ResponseBody
+    @RequestMapping(value = "/pageinfo")
+    public PageInfo<Cost> pageInfo(@RequestParam("pages") Integer pageSize){
+        return costService.getPageinfo(pageSize);
     }
 
     // 调用显示当前cost
-//    @ResponseBody
+    @ResponseBody
     @RequestMapping(value = "/showThisCost")
-    public String showThisCost(Cost cost,HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public String showThisCost(Cost cost,HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
         // 获取session
         HttpSession session = request.getSession();
         // 获取页面传过来的id
         Integer id = cost.getCostId();
-        // 查询当前这个cost的详细信息
-        List<Cost> costList = costService.findAllCost(cost);
-        // 把cost存在session中
-        session.setAttribute("thisCost",costList.get(0));
+        // 把cost的id存在session中
+        session.setAttribute("thisCost",id);
 
-//        response.sendRedirect("fee/fee_detail");
-
-        return "fee/fee_detail";
+        return "redirect:fee/fee_detail";
     }
 
     // 显示当前cost
@@ -101,9 +109,13 @@ public class CostController {
     public Cost showThisCostList(HttpServletRequest request,HttpServletResponse response){
         // 获取session中的id
         HttpSession session = request.getSession();
-        Cost cost = (Cost) session.getAttribute("thisCost");
+        Integer id = (Integer) session.getAttribute("thisCost");
 
-        return cost;
+        Cost cost = new Cost();
+        cost.setCostId(id);
+        List<Cost> costList = costService.findAllCost(cost);
+
+        return costList.get(0);
     }
 
     // 添加资费页面相关操作
@@ -111,7 +123,7 @@ public class CostController {
     @ResponseBody
     @RequestMapping(value = "/addCost",method = RequestMethod.POST)
     public Integer addCost(Cost cost) throws ServletException, IOException {
-
+        // 改时间的格式？
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
 
@@ -131,16 +143,7 @@ public class CostController {
 
         // 删除成功之后返回1
         Integer del = costService.delCost(cost.getCostId());
-
-        // 返回什么？
         return del;
-    }
-
-    // 分页
-    @ResponseBody
-    @RequestMapping(value = "/pageinfo")
-    public PageInfo<Cost> pageInfo(@RequestParam("pages") Integer pageSize){
-        return costService.getPageinfo(pageSize);
     }
 
 }

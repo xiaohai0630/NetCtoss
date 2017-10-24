@@ -61,15 +61,14 @@ public class CostServiceImpl implements CostService {
     // 参数是要查询的表所对应的实体类
     public PageInfo<Cost> queryCostByPage(Integer pageNo, Integer pageSize) {
 
-        // 判断参数合法性：默认页数1 默认每页大小2
+        // 判断参数合法性：默认页数1 默认每页大小3
         pageNo = pageNo == null ? 1 : pageNo;
-        pageSize = pageSize == null ? 2 : pageSize;
-
+        pageSize = pageSize == null ? 3 : pageSize;
 
         PageHelper.startPage(pageNo, pageSize);
 
+        // 获取全部的资费信息，此时cost全为null
         Cost cost = new Cost();
-        // 获取全部的学员信息
         List<Cost> costList = costMapper.findAllCost(cost);
 
         // 使用PageInfo对结果进行包装
