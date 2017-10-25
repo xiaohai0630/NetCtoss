@@ -32,33 +32,21 @@ public class CostController {
     @Resource
     private CostService costService;
 
-    // 显示全部的租赁信息－－分页之后的第一页
+    // 分页显示
     @ResponseBody
-    @RequestMapping(value = "/showAllCost")
-    public List<Cost> showAllCost(@RequestParam("no") Integer pageNo,
-                                  @RequestParam("size") Integer pageSize) {
-
-        // 加载页面的时候直接显示第一页
-        return costService.findWithPageInfo(pageNo,pageSize);
-    }
-
-    // 分页
-    @ResponseBody
-    @RequestMapping(value = "/pageinfo")
-    public PageInfo<Cost> pageInfo(@RequestParam("pagesize") Integer pageSize){
-        return costService.getPageinfo(pageSize);
+    @RequestMapping(value = "/pageinfoCost")
+    public PageInfo<Cost> pageInfo(@RequestParam("no") Integer pageNo,
+                                   @RequestParam("size") Integer pageSize){
+        return costService.getPageinfo(pageNo,pageSize);
     }
 
     // 显示详细信息1－－把id存在session中
     @ResponseBody
     @RequestMapping(value = "/showThisCost")
     public String showThisCost(Cost cost,HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-        // 获取session
+        // 获取session，把cost存在session中
         HttpSession session = request.getSession();
-        // 获取页面传过来的id
-        Integer id = cost.getCostId();
-        // 把cost的id存在session中
-        session.setAttribute("thisCost",id);
+        session.setAttribute("thisCost",cost);
 
         return "redirect:fee/fee_detail";
     }
@@ -67,13 +55,9 @@ public class CostController {
     @ResponseBody
     @RequestMapping(value = "/showThisCostList")
     public Cost showThisCostList(HttpServletRequest request,HttpServletResponse response){
-        // 获取session中的id
+        // 获取session中的cost，查询相应的信息
         HttpSession session = request.getSession();
-        Integer id = (Integer) session.getAttribute("thisCost");
-
-        // 查询这个id对应的cost
-        Cost cost = new Cost();
-        cost.setCostId(id);
+        Cost cost = (Cost) session.getAttribute("thisCost");
         List<Cost> costList = costService.findAllCost(cost);
 
         return costList.get(0);
@@ -101,5 +85,34 @@ public class CostController {
         Integer del = costService.delCost(cost.getCostId());
         return del;
     }
+
+    // 三、修改
+    // 1、存当前的id
+    @ResponseBody
+    @RequestMapping(value = "/changeCost")
+    public String changeCost(Cost cost,HttpServletRequest request,HttpServletResponse response){
+        HttpSession session = request.getSession();
+        session.setAttribute("changeCost",cost);
+
+        return "redirect:fee/fee_modi";
+    }
+
+    // 2、取当前的cost，显示在页面
+    @ResponseBody
+    @RequestMapping(value = "/changeCostList")
+    public Cost changeCostList(HttpServletRequest request,HttpServletResponse response){
+        // 把当前这个cost的详细信息显示在页面上
+        HttpSession session = request.getSession();
+        Cost cost = (Cost) session.getAttribute("changeCost");
+        List<Cost> costList = costService.findAllCost(cost);
+
+        return costList.get(0);
+    }
+
+    // 3、将修改后的内容保存
+
+
+
+    // 四、启用
 
 }

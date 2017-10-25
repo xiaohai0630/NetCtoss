@@ -40,6 +40,12 @@ public class MainController {
         return "fee/fee_detail";
     }
 
+    // 跳转修改cost页面
+    @RequestMapping(value = "/fee_modi")
+    public String changCost(){
+        return "fee/fee_modi";
+    }
+
 
     // 账务账号相关跳转：
     // 跳转账号列表页面
@@ -53,5 +59,14 @@ public class MainController {
     public String detailAccount(){
         return "account/account_detail";
     }
+
+
+    // 服务相关跳转
+    // 服务列表页面
+    @RequestMapping(value = "/service_list")
+    public String serviceShow(){
+        return "service/service_list";
+    }
+
 
 }

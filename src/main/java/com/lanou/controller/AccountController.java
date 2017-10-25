@@ -1,5 +1,6 @@
 package com.lanou.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.lanou.bean.Account;
 import com.lanou.service.AccountService;
 import org.springframework.stereotype.Controller;
@@ -28,12 +29,12 @@ public class AccountController {
 
     // 显示全部信息
     @ResponseBody
-    @RequestMapping(value = "/showAllAccount")
-    public List<Account> showAllAccount(@RequestParam("no") Integer pageNo,
-                                        @RequestParam("size") Integer pageSize){
+    @RequestMapping(value = "/pageinfoAccount")
+    public PageInfo<Account> showAllAccount(@RequestParam("no") Integer pageNo,
+                                            @RequestParam("size") Integer pageSize){
 
         // 加载页面的时候直接显示第一页
-        return accountService.findWithPageInfo(pageNo,pageSize);
+        return accountService.getPageinfo(pageNo,pageSize);
     }
 
     // 删除

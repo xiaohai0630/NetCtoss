@@ -27,30 +27,84 @@
             document.getElementById("operate_result_info").style.display = "block";
         }
 
-        /**
-         * 展示全部的信息（第一页）
-         * 获取到信息之后就添加新的一行
-         */
-        function showAllCost() {
+        // 分页
+        function separatePages(pageNo) {
             $.ajax({
-                url: "/showAllCost",
+                url: "/pageinfoCost",
 
                 data: {
-                    no: 1,
+                    no: pageNo,
                     size: 3
                 },
 
-                success: function (datas) {
+                success: function (result) {
 
-                    $.each(datas, function (i, data) {
-                        // 添加新的一行，三行
-                        addNewTr(data);
-                    });
+                    console.log(result);
 
-                    addNewPages(data)
+                    // 最开始要进行一下页面内容(tbody id=tab)和页面导航(span id=pageX)的清空
+                    $("#tab").children().remove();
+                    $("#pages").children().remove();
+
+                    var costPageInfo = result;
+
+                    var costListPresent = result.list;
+
+                    for (var i = 0; i < costListPresent.length; i++) {
+                        addNewTr(costListPresent[i])
+                    }
+                    // 分页导航栏:
+                    // (1)上一页
+                    if (costPageInfo.isFirstPage) {
+                        var prePage = $("<a></a>").html("上一页")
+                    } else {
+                        var preNo = costPageInfo.prePage;
+                        var prePage = $("<a></a>").html("上一页").attr("id", "pageNo" + preNo).click(toClickPage);
+                    }
+                    $("#pages").append(prePage);
+
+                    // (2)页码
+                    for (var i = 0; i < costPageInfo.pages; i++) {
+                        // 设置页码:1,2,3...
+                        var pageNoX = $("<a></a>").html(i + 1).attr("id", "pageNo" + (i + 1)).click(toClickPage);
+                        // 为当前页添加背景属性,以作区分
+                        if ((i + 1) == costPageInfo.pageNum) {
+                            pageNoX.attr("class", "current_page")
+                        }
+                        // 将页码填入分页导航栏
+                        $("#pages").append(pageNoX)
+                    }
+
+                    // (3)下一页
+                    if (costPageInfo.isLastPage) {
+                        var nextPage = $("<a></a>").html("下一页")
+                    } else {
+                        var nextNo = costPageInfo.nextPage;
+                        var nextPage = $("<a></a>").html("下一页").attr("id", "pageNo" + nextNo).click(toClickPage);
+                    }
+                    $("#pages").append(nextPage);
                 }
 
             })
+
+        }
+
+        separatePages(1);
+
+        // 跳转到点击的页面
+        function toClickPage() {
+
+            var pageNo = $(this).attr("id").slice(6);
+
+            console.log(pageNo);
+
+            if ($(this).attr("sortType") == null) {
+                console.log(pageNo);
+                separatePages(pageNo)
+            } else {
+                var type = $(this).attr("sortType");
+                var order = $(this).attr("sortOrder");
+                sorting(type, order, pageNo)
+            }
 
         }
 
@@ -77,33 +131,9 @@
 
         }
 
-        // 展示全部－－页面加载的时候调用
-        showAllCost();
-
         // 添加
         function add() {
             window.location.href = '/fee_add';
-        }
-
-        // 点击页码，显示不同的内容
-        function pages() {
-
-            $.ajax({
-
-                url: "/showThisCost",
-                data: {
-                    no: $(this).attr("id"),
-                    size: 3
-                },
-                success: function (data) {
-
-                    $("#datalist").html(addNewTr(data));
-
-                    // 给当前页加一个属性
-                }
-
-            })
-
         }
 
         // 将时间戳修改为日期类型
@@ -156,8 +186,10 @@
         <!--账号展示-->
         <li><a href="/account_list" class="account_off"></a></li>
 
+        <!--服务-->
+        <li><a href="/service_list" class="service_off"></a></li>
 
-        <li><a href="../service/service_list.html" class="service_off"></a></li>
+
         <li><a href="../bill/bill_list.html" class="bill_off"></a></li>
         <li><a href="../report/report_list.html" class="report_off"></a></li>
         <li><a href="../user/user_info.html" class="information_off"></a></li>
@@ -189,6 +221,7 @@
     <!--数据区域：用表格展示数据-->
     <div id="data">
         <table id="datalist">
+            <thead>
             <tr>
                 <th>资费ID</th>
                 <th class="width100">资费名称</th>
@@ -200,6 +233,11 @@
                 <th class="width50">状态</th>
                 <th class="width200"></th>
             </tr>
+            </thead>
+
+            <tbody id="tab">
+
+            </tbody>
 
         </table>
 
@@ -214,15 +252,7 @@
 
     <!--分页-->
     <div id="pages">
-        <!--<a href="###" onclick="pages.call(this)" id="up">上一页</a>-->
 
-        <!--<a href="#" class="current_page">1</a>-->
-
-        <!--<a href="#">2</a>-->
-        <!--<a href="#">3</a>-->
-        <!--<a href="#">4</a>-->
-        <!--<a href="#">5</a>-->
-        <!--<a href="###" onclick="pages.call(this)" id="down">下一页</a>-->
     </div>
 
 </div>
@@ -236,6 +266,24 @@
 </body>
 
 <script>
+
+    // 修改cost
+    function changeCost() {
+
+        $.ajax({
+            url: "/changeCost",
+
+            data: {
+                costId: $(this).attr("changeId")
+            },
+            success: function (data) {
+
+                window.location.href = '/fee_modi'
+            }
+
+        })
+
+    }
 
     //删除
     function deleteFee() {
@@ -288,7 +336,7 @@
         var use = $("<input type='button' value='启用' class='btn_start' onclick='startFee.call(this)'/>")
                 .attr("useId", cost.costId);
 
-        var change = $("<input type='button' value='修改' class='btn_modify'/>")
+        var change = $("<input type='button' value='修改' class='btn_modify' onclick='changeCost.call(this)'/>")
                 .attr("changeId", cost.costId);
 
         var del = $("<input type='button' value='删除' class='btn_delete' onclick='deleteFee.call(this)'/>")
@@ -299,26 +347,7 @@
         var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6)
                 .append(td7).append(td8).append(td9);
 
-        $("#datalist").append(trob);
-    }
-
-    // 添加页码
-    function addNewPages(data) {
-
-        var a1 = $("<a></a>");
-
-        var aUp = $("<a href='###' onclick='pages.call(this)'>上一页</a>");
-        var aDown = $("<a href='###' onclick='pages.call(this)'>下一页</a>");
-
-        $("#pages").append(aUp);
-
-        for (var i = 0; i < data.pages; i++) {
-            // 添加页码
-            a1.html("1");
-            $("#pages").append(a1);
-        }
-
-        $("#pages").append(a1).append(aDown)
+        $("#tab").append(trob);
     }
 
 </script>

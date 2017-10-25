@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by dllo on 17/10/20.
  */
-public interface CostService{
+public interface CostService {
 
     // 查询全部的cost
     List<Cost> findAllCost(Cost cost);
@@ -19,8 +19,6 @@ public interface CostService{
     // 删除cost
     Integer delCost(Integer id);
 
-    // 两个参数：pageNo 第几页；pageSize 每一页的大小
-    List<Cost> findWithPageInfo(Integer pageNo,Integer pageSize);
-
-    PageInfo<Cost> getPageinfo(Integer pageSize);
+    // 分页
+    PageInfo<Cost> getPageinfo(Integer pageNo, Integer pageSize);
 }

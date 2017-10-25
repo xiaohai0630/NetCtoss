@@ -16,8 +16,6 @@ public interface AccountService {
     // 删除
     Integer delAccount(Integer id);
 
-    // 两个参数：pageNo 第几页；pageSize 每一页的大小
-    List<Account> findWithPageInfo(Integer pageNo, Integer pageSize);
-
-    PageInfo<Account> getPageinfo(Integer pageSize);
+    // 分页
+    PageInfo<Account> getPageinfo(Integer pageNo, Integer pageSize);
 }

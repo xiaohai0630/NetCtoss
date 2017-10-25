@@ -21,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
 
 
-    // 查询全部
+    // 查询全部、按id查询
     public List<Account> findAllAccount(Account account) {
 
         List<Account> accountList = accountMapper.findAllAccount(account);
@@ -37,20 +37,10 @@ public class AccountServiceImpl implements AccountService {
         return del;
     }
 
-
-    // 分页
-    // 目标：PageInfo对象
-    public List<Account> findWithPageInfo(Integer pageNo, Integer pageSize) {
-
-        PageInfo<Account> pageInfo = queryCostByPage(pageNo, pageSize);
-        // 要查询的页面和这个页面的信息
-        return pageInfo.getList();
-    }
-
     // 获取分页信息－－为了做显示页面的部分
-    public PageInfo<Account> getPageinfo(Integer pageSize) {
+    public PageInfo<Account> getPageinfo(Integer pageNo, Integer pageSize) {
 
-        return queryCostByPage(null, pageSize);
+        return queryCostByPage(pageNo, pageSize);
     }
 
     // 参数是要查询的表所对应的实体类

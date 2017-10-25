@@ -1,7 +1,6 @@
 package com.lanou.mapper;
 
 import com.lanou.bean.Account;
-import com.sun.org.apache.xalan.internal.utils.XMLSecurityManager;
 
 import java.util.List;
 

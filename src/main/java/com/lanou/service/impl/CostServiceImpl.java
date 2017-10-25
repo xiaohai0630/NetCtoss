@@ -43,20 +43,10 @@ public class CostServiceImpl implements CostService {
         return del;
     }
 
-
-    // 分页
-    // 目标：PageInfo对象
-    public List<Cost> findWithPageInfo(Integer pageNo, Integer pageSize) {
-
-        PageInfo<Cost> pageInfo = queryCostByPage(pageNo, pageSize);
-        // 要查询的页面和这个页面的信息
-        return pageInfo.getList();
-    }
-
     // 获取分页信息－－为了做显示页面的部分
-    public PageInfo<Cost> getPageinfo(Integer pageSize) {
+    public PageInfo<Cost> getPageinfo(Integer pageNo, Integer pageSize) {
 
-        return queryCostByPage(null, pageSize);
+        return queryCostByPage(pageNo, pageSize);
     }
 
     // 参数是要查询的表所对应的实体类
