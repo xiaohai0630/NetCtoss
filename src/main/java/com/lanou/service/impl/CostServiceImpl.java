@@ -23,24 +23,25 @@ public class CostServiceImpl implements CostService {
     // 查询全部的cost，按照id查询cost
     public List<Cost> findAllCost(Cost cost) {
 
-        List<Cost> costList = costMapper.findAllCost(cost);
-
-        return costList;
+        return costMapper.findAllCost(cost);
     }
 
     // 保存
     public Integer saveCost(Cost cost) {
 
-        Integer save = costMapper.insert(cost);
-        return save;
+        return costMapper.insert(cost);
     }
 
     // 删除
     public Integer delCost(Integer id) {
 
-        Integer del = costMapper.deleteByPrimaryKey(id);
+        return costMapper.deleteByPrimaryKey(id);
+    }
 
-        return del;
+    // 修改
+    public Integer changeCost(Cost cost) {
+        // 修改成功返回1
+        return costMapper.updateByPrimaryKeySelective(cost);
     }
 
     // 获取分页信息－－为了做显示页面的部分

@@ -8,13 +8,14 @@ public interface CostMapper {
     // 通过主键删除
     int deleteByPrimaryKey(Integer costId);
 
-    // 保存
+    // 添加
     int insert(Cost record);
 
     int insertSelective(Cost record);
 
     Cost selectByPrimaryKey(Integer costId);
 
+    // 修改cost信息
     int updateByPrimaryKeySelective(Cost record);
 
     int updateByPrimaryKey(Cost record);

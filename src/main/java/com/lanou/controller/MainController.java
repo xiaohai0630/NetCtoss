@@ -60,6 +60,12 @@ public class MainController {
         return "account/account_detail";
     }
 
+    // 跳转添加
+    @RequestMapping(value = "/account_add")
+    public String addAccount(){
+        return "account/account_add";
+    }
+
 
     // 服务相关跳转
     // 服务列表页面
@@ -68,5 +74,10 @@ public class MainController {
         return "service/service_list";
     }
 
+    // 添加
+    @RequestMapping(value = "/service_add")
+    public String addService(){
+        return "service/service_add";
+    }
 
 }

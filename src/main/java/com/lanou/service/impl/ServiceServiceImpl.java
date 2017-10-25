@@ -21,9 +21,7 @@ public class ServiceServiceImpl implements ServiceService {
     // 查询全部
     public List<Service> findAllService(Service service) {
 
-        List<Service> serviceList = serviceMapper.findAllService(service);
-
-        return serviceList;
+        return serviceMapper.findAllService(service);
     }
 
     // 分页

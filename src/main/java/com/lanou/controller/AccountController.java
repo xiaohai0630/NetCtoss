@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,13 +38,32 @@ public class AccountController {
         return accountService.getPageinfo(pageNo,pageSize);
     }
 
-    // 删除
+    // 查询
+    @ResponseBody
+    @RequestMapping(value = "/findAccount")
+    public List<Account> findSomeAccount(Account account){
+        
+        return accountService.findSomeAccount(account);
+    }
+
+
+    // 删除－－记载删除时间
     @ResponseBody
     @RequestMapping(value = "/delAccount")
     public Integer delAccount(Account account){
-        // 删除成功之后返回1
-        Integer del = accountService.delAccount(account.getAccountId());
-        return del;
+
+        List<Account> accountList = accountService.findAllAccount(account);
+        // 删除时间不为空，说明已经删除了
+        if (accountList.get(0).getCloseDate() != null){
+            return 0;
+        }
+
+        // 添加删除时间、状态改为0
+        account.setCloseDate(new Date());
+        account.setStatus("0");
+
+        // 删除成功之后返回1－－添加删除时间
+        return accountService.changeAccount(account);
     }
 
     // 显示详细信息1－－把id存在session中
@@ -73,6 +93,26 @@ public class AccountController {
         List<Account> accountList = accountService.findAllAccount(account);
 
         return accountList.get(0);
+    }
+
+    // 添加
+    @ResponseBody
+    @RequestMapping(value = "/addAccount")
+    public Integer addAccount(Account account,
+                              @RequestParam("referrerID") String referrerID){
+
+        // 找推荐人id
+        Account accountReferrer = new Account();
+        accountReferrer.setIdcardNo(referrerID);
+        List<Account> accountList = accountService.findAllAccount(accountReferrer);
+
+        // 创建时间、状态1（开通）
+        account.setCreateDate(new Date());
+        account.setStatus("1");
+        // 通过身份证找到推荐人的id
+        account.setRecommenderId(accountList.get(0).getAccountId());
+
+        return accountService.addAccount(account);
     }
 
 }

@@ -82,7 +82,6 @@
                     $("#baseTime").attr("value",data.baseDuration);
                     $("#baseCost").attr("value",data.baseCost);
                     $("#unitCost").attr("value",data.unitCost);
-
                 }
 
             })
@@ -92,6 +91,29 @@
         showThisCost();
 
         // 2、保存修改之后的值
+        function changeCost() {
+
+            $.ajax({
+                url:"/changeCostSave",
+
+                data:{
+                    costId:$("#costId").val(),
+                    name:$("#costName").val(),
+                    baseDuration:$("#baseTime").val(),
+                    baseCost:$("#baseCost").val(),
+                    unitCost:$("#unitCost").val()
+                },
+                success:function (data) {
+
+                    if (data == 1){
+                        window.location.href = '/fee_list'
+                    }
+
+                }
+
+            })
+
+        }
 
     </script>
 
@@ -187,7 +209,7 @@
     </div>
 
     <div class="button_info clearfix">
-        <input type="button" value="保存" class="btn_save" onclick="showResult();"/>
+        <input type="button" value="保存" class="btn_save" onclick="changeCost()"/>
         <input type="button" value="取消" class="btn_save" onclick="returnCostList()"/>
     </div>
 

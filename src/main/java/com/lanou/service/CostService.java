@@ -19,6 +19,9 @@ public interface CostService {
     // 删除cost
     Integer delCost(Integer id);
 
+    // 修改cost
+    Integer changeCost(Cost cost);
+
     // 分页
     PageInfo<Cost> getPageinfo(Integer pageNo, Integer pageSize);
 }

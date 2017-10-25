@@ -11,10 +11,10 @@
 
     <script language="javascript" type="text/javascript">
         //删除
-        function deleteAccount() {
-            var r = window.confirm("确定要删除此账务账号吗？\r\n删除后将不能恢复，且会删除其下属的所有业务账号。");
-            document.getElementById("operate_result_info").style.display = "block";
-        }
+        //        function deleteAccount() {
+        //            var r = window.confirm("确定要删除此账务账号吗？\r\n删除后将不能恢复，且会删除其下属的所有业务账号。");
+        //            document.getElementById("operate_result_info").style.display = "block";
+        //        }
         //开通或暂停
         function setState() {
             var r = window.confirm("确定要开通此账务账号吗？");
@@ -115,8 +115,12 @@
                 },
                 success: function (data) {
 
+                    alert(data);
+
                     if (data == 1) {
                         window.location.href = '/account_list'
+                    } else {
+                        alert("已经删除了")
                     }
 
                 }
@@ -139,11 +143,14 @@
 
             // 状态是1的时候是开通
             var status = '';
-            if (account.status == 1) {
+            if (account.status == "1") {
                 status = "开通"
+            } else if (account.status == "0") {
+                status = "已删除"
             } else {
                 status = "暂停"
             }
+
             var td5 = $("<td></td>").html(status);
             // 创建时间
             var td6 = $("<td></td>").html(getLocalTime(account.createDate));
@@ -211,6 +218,37 @@
 
         }
 
+        // 添加
+        function add() {
+            window.location.href = '/account_add'
+        }
+
+        // 查询
+        function findAccount() {
+
+            $.ajax({
+
+                url:"/findAccount",
+
+                data:{
+
+                    idcardNo:$("#findIdcard").val(),
+                    realName:$("#findName").val(),
+                    loginName:$("#findLoginName").val()
+                },
+                success:function (datas) {
+
+                    $("#tab").children().remove();
+                    $.each(datas,function (i,data) {
+                        addNewTr(data)
+                    })
+
+                }
+
+            })
+
+        }
+
     </script>
 
 </head>
@@ -257,9 +295,9 @@
 
     <!--查询-->
     <div class="search_add">
-        <div>身份证：<input type="text" value="不验证" class="text_search"/></div>
-        <div>姓名：<input type="text" class="width70 text_search" value="不验证"/></div>
-        <div>登录名：<input type="text" value="不验证" class="text_search"/></div>
+        <div>身份证：<input type="text" class="text_search" id="findIdcard" value=""/></div>
+        <div>姓名：<input type="text" class="width70 text_search" id="findName" value=""/></div>
+        <div>登录名：<input type="text" id="findLoginName" class="text_search" value=""/></div>
         <div>
             状态：
             <select class="select_search">
@@ -269,8 +307,8 @@
                 <option>删除</option>
             </select>
         </div>
-        <div><input type="button" value="搜索" class="btn_search"/></div>
-        <input type="button" value="增加" class="btn_add" onclick="location.href='account_add.html';"/>
+        <div><input type="button" value="搜索" class="btn_search" onclick="findAccount()"/></div>
+        <input type="button" value="增加" class="btn_add" onclick="add()"/>
     </div>
     <!--删除等的操作提示-->
     <div id="operate_result_info" class="operate_success">

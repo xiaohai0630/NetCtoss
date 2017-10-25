@@ -36,17 +36,17 @@ public class CostController {
     @ResponseBody
     @RequestMapping(value = "/pageinfoCost")
     public PageInfo<Cost> pageInfo(@RequestParam("no") Integer pageNo,
-                                   @RequestParam("size") Integer pageSize){
-        return costService.getPageinfo(pageNo,pageSize);
+                                   @RequestParam("size") Integer pageSize) {
+        return costService.getPageinfo(pageNo, pageSize);
     }
 
     // 显示详细信息1－－把id存在session中
     @ResponseBody
     @RequestMapping(value = "/showThisCost")
-    public String showThisCost(Cost cost,HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
+    public String showThisCost(Cost cost, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         // 获取session，把cost存在session中
         HttpSession session = request.getSession();
-        session.setAttribute("thisCost",cost);
+        session.setAttribute("thisCost", cost);
 
         return "redirect:fee/fee_detail";
     }
@@ -54,7 +54,7 @@ public class CostController {
     // 显示详细信息2－－跳转页面之后调用
     @ResponseBody
     @RequestMapping(value = "/showThisCostList")
-    public Cost showThisCostList(HttpServletRequest request,HttpServletResponse response){
+    public Cost showThisCostList(HttpServletRequest request, HttpServletResponse response) {
         // 获取session中的cost，查询相应的信息
         HttpSession session = request.getSession();
         Cost cost = (Cost) session.getAttribute("thisCost");
@@ -66,41 +66,51 @@ public class CostController {
     // 添加资费页面相关操作
     // 一、添加
     @ResponseBody
-    @RequestMapping(value = "/addCost",method = RequestMethod.POST)
+    @RequestMapping(value = "/addCost", method = RequestMethod.POST)
     public Integer addCost(Cost cost) throws ServletException, IOException {
-        // 默认状态是1；创建时间是系统当前时间，展示的时候需要改变格式
-        cost.setStatus("1");
+        // 默认状态是0；创建时间是系统当前时间，展示的时候需要改变格式
+        cost.setStatus("0");
         cost.setCreatime(new Date());
 
-        Integer save = costService.saveCost(cost);
-
-        return save;
+        return costService.saveCost(cost);
     }
 
     // 二、删除
     @ResponseBody
     @RequestMapping(value = "/delCost")
-    public Integer delCost(Cost cost){
+    public Integer delCost(Cost cost) {
+
+        List<Cost> costList = costService.findAllCost(cost);
+        if (costList.get(0).getStatus().equals("1")){
+            return 0;
+        }
+
         // 删除成功之后返回1
-        Integer del = costService.delCost(cost.getCostId());
-        return del;
+        return costService.delCost(cost.getCostId());
     }
 
     // 三、修改
     // 1、存当前的id
     @ResponseBody
     @RequestMapping(value = "/changeCost")
-    public String changeCost(Cost cost,HttpServletRequest request,HttpServletResponse response){
-        HttpSession session = request.getSession();
-        session.setAttribute("changeCost",cost);
+    public Integer changeCost(Cost cost, HttpServletRequest request, HttpServletResponse response) {
 
-        return "redirect:fee/fee_modi";
+        List<Cost> costList = costService.findAllCost(cost);
+        if (costList.get(0).getStatus().equals("1")){
+            return 0;
+        }else {
+            HttpSession session = request.getSession();
+            session.setAttribute("changeCost", cost);
+        }
+
+        return 1;
+//        return "redirect:fee/fee_modi";
     }
 
     // 2、取当前的cost，显示在页面
     @ResponseBody
     @RequestMapping(value = "/changeCostList")
-    public Cost changeCostList(HttpServletRequest request,HttpServletResponse response){
+    public Cost changeCostList(HttpServletRequest request, HttpServletResponse response) {
         // 把当前这个cost的详细信息显示在页面上
         HttpSession session = request.getSession();
         Cost cost = (Cost) session.getAttribute("changeCost");
@@ -110,9 +120,26 @@ public class CostController {
     }
 
     // 3、将修改后的内容保存
+    @ResponseBody
+    @RequestMapping(value = "/changeCostSave")
+    public Integer changeCostSave(Cost cost) {
+
+        return costService.changeCost(cost);
+    }
 
 
+    // 四、开通
+    @ResponseBody
+    @RequestMapping(value = "/openCost")
+    public Integer openCost(Cost cost){
 
-    // 四、启用
+        if (cost.getStatus() == "1"){
+            return 0;
+        }
+        // 将状态改成"1"
+        cost.setStatus("1");
+        cost.setStartime(new Date());
+        return costService.changeCost(cost);
+    }
 
 }

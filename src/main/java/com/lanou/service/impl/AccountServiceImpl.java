@@ -24,17 +24,31 @@ public class AccountServiceImpl implements AccountService {
     // 查询全部、按id查询
     public List<Account> findAllAccount(Account account) {
 
-        List<Account> accountList = accountMapper.findAllAccount(account);
+        return accountMapper.findAllAccount(account);
+    }
 
-        return accountList;
+    // 根据条件查询部分内容
+    public List<Account> findSomeAccount(Account account) {
+
+        return accountMapper.findSomeAccount(account);
     }
 
     // 删除
     public Integer delAccount(Integer id) {
 
-        Integer del = accountMapper.deleteByPrimaryKey(id);
+        return accountMapper.deleteByPrimaryKey(id);
+    }
 
-        return del;
+    // 添加
+    public Integer addAccount(Account account) {
+
+        return accountMapper.insert(account);
+    }
+
+    // 修改
+    public Integer changeAccount(Account account) {
+
+        return accountMapper.updateByPrimaryKeySelective(account);
     }
 
     // 获取分页信息－－为了做显示页面的部分

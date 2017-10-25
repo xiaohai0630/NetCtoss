@@ -123,6 +123,9 @@
             </if>
         </trim>
     </insert>
+
+
+    <!--修改cost信息-->
     <update id="updateByPrimaryKeySelective" parameterType="com.lanou.bean.Cost">
         update cost
         <set>
@@ -156,6 +159,8 @@
         </set>
         where cost_id = #{costId,jdbcType=INTEGER}
     </update>
+
+
     <update id="updateByPrimaryKey" parameterType="com.lanou.bean.Cost">
     update cost
     set name = #{name,jdbcType=VARCHAR},
