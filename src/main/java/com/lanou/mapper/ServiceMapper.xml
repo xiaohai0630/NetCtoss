@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.lanou.mapper.ServiceMapper">
+
     <resultMap id="BaseResultMap" type="com.lanou.bean.Service">
+
         <id column="service_id" jdbcType="INTEGER" property="serviceId"/>
         <result column="account_id" jdbcType="INTEGER" property="accountId"/>
         <result column="unix_host" jdbcType="VARCHAR" property="unixHost"/>
@@ -12,11 +15,24 @@
         <result column="pause_date" jdbcType="TIMESTAMP" property="pauseDate"/>
         <result column="close_date" jdbcType="TIMESTAMP" property="closeDate"/>
         <result column="cost_id" jdbcType="INTEGER" property="costId"/>
+
+        <!--和account、cost表都是一对一的关系-->
+        <association property="account"
+                     column="accountId"
+                     select="com.lanou.mapper.AccountMapper.findAllAccount">
+        </association>
+
+        <association property="cost"
+                     column="costId"
+                     select="com.lanou.mapper.CostMapper.findAllCost"/>
+
     </resultMap>
+
     <sql id="Base_Column_List">
     service_id, account_id, unix_host, os_username, login_passwd, status, create_date, 
     pause_date, close_date, cost_id
-  </sql>
+    </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -34,7 +50,6 @@
             </if>
         </where>
     </select>
-
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -163,5 +178,6 @@
       close_date = #{closeDate,jdbcType=TIMESTAMP},
       cost_id = #{costId,jdbcType=INTEGER}
     where service_id = #{serviceId,jdbcType=INTEGER}
-  </update>
+    </update>
+
 </mapper>

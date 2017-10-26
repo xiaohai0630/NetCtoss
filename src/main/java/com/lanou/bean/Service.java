@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Service {
     // 业务表
-
     private Integer serviceId;  // 业务id
     private Integer accountId;  // 账号id
     private String unixHost;    // 服务器网址
@@ -15,6 +14,12 @@ public class Service {
     private Date pauseDate;     // 暂停日期
     private Date closeDate;     // 关闭日期
     private Integer costId;     // 资费id
+
+    // 级联关系－－service和account的级联关系
+    private Account account;
+
+    // 级联关系－－service和cost的级联关系
+    private Cost cost;
 
 
     public Integer getServiceId() {
@@ -97,6 +102,22 @@ public class Service {
         this.costId = costId;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Cost getCost() {
+        return cost;
+    }
+
+    public void setCost(Cost cost) {
+        this.cost = cost;
+    }
+
     @Override
     public String toString() {
         return "Service{" +
@@ -110,6 +131,8 @@ public class Service {
                 ", pauseDate=" + pauseDate +
                 ", closeDate=" + closeDate +
                 ", costId=" + costId +
+                ", account=" + account +
+                ", cost=" + cost +
                 '}';
     }
 

@@ -121,12 +121,20 @@
                     .html(data.serviceId).appendTo(td1).attr("showId", data.serviceId);
 
             var td2 = $("<td></td>").html(data.accountId);
-            var td3 = $("<td></td>").html(1);
-            var td4 = $("<td></td>").html(1);
+
+            // 身份证
+            var td3 = $("<td></td>").html(data.idcardNo);
+
+            // 真实姓名
+            var td4 = $("<td></td>").html(data.realName);
+
             var td5 = $("<td></td>").html(data.osUsername);
             var td6 = $("<td></td>").html(data.status);
             var td7 = $("<td></td>").html(data.unixHost);
-            var td8 = $("<td></td>").html(data.costId);
+
+            // 资费名称
+            var td8 = $("<td></td>").html(data.name);
+
             // 启用、修改、删除－－id
             var td9 = $("<td></td>");
 
