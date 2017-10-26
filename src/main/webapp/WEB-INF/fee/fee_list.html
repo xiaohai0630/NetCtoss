@@ -346,7 +346,8 @@
         var td2 = $("<td></td>");
 
         // 展示详情－－调用方法，获取它本身的id
-        $("<a href='###' onclick='showThisCost.call(this)'></a>").html(cost.name).appendTo(td2).attr("showId", cost.costId);
+        $("<a href='###' onclick='showThisCost.call(this)'></a>")
+                .html(cost.name).appendTo(td2).attr("showId", cost.costId);
 
         var td3 = $("<td></td>").html(cost.baseDuration);
 

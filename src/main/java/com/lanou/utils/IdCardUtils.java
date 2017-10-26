@@ -114,7 +114,7 @@ public class IdCardUtils {
         String date = idCardNo18.substring(6, 10) + "-" +
                 idCardNo18.substring(10, 12) + "-" +
                 idCardNo18.substring(12, 14);
-        System.out.println(date);
+//        System.out.println(date);
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         return f.format(f.parse(date));
     }

@@ -114,7 +114,12 @@
         // 新的一行
         function addNewTr(data) {
 
-            var td1 = $("<td></td>").html(data.serviceId);
+            var td1 = $("<td></td>");
+
+            // 展示详细信息
+            $("<a href='###' onclick='showThisCost.call(this)'></a>")
+                    .html(data.serviceId).appendTo(td1).attr("showId", data.serviceId);
+
             var td2 = $("<td></td>").html(data.accountId);
             var td3 = $("<td></td>").html(1);
             var td4 = $("<td></td>").html(1);
