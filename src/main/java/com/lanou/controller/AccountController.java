@@ -5,7 +5,6 @@ import com.lanou.bean.Account;
 import com.lanou.service.AccountService;
 import com.lanou.utils.IdCardUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -98,7 +97,7 @@ public class AccountController {
     public Integer addAccount(Account account,
                               @RequestParam("referrerID") String referrerID) {
 
-        // 找推荐人id
+        // 查询推荐人id
         Account accountReferrer = new Account();
         accountReferrer.setIdcardNo(referrerID);
         List<Account> accountList = accountService.findAllAccount(accountReferrer);

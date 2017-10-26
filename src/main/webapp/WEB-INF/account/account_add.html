@@ -45,12 +45,20 @@
 
         // 添加
         function addAccount() {
+            var occupation = '';
+            var gender = '';
+
+            // 获取职业和性别
+            occupation = $("#sel option:selected").text();
+            gender = $("#gender input[name = 'radSex']:checked").val();
+
             $.ajax({
 
                 url:"/addAccount",
 
                 data:{
-
+                    // 必选项：
+                    // 真实姓名、身份证、登录名、登录密码、电话
                     realName:$("#name").val(),
                     idcardNo:$("#idcard").val(),
                     loginName:$("#loginName").val(),
@@ -58,11 +66,16 @@
                     telephone:$("#tel").val(),
 
                     // 可选项
+                    // 推荐人身份证、邮箱、通信地址、邮编、qq
                     referrerID:$("#referrerId ").val(),
                     email:$("#email").val(),
                     mailaddress:$("#mailaddress").val(),
                     zipcode:$("#zipcode").val(),
-                    qq:$("#qq").val()
+                    qq:$("#qq").val(),
+
+                    // 职业、性别
+                    occupation:occupation,
+                    gender:gender
 
                 },
                 success:function (data) {
@@ -185,7 +198,8 @@
 
         <div class="text_info clearfix"><span>职业：</span></div>
         <div class="input_info">
-            <select>
+            <select id="sel">
+                <option selected="selected"></option>
                 <option>干部</option>
                 <option>学生</option>
                 <option>技术人员</option>
@@ -194,10 +208,10 @@
         </div>
 
         <div class="text_info clearfix"><span>性别：</span></div>
-        <div class="input_info fee_type">
-            <input type="radio" name="radSex" checked="checked" id="female"/>
+        <div class="input_info fee_type" id="gender">
+            <input type="radio" name="radSex" checked="checked" id="female" value="女"/>
             <label for="female">女</label>
-            <input type="radio" name="radSex" id="male"/>
+            <input type="radio" name="radSex" id="male" value="男"/>
             <label for="male">男</label>
         </div>
 

@@ -49,7 +49,34 @@
                     // 邮编
                     $("#zipcode").attr("value",data.zipcode);
                     // qq
-                    $("#qq").attr("value",data.qq)
+                    $("#qq").attr("value",data.qq);
+
+                    // 状态：0－暂停；1-开通；2-删除
+                    if (data.status == "0"){
+                        $("#pause").attr("selected","selected")
+                    }else if (data.status == "1"){
+                        $("#op").attr("selected","selected")
+                    }else if (data.status == "2"){
+                        $("#del").attr("selected","selected")
+                    }
+
+                    // 职业
+                    if (data.occupation == "干部"){
+                        $("#leader").attr("selected","selected")
+                    }else if (data.occupation == "学生"){
+                        $("#stu").attr("selected","selected")
+                    }else if (data.occupation == "技术人员"){
+                        $("#artisan").attr("selected","selected")
+                    }else {
+                        $("#else").attr("selected","selected")
+                    }
+
+                    // 性别
+                    if (data.gender == "男"){
+                        $("#male").attr("checked","checked")
+                    }else if (data.gender == "女"){
+                        $("#female").attr("checked","checked")
+                    }
 
                 }
 
@@ -158,9 +185,9 @@
 
     <div class="input_info">
         <select disabled>
-            <option>开通</option>
-            <option>暂停</option>
-            <option>删除</option>
+            <option id="op">开通</option>
+            <option id="pause">暂停</option>
+            <option id="del">删除</option>
         </select>
     </div>
 
@@ -188,16 +215,16 @@
     <div class="text_info clearfix"><span>职业：</span></div>
     <div class="input_info">
         <select disabled>
-            <option>干部</option>
-            <option>学生</option>
-            <option>技术人员</option>
-            <option>其他</option>
+            <option id="leader">干部</option>
+            <option id="stu">学生</option>
+            <option id="artisan">技术人员</option>
+            <option id="else">其他</option>
         </select>
     </div>
 
     <div class="text_info clearfix"><span>性别：</span></div>
     <div class="input_info fee_type">
-        <input type="radio" name="radSex" checked="checked" id="female" disabled/>
+        <input type="radio" name="radSex" id="female" disabled/>
         <label for="female">女</label>
         <input type="radio" name="radSex" id="male" disabled/>
         <label for="male">男</label>

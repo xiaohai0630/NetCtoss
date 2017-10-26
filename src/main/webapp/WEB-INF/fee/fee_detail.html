@@ -48,8 +48,17 @@
                         // 基本时长、基本费用为空－－计时
                         $("#timeBased").attr("checked","checked")
                     } else {
-                        // 全有是套餐
+                        // 三个项目全有－－套餐
                         $("#package").attr("checked","checked")
+                    }
+
+                    // 选择状态
+                    // 状态：0-暂停；1-开通
+                    // 为什么有删除？
+                    if (data.status == "0"){
+                        $("#pause").attr("selected","selected")
+                    }else if (data.status == "1"){
+                        $("#op").attr("selected","selected")
                     }
 
                 }
@@ -135,9 +144,9 @@
     <div class="text_info clearfix"><span>资费状态：</span></div>
 
     <div class="input_info">
-        <select class="readonly" disabled>
-            <option>开通</option>
-            <option>暂停</option>
+        <select class="readonly" disabled id="sel">
+            <option id="op">开通</option>
+            <option id="pause">暂停</option>
             <option>删除</option>
         </select>
     </div>
