@@ -104,7 +104,6 @@ public class CostController {
         }
 
         return 1;
-//        return "redirect:fee/fee_modi";
     }
 
     // 2、取当前的cost，显示在页面

@@ -66,6 +66,12 @@ public class MainController {
         return "account/account_add";
     }
 
+    // 跳转修改页面
+    @RequestMapping(value = "/account_modi")
+    public String changeAccount(){
+        return "account/account_modi";
+    }
+
 
     // 服务相关跳转
     // 服务列表页面

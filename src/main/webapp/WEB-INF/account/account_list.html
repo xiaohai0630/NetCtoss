@@ -16,10 +16,10 @@
         //            document.getElementById("operate_result_info").style.display = "block";
         //        }
         //开通或暂停
-        function setState() {
-            var r = window.confirm("确定要开通此账务账号吗？");
-            document.getElementById("operate_result_info").style.display = "block";
-        }
+//        function setState() {
+//            var r = window.confirm("确定要开通此账务账号吗？");
+//            document.getElementById("operate_result_info").style.display = "block";
+//        }
 
         // 分页
         function separatePages(pageNo) {
@@ -115,12 +115,8 @@
                 },
                 success: function (data) {
 
-                    alert(data);
-
                     if (data == 1) {
                         window.location.href = '/account_list'
-                    } else {
-                        alert("已经删除了")
                     }
 
                 }
@@ -129,7 +125,44 @@
 
         }
 
+        // 改变状态－－开通和暂停
+        function changeStatus() {
+
+            $.ajax({
+
+                url:"/changeStatus",
+
+                data:{
+                    accountId:$(this).attr("useId"),
+                    status:$(this).attr("status")
+                },
+                success:function (data) {
+                    window.location.href = '/account_list'
+                }
+
+            })
+
+        }
+
+        // 修改详细内容
+        function changeAccount() {
+
+            $.ajax({
+
+                url:"/changeThisAccount",
+                data:{
+                    accountId:$(this).attr("changeId")
+                },
+                success:function (data) {
+                    window.location.href = '/account_modi'
+                }
+
+            })
+
+        }
+
         // 循环添加新的一行
+        // status状态码：1:开启，0:暂停，2:删除
         function addNewTr(account) {
 
             var td1 = $("<td></td>").html(account.accountId);
@@ -141,11 +174,11 @@
             var td3 = $("<td></td>").html(account.idcardNo);
             var td4 = $("<td></td>").html(account.loginName);
 
-            // 状态是1的时候是开通
+            // status状态码：1:开启，0:暂停，2:删除
             var status = '';
             if (account.status == "1") {
                 status = "开通"
-            } else if (account.status == "0") {
+            } else if (account.status == "2") {
                 status = "已删除"
             } else {
                 status = "暂停"
@@ -160,16 +193,26 @@
             // 启用、修改、删除－－id
             var td8 = $("<td></td>");
 
-            var use = $("<input type='button' value='暂停' class='btn_start' onclick=''/>")
-                    .attr("useId", account.accountId);
+            var use = $("<input type='button' onclick='changeStatus.call(this)'/>")
+                    .attr("useId", account.accountId).attr("status",account.status);
 
-            var change = $("<input type='button' value='修改' class='btn_modify'/>")
+            // 状态是开通的时候需要暂停；状态是暂停的时候需要开通
+            if (account.status == "1"){
+                use.attr("value","暂停").attr("class","btn_pause")
+            }else if (account.status == "0"){
+                use.attr("value","开启").attr("class","btn_start")
+            }
+
+            var change = $("<input type='button' value='修改' class='btn_modify' onclick='changeAccount.call(this)'/>")
                     .attr("changeId", account.accountId);
 
             var del = $("<input type='button' value='删除' class='btn_delete' onclick='deleteAccount.call(this)'/>")
                     .attr("delId", account.accountId);
 
-            td8.append(use).append(change).append(del);
+            // status状态码：1:开启，0:暂停，2:删除
+            if (account.status != "2"){
+                td8.append(use).append(change).append(del);
+            }
 
             var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6)
                     .append(td7).append(td8);
@@ -223,15 +266,29 @@
             window.location.href = '/account_add'
         }
 
-        // 查询
+        // 查询－－没分页
         function findAccount() {
+            $("#tab").children().remove();
+
+            var sta = $("#status").val();
+            var sta1 = '';
+
+            if (sta == "开通"){
+                sta1 = "1"
+            }else if (sta == "暂停"){
+                sta1 = "0"
+            }else if (sta == "删除"){
+                sta1 = "2"
+            }else {
+                sta1 = "3"
+            }
 
             $.ajax({
 
                 url:"/findAccount",
 
                 data:{
-
+                    sta:sta1,
                     idcardNo:$("#findIdcard").val(),
                     realName:$("#findName").val(),
                     loginName:$("#findLoginName").val()
@@ -239,6 +296,7 @@
                 success:function (datas) {
 
                     $("#tab").children().remove();
+
                     $.each(datas,function (i,data) {
                         addNewTr(data)
                     })
@@ -298,15 +356,17 @@
         <div>身份证：<input type="text" class="text_search" id="findIdcard" value=""/></div>
         <div>姓名：<input type="text" class="width70 text_search" id="findName" value=""/></div>
         <div>登录名：<input type="text" id="findLoginName" class="text_search" value=""/></div>
+
         <div>
             状态：
-            <select class="select_search">
+            <select class="select_search" id="status">
                 <option>全部</option>
                 <option>开通</option>
                 <option>暂停</option>
                 <option>删除</option>
             </select>
         </div>
+
         <div><input type="button" value="搜索" class="btn_search" onclick="findAccount()"/></div>
         <input type="button" value="增加" class="btn_add" onclick="add()"/>
     </div>

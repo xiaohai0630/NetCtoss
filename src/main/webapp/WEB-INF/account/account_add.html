@@ -42,6 +42,7 @@
             window.location.href = '/account_list'
         }
 
+
         // 添加
         function addAccount() {
             $.ajax({
@@ -173,7 +174,7 @@
 
         <div class="text_info clearfix"><span>生日：</span></div>
         <div class="input_info">
-            <input type="text" value="由身份证号计算而来" readonly class="readonly"/>
+            <input type="text" id="birthday" readonly class="readonly"/>
         </div>
 
         <div class="text_info clearfix"><span>Email：</span></div>
@@ -236,5 +237,27 @@
 </div>
 
 </body>
+
+
+<script>
+
+    // 计算生日
+    $("#referrerId").blur(function () {
+
+        $.ajax({
+            url:"/birthday",
+
+            data:{
+                referrerId:$("#referrerId").val()
+            },
+            success:function (data) {
+                $("#birthday").attr("value",data)
+            }
+
+        })
+
+    });
+
+</script>
 
 </html>

@@ -9,7 +9,7 @@ public class Account {
     private Integer recommenderId;  // 推荐人id
     private String loginName;       // 登录名
     private String loginPasswd;     // 登录密码
-    private String status;          // 状态－－1
+    private String status;          // 状态
     private Date createDate;        // 创建时间
     private Date pauseDate;         // 暂停时间
     private Date closeDate;         // 关闭时间
