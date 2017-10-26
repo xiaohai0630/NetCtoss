@@ -45,15 +45,11 @@
 
         // 添加
         function addAccount() {
-            var occupation = '';
-            var gender = '';
-
             // 获取职业和性别
-            occupation = $("#sel option:selected").text();
-            gender = $("#gender input[name = 'radSex']:checked").val();
+            var occupation = $("#sel option:selected").val();
+            var gender = $("#gender input[name = 'radSex']:checked").val();
 
             $.ajax({
-
                 url:"/addAccount",
 
                 data:{
@@ -68,6 +64,7 @@
                     // 可选项
                     // 推荐人身份证、邮箱、通信地址、邮编、qq
                     referrerID:$("#referrerId ").val(),
+
                     email:$("#email").val(),
                     mailaddress:$("#mailaddress").val(),
                     zipcode:$("#zipcode").val(),
@@ -200,18 +197,18 @@
         <div class="input_info">
             <select id="sel">
                 <option selected="selected"></option>
-                <option>干部</option>
-                <option>学生</option>
-                <option>技术人员</option>
-                <option>其他</option>
+                <option value="1">干部</option>
+                <option value="2">学生</option>
+                <option value="3">技术人员</option>
+                <option value="4">其他</option>
             </select>
         </div>
 
         <div class="text_info clearfix"><span>性别：</span></div>
         <div class="input_info fee_type" id="gender">
-            <input type="radio" name="radSex" checked="checked" id="female" value="女"/>
+            <input type="radio" name="radSex" id="female" value="1"/>
             <label for="female">女</label>
-            <input type="radio" name="radSex" id="male" value="男"/>
+            <input type="radio" name="radSex" id="male" value="2"/>
             <label for="male">男</label>
         </div>
 
@@ -255,14 +252,14 @@
 
 <script>
 
-    // 计算生日
-    $("#referrerId").blur(function () {
+    // 计算生日－－应该是计算当前用户的生日吧？
+    $("#idcard").blur(function () {
 
         $.ajax({
             url:"/birthday",
 
             data:{
-                referrerId:$("#referrerId").val()
+                birthday:$("#idcard").val()
             },
             success:function (data) {
                 $("#birthday").attr("value",data)

@@ -32,7 +32,6 @@
                     $("#tel").attr("value",data.telephone);
                     // 推荐人id
                     $("#referrerId ").attr("value",data.recommenderId);
-                    // 推荐人身份证号
 
                     // 开通时间
                     $("#createTime").attr("value",getLocalTime(data.createDate));
@@ -43,9 +42,11 @@
 
                     // 可选项
                     // 生日
-                    $("#birthday").attr("value",getLocalTime(data.birthday));
+                    $("#birthday").attr("value",getLocalTime(data.birthdate));
                     // email
-                    $("#email").attr("value",data.mailaddress);
+                    $("#email").attr("value",data.email);
+                    // 通信地址
+                    $("#address").attr("value",data.mailaddress);
                     // 邮编
                     $("#zipcode").attr("value",data.zipcode);
                     // qq
@@ -80,7 +81,7 @@
 
                 }
 
-            })
+            });
 
         }
 
@@ -176,7 +177,7 @@
     </div>
 
     <div class="text_info clearfix"><span>推荐人账务账号ID：</span></div>
-    <div class="input_info"><input type="text" readonly class="readonly" id="referrerId "/></div>
+    <div class="input_info"><input type="text" readonly class="readonly" id="referrerId"/></div>
 
     <div class="text_info clearfix"><span>推荐人身份证号码：</span></div>
     <div class="input_info"><input type="text" readonly class="readonly" id="referrerIdCard"/></div>
@@ -253,5 +254,27 @@
 </div>
 
 </body>
+
+
+<script>
+
+    // 找推荐人身份证
+    function findIDCard() {
+
+        $.ajax({
+
+            url:"/findRecommenderIdCard",
+
+            success:function (data) {
+                $("#referrerIdCard").attr("value",data.idcardNo)
+            }
+
+        })
+
+    }
+
+    findIDCard();
+
+</script>
 
 </html>

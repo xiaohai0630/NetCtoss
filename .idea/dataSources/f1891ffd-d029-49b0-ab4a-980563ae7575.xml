@@ -110,7 +110,7 @@
       <data-type>datetime|0</data-type>
     </column>
     <column id="53" parent="29" name="gender">
-      <data-type>char(1)|0</data-type>
+      <data-type>char(4)|0</data-type>
     </column>
     <column id="54" parent="29" name="occupation">
       <data-type>varchar(50)|0</data-type>

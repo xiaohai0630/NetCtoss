@@ -56,15 +56,19 @@
                 success: function (data) {
 
                     $("#id").attr("value", data.accountId);
-                    $("#name").attr("value",data.realName);
-                    $("#idCard").attr("value",data.idcardNo);
-                    $("#loginName").attr("value",data.loginName);
-                    $("#tel").attr("value",data.telephone);
+                    $("#name").attr("value", data.realName);
+                    $("#idCard").attr("value", data.idcardNo);
+                    $("#loginName").attr("value", data.loginName);
+                    $("#tel").attr("value", data.telephone);
                     // 推荐人身份证？
-                    $("#referrerId ").attr("value",data.recommenderId);
-                    $("#address").attr("value",data.mailaddress);
-                    $("#zipcode").attr("value",data.zipcode);
-                    $("#qq").attr("value",data.qq)
+                    $("#referrerId ").attr("value", data.recommenderId);
+                    $("#address").attr("value", data.mailaddress);
+                    $("#zipcode").attr("value", data.zipcode);
+                    $("#qq").attr("value", data.qq);
+
+                    // 默认显示的职业、性别
+                    $("#sel").attr("select",data.occupation);
+                    $("#gender").attr("checked",data.gender)
 
                 }
 
@@ -76,6 +80,9 @@
 
         // 保存并且回到list页面
         function save() {
+            // 获取职业和性别
+            var occupation = $("#sel option:selected").val();
+            var gender = $("#gender input[name = 'radSex']:checked").val();
 
             $.ajax({
 
@@ -83,6 +90,15 @@
 
                 data: {
 
+                    realName: $("#name"),
+                    telephone: $("#tel"),
+                    recommenderId: $("#referrerId "),
+                    email: $("#email"),
+                    occupation: occupation,
+                    gender: gender,
+                    mailaddress: $("#address"),
+                    zipcode: $("#zipcode"),
+                    qq:$("#qq")
                 },
 
                 success: function (data) {
@@ -217,19 +233,19 @@
 
     <div class="text_info clearfix"><span>职业：</span></div>
     <div class="input_info">
-        <select>
-            <option>干部</option>
-            <option>学生</option>
-            <option>技术人员</option>
-            <option>其他</option>
+        <select id="sel">
+            <option value="干部">干部</option>
+            <option value="学生">学生</option>
+            <option value="技术人员">技术人员</option>
+            <option value="其他">其他</option>
         </select>
     </div>
 
     <div class="text_info clearfix"><span>性别：</span></div>
     <div class="input_info fee_type">
-        <input type="radio" name="radSex" checked="checked" id="female" onclick="feeTypeChange(1);"/>
+        <input type="radio" name="radSex" value="女" id="female" onclick="feeTypeChange(1);"/>
         <label for="female">女</label>
-        <input type="radio" name="radSex" id="male" onclick="feeTypeChange(2);"/>
+        <input type="radio" name="radSex" value="男" id="male" onclick="feeTypeChange(2);"/>
         <label for="male">男</label>
     </div>
 
@@ -266,5 +282,27 @@
 </div>
 
 </body>
+
+<script>
+
+    // 计算生日
+    $("#referrerId").blur(function () {
+
+        $.ajax({
+            url:"/birthday",
+
+            data:{
+                birthday:$("#idCard").val()
+            },
+            success:function (data) {
+                $("#birthday").attr("value",data)
+            }
+
+        })
+
+    });
+
+</script>
+
 
 </html>

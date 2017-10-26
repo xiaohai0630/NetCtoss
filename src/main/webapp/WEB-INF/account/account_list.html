@@ -288,6 +288,8 @@
                 url:"/findAccount",
 
                 data:{
+                    no:1,
+                    size:3,
                     sta:sta1,
                     idcardNo:$("#findIdcard").val(),
                     realName:$("#findName").val(),
@@ -297,7 +299,7 @@
 
                     $("#tab").children().remove();
 
-                    $.each(datas,function (i,data) {
+                    $.each(datas.list,function (i,data) {
                         addNewTr(data)
                     })
 

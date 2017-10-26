@@ -1,7 +1,12 @@
 package com.lanou.controller;
 
+import com.lanou.utils.IdCardUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.ParseException;
 
 /**
  * Created by dllo on 17/10/24.
@@ -19,6 +24,14 @@ public class MainController {
     @RequestMapping(value = "/fee_index")
     public String index() {
         return "index";
+    }
+
+    // 计算生日
+    @ResponseBody
+    @RequestMapping(value = "/birthday")
+    public String birthday(@RequestParam("birthday") String referrerId) throws ParseException {
+
+        return IdCardUtils.getBirthday(referrerId);
     }
 
     // 资费表相关跳转：

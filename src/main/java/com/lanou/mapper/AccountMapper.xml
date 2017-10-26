@@ -48,6 +48,9 @@
             <if test="idcardNo != null">
                 and idcard_no=#{idcardNo}
             </if>
+            <if test="recommenderId != null">
+                and recommender_id=#{recommenderId}
+            </if>
         </where>
     </select>
 
