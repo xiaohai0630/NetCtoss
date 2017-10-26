@@ -12,6 +12,9 @@ public interface ServiceService {
     // 查询全部
     List<Service> findAllService(Service service);
 
+    // 添加
+    Integer saveService(Service service);
+
     // 分页
     PageInfo<Service> getPageinfo(Integer pageNo, Integer pageSize);
 }

@@ -24,6 +24,11 @@ public class ServiceServiceImpl implements ServiceService {
         return serviceMapper.findAllService(service);
     }
 
+    // 添加
+    public Integer saveService(Service service) {
+        return null;
+    }
+
     // 分页
     public PageInfo<Service> getPageinfo(Integer pageNo, Integer pageSize) {
 

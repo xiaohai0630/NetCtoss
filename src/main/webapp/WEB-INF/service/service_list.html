@@ -123,17 +123,22 @@
             var td2 = $("<td></td>").html(data.accountId);
 
             // 身份证
-            var td3 = $("<td></td>").html(data.idcardNo);
+            var td3 = $("<td></td>").html(data.account.idcardNo);
 
             // 真实姓名
-            var td4 = $("<td></td>").html(data.realName);
+            var td4 = $("<td></td>").html(data.account.realName);
 
+            // os账号
             var td5 = $("<td></td>").html(data.osUsername);
+
+            // 状态
             var td6 = $("<td></td>").html(data.status);
+
+            // 服务器ip
             var td7 = $("<td></td>").html(data.unixHost);
 
             // 资费名称
-            var td8 = $("<td></td>").html(data.name);
+            var td8 = $("<td></td>").html(data.cost.name);
 
             // 启用、修改、删除－－id
             var td9 = $("<td></td>");

@@ -7,6 +7,7 @@ import java.util.List;
 public interface ServiceMapper {
     int deleteByPrimaryKey(Integer serviceId);
 
+    // 添加
     int insert(Service record);
 
     int insertSelective(Service record);

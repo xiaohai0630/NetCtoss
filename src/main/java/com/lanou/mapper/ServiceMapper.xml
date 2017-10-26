@@ -18,13 +18,15 @@
 
         <!--和account、cost表都是一对一的关系-->
         <association property="account"
-                     column="accountId"
-                     select="com.lanou.mapper.AccountMapper.findAllAccount">
+                     column="account_id"
+                     javaType="com.lanou.bean.Account"
+                     select="com.lanou.mapper.AccountMapper.selectByPrimaryKey">
         </association>
 
         <association property="cost"
-                     column="costId"
-                     select="com.lanou.mapper.CostMapper.findAllCost"/>
+                     column="cost_id"
+                     javaType="com.lanou.bean.Cost"
+                     select="com.lanou.mapper.CostMapper.selectByPrimaryKey"/>
 
     </resultMap>
 
@@ -56,6 +58,8 @@
     delete from service
     where service_id = #{serviceId,jdbcType=INTEGER}
     </delete>
+
+    <!--添加-->
     <insert id="insert" parameterType="com.lanou.bean.Service">
     insert into service (service_id, account_id, unix_host, 
       os_username, login_passwd, status, 
@@ -66,6 +70,8 @@
       #{createDate,jdbcType=TIMESTAMP}, #{pauseDate,jdbcType=TIMESTAMP}, #{closeDate,jdbcType=TIMESTAMP}, 
       #{costId,jdbcType=INTEGER})
     </insert>
+
+
     <insert id="insertSelective" parameterType="com.lanou.bean.Service">
         insert into service
         <trim prefix="(" suffix=")" suffixOverrides=",">
