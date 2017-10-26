@@ -27,15 +27,15 @@
 //            document.getElementById("operate_result_info").style.display = "block";
 
             $.ajax({
-                url:"/openCost",
-                data:{
+                url: "/openCost",
+                data: {
                     costId: $(this).attr("useId")
                 },
-                success:function (data) {
+                success: function (data) {
 
-                    if (data == 1){
+                    if (data == 1) {
                         window.location.href = '/fee_list'
-                    }else {
+                    } else {
                         alert("已经开通")
                     }
 
@@ -296,9 +296,9 @@
             },
             success: function (data) {
 
-                if (data == 0){
+                if (data == 0) {
                     alert("已经开通不能修改")
-                }else {
+                } else {
                     window.location.href = '/fee_modi'
                 }
 
@@ -329,7 +329,7 @@
 
                 if (data == 1) {
                     window.location.href = '/fee_list'
-                }else {
+                } else {
                     alert("已经开通不能删除！")
                 }
 
@@ -353,9 +353,9 @@
 
         var td4 = $("<td></td>");
 
-        if (cost.baseCost != null){
+        if (cost.baseCost != null) {
             td4.html(cost.baseCost + "元/小时")
-        }else {
+        } else {
             td4.html()
         }
 
@@ -367,17 +367,24 @@
         var td8 = $("<td></td>");
 
         // 开通1/未开通0
-        if (cost.status == "1"){
+        if (cost.status == "1") {
             td8.html("开通")
-        }else {
+        } else {
             td8.html("暂停")
         }
 
         // 启用、修改、删除－－id
         var td9 = $("<td></td>");
 
-        var use = $("<input type='button' value='启用' class='btn_start' onclick='startFee.call(this)'/>")
+        var use = $("<input type='button' onclick='startFee.call(this)'/>")
                 .attr("useId", cost.costId);
+
+        // 状态码：0是暂停；1是开通
+        if (cost.status == "0") {
+            use.attr("value", "启用").attr("class", "btn_start")
+        } else {
+            use.attr("value", "暂停").attr("class", "btn_pause")
+        }
 
         var change = $("<input type='button' value='修改' class='btn_modify' onclick='changeCost.call(this)'/>")
                 .attr("changeId", cost.costId);
@@ -385,7 +392,10 @@
         var del = $("<input type='button' value='删除' class='btn_delete' onclick='deleteFee.call(this)'/>")
                 .attr("delId", cost.costId);
 
-        td9.append(use).append(change).append(del);
+        // 状态码不是1，可以更改状态
+        if (cost.status == "0") {
+            td9.append(use).append(change).append(del);
+        }
 
         var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6)
                 .append(td7).append(td8).append(td9);

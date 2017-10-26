@@ -33,8 +33,25 @@
                     $("#unitCost").attr("value", data.unitCost);
                     // 创建时间
                     $("#creatTime").attr("value", getLocalTime(data.creatime));
+                    // 启动时间
+                    $("#time").attr("value",getLocalTime(data.startime));
                     // 资费说明
                     $("#text").html(data.descr);
+
+                    // 选择包月、计时、套餐
+                    if ((data.baseDuration == null || data.baseDuration == '')
+                            && (data.unitCost == null || data.unitCost == '')){
+                        // 基本时长、单位费用为空－－包月
+                        $("#monthly").attr("checked","checked")
+                    }else if (data.baseDuration == null || data.baseDuration == ''
+                            && (data.baseCost == null || data.baseCost == '')){
+                        // 基本时长、基本费用为空－－计时
+                        $("#timeBased").attr("checked","checked")
+                    } else {
+                        // 全有是套餐
+                        $("#package").attr("checked","checked")
+                    }
+
                 }
 
             })
@@ -132,7 +149,7 @@
         <label for="monthly">包月</label>
         <input type="radio" name="radFeeType" id="package" disabled="disabled"/>
         <label for="package">套餐</label>
-        <input type="radio" name="radFeeType" checked="checked" id="timeBased" disabled="disabled"/>
+        <input type="radio" name="radFeeType" id="timeBased" disabled="disabled"/>
         <label for="timeBased">计时</label>
     </div>
 
