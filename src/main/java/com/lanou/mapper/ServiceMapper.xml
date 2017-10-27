@@ -53,6 +53,29 @@
         </where>
     </select>
 
+    <!--按条件查询-->
+    <select id="findSomeService" resultMap="BaseResultMap">
+
+        SELECT *FROM service
+        <where>
+
+            <if test="osUsername != null and osUsername != '' ">
+                AND os_username LIKE concat(concat('%',#{osUsername},'%'))
+            </if>
+            <if test="unixHost != null and unixHost != '' ">
+                and unix_host like concat(concat('%',#{unixHost},'%'))
+            </if>
+            <if test="accountId != null and accountId != '' and accountId != 0 ">
+                and account_id like concat(concat('%',#{accountId},'%'))
+            </if>
+            <if test="status != null and status != '' ">
+                and status like concat(concat('%',#{status},'%'))
+            </if>
+
+        </where>
+
+    </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from service

@@ -12,6 +12,9 @@ public interface ServiceService {
     // 查询全部
     List<Service> findAllService(Service service);
 
+    // 查询部分
+    List<Service> findSomeService(Service service);
+
     // 添加
     Integer saveService(Service service);
 

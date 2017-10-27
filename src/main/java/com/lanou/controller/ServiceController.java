@@ -163,13 +163,65 @@ public class ServiceController {
     // 删除－－改状态，不是真的删除
     @ResponseBody
     @RequestMapping(value = "/delService")
-    public Integer delService(Service service){
+    public Integer delService(Service service) {
 
         // 修改状态码，并且添加删除时间
         service.setCloseDate(new Date());
         service.setStatus("2");
 
         return serviceService.changeService(service);
+    }
+
+    // 查询符合条件的内容
+    @ResponseBody
+    @RequestMapping(value = "/findServiceCondition", method = RequestMethod.POST)
+    public List<Service> findServiceCondition(Service service,
+                                              @RequestParam("idcard") String idCard,
+                                              @RequestParam("statusService") String sta,
+                                              HttpServletRequest request, HttpServletResponse response)
+            throws UnsupportedEncodingException {
+
+        // 编码
+        request.setCharacterEncoding("utf-8");
+
+        // 查询身份证号
+        if (idCard != null) {
+            // 根据身份证号查询账号id－－转换为账务账号去查询
+            Account account = new Account();
+            account.setIdcardNo(idCard);
+            List<Account> accountList = accountService.findAllAccount(account);
+
+            if (accountList.size() > 0) {
+                // 能查询到，有这个身份证对应的账号id
+                service.setAccountId(accountList.get(0).getAccountId());
+            } else {
+                // 不能查询到，没有这个身份证对应的账号id
+                service.setAccountId(0);
+            }
+
+        }
+
+        // 查询状态
+        if (sta != null) {
+
+            switch (sta) {
+                case "暂停":
+                    service.setStatus("1");
+                    break;
+                case "开通":
+                    service.setStatus("0");
+                    break;
+                case "删除":
+                    service.setStatus("2");
+                    break;
+                default:
+                    service.setStatus(null);
+            }
+
+        }
+
+        // 返回一个集合
+        return serviceService.findSomeService(service);
     }
 
 }

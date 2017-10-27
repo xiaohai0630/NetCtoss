@@ -25,6 +25,12 @@ public class ServiceServiceImpl implements ServiceService {
         return serviceMapper.findAllService(service);
     }
 
+    @Override
+    public List<Service> findSomeService(Service service) {
+
+        return serviceMapper.findSomeService(service);
+    }
+
     // 添加
     @Override
     public Integer saveService(Service service) {

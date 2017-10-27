@@ -240,8 +240,40 @@
 
         }
 
+        // 搜索
+        function findServiceAll() {
+
+            // 获取状态
+            var sta = $("#selFind option:selected").val();
+
+            $.ajax({
+                type:"POST",
+                url:"/findServiceCondition",
+                data:{
+
+                    osUsername:$("#osfind").val(),
+                    unixHost:$("#ipfind").val(),
+                    statusService:sta,
+                    idcard:$("#idfind").val()
+
+                },
+                success:function (data) {
+
+                    $("#tab").children().remove();
+
+                    $.each(data,function (i, datas) {
+                        addNewTr(datas)
+                    })
+
+                }
+
+            })
+
+        }
+
     </script>
 </head>
+
 <body>
 <!--Logo区域开始-->
 <div id="header">
@@ -249,6 +281,7 @@
     <a href="#">[退出]</a>
 </div>
 <!--Logo区域结束-->
+
 <!--导航区域开始-->
 <div id="navi">
     <ul id="menu">
@@ -283,14 +316,14 @@
     <!--查询-->
     <div class="search_add">
 
-        <div>OS 账号：<input type="text" value="" class="width100 text_search"/></div>
+        <div>OS 账号：<input type="text" value="" class="width100 text_search" id="osfind"/></div>
 
-        <div>服务器 IP：<input type="text" value="" class="width100 text_search"/></div>
+        <div>服务器 IP：<input type="text" value="" class="width100 text_search" id="ipfind"/></div>
 
-        <div>身份证：<input type="text" value="" class="text_search"/></div>
+        <div>身份证：<input type="text" value="" class="text_search" id="idfind"/></div>
 
         <div>状态：
-            <select class="select_search">
+            <select class="select_search" id="selFind">
                 <option>全部</option>
                 <option>开通</option>
                 <option>暂停</option>
@@ -298,7 +331,7 @@
             </select>
         </div>
 
-        <div><input type="button" value="搜索" class="btn_search"/></div>
+        <div><input type="button" value="搜索" class="btn_search" onclick="findServiceAll()"/></div>
         <input type="button" value="增加" class="btn_add" onclick="location.href='service_add.html';"/>
     </div>
     <!--删除的操作提示-->

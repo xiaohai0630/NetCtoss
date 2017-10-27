@@ -21,4 +21,7 @@ public interface ServiceMapper {
 
     // 查询全部
     List<Service> findAllService(Service service);
+
+    // 查询部分
+    List<Service> findSomeService(Service service);
 }
