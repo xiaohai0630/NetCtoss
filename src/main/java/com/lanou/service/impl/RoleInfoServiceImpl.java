@@ -26,6 +26,7 @@ public class RoleInfoServiceImpl implements RoleInfoService {
     }
 
     // 分页
+    @Override
     public PageInfo<RoleInfo> getPageinfo(Integer pageNo, Integer pageSize) {
 
         return queryCostByPage(pageNo, pageSize);

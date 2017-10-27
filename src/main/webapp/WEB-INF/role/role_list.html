@@ -72,7 +72,7 @@
                     $("#pages").append(nextPage);
                 }
 
-            })
+            });
 
         }
 
@@ -110,6 +110,13 @@
 
             // 拥有权利
             var td3 = $("<td></td>");
+
+            $.each(data.moduleInfoList,function (i, m) {
+
+                td3.append("<span class='aaa'>" + m.name + "</span>");
+                td3.append("<span class='aaa'>、</span>")
+            });
+
 
             // 修改、删除
             var td4 = $("<td></td>");

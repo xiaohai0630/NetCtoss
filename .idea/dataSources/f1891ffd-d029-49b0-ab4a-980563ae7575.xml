@@ -33,153 +33,166 @@
     <table id="28" parent="1" name="cost"/>
     <table id="29" parent="1" name="account"/>
     <table id="30" parent="1" name="service"/>
-    <column id="31" parent="28" name="cost_id">
+    <table id="31" parent="1" name="role_info"/>
+    <column id="32" parent="28" name="cost_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="32" parent="28" name="name">
+    <column id="33" parent="28" name="name">
       <mandatory>1</mandatory>
       <data-type>varchar(50)|0</data-type>
     </column>
-    <column id="33" parent="28" name="base_duration">
+    <column id="34" parent="28" name="base_duration">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="34" parent="28" name="base_cost">
+    <column id="35" parent="28" name="base_cost">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="35" parent="28" name="unit_cost">
+    <column id="36" parent="28" name="unit_cost">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="36" parent="28" name="status">
+    <column id="37" parent="28" name="status">
       <data-type>char(1)|0</data-type>
     </column>
-    <column id="37" parent="28" name="descr">
+    <column id="38" parent="28" name="descr">
       <data-type>varchar(100)|0</data-type>
     </column>
-    <column id="38" parent="28" name="creatime">
+    <column id="39" parent="28" name="creatime">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="39" parent="28" name="startime">
+    <column id="40" parent="28" name="startime">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="40" parent="28" name="cost_type">
+    <column id="41" parent="28" name="cost_type">
       <data-type>char(1)|0</data-type>
     </column>
-    <key id="41" parent="28" name="PRIMARY">
+    <key id="42" parent="28" name="PRIMARY">
       <columns>cost_id</columns>
       <primary>1</primary>
     </key>
-    <column id="42" parent="29" name="account_id">
+    <column id="43" parent="29" name="account_id">
       <mandatory>1</mandatory>
       <data-type>int(9)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="43" parent="29" name="recommender_id">
+    <column id="44" parent="29" name="recommender_id">
       <data-type>int(9)|0</data-type>
     </column>
-    <column id="44" parent="29" name="login_name">
+    <column id="45" parent="29" name="login_name">
       <mandatory>1</mandatory>
       <data-type>varchar(30)|0</data-type>
     </column>
-    <column id="45" parent="29" name="login_passwd">
+    <column id="46" parent="29" name="login_passwd">
       <mandatory>1</mandatory>
       <data-type>varchar(30)|0</data-type>
     </column>
-    <column id="46" parent="29" name="status">
+    <column id="47" parent="29" name="status">
       <data-type>char(1)|0</data-type>
     </column>
-    <column id="47" parent="29" name="create_date">
+    <column id="48" parent="29" name="create_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="48" parent="29" name="pause_date">
+    <column id="49" parent="29" name="pause_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="49" parent="29" name="close_date">
+    <column id="50" parent="29" name="close_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="50" parent="29" name="real_name">
+    <column id="51" parent="29" name="real_name">
       <mandatory>1</mandatory>
       <data-type>varchar(20)|0</data-type>
     </column>
-    <column id="51" parent="29" name="idcard_no">
+    <column id="52" parent="29" name="idcard_no">
       <mandatory>1</mandatory>
       <data-type>char(18)|0</data-type>
     </column>
-    <column id="52" parent="29" name="birthdate">
+    <column id="53" parent="29" name="birthdate">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="53" parent="29" name="gender">
+    <column id="54" parent="29" name="gender">
       <data-type>char(4)|0</data-type>
     </column>
-    <column id="54" parent="29" name="occupation">
+    <column id="55" parent="29" name="occupation">
       <data-type>varchar(50)|0</data-type>
     </column>
-    <column id="55" parent="29" name="telephone">
+    <column id="56" parent="29" name="telephone">
       <mandatory>1</mandatory>
       <data-type>varchar(15)|0</data-type>
     </column>
-    <column id="56" parent="29" name="email">
+    <column id="57" parent="29" name="email">
       <data-type>varchar(50)|0</data-type>
     </column>
-    <column id="57" parent="29" name="mailaddress">
+    <column id="58" parent="29" name="mailaddress">
       <data-type>varchar(200)|0</data-type>
     </column>
-    <column id="58" parent="29" name="zipcode">
+    <column id="59" parent="29" name="zipcode">
       <data-type>char(6)|0</data-type>
     </column>
-    <column id="59" parent="29" name="qq">
+    <column id="60" parent="29" name="qq">
       <data-type>varchar(15)|0</data-type>
     </column>
-    <column id="60" parent="29" name="last_login_time">
+    <column id="61" parent="29" name="last_login_time">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="61" parent="29" name="last_login_ip">
+    <column id="62" parent="29" name="last_login_ip">
       <data-type>varchar(15)|0</data-type>
     </column>
-    <key id="62" parent="29" name="PRIMARY">
+    <key id="63" parent="29" name="PRIMARY">
       <columns>account_id</columns>
       <primary>1</primary>
     </key>
-    <column id="63" parent="30" name="service_id">
+    <column id="64" parent="30" name="service_id">
       <mandatory>1</mandatory>
       <data-type>int(10)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="64" parent="30" name="account_id">
+    <column id="65" parent="30" name="account_id">
       <mandatory>1</mandatory>
       <data-type>int(9)|0</data-type>
     </column>
-    <column id="65" parent="30" name="unix_host">
+    <column id="66" parent="30" name="unix_host">
       <mandatory>1</mandatory>
       <data-type>varchar(15)|0</data-type>
     </column>
-    <column id="66" parent="30" name="os_username">
+    <column id="67" parent="30" name="os_username">
       <mandatory>1</mandatory>
       <data-type>varchar(8)|0</data-type>
     </column>
-    <column id="67" parent="30" name="login_passwd">
+    <column id="68" parent="30" name="login_passwd">
       <mandatory>1</mandatory>
       <data-type>varchar(30)|0</data-type>
     </column>
-    <column id="68" parent="30" name="status">
+    <column id="69" parent="30" name="status">
       <data-type>char(1)|0</data-type>
     </column>
-    <column id="69" parent="30" name="create_date">
+    <column id="70" parent="30" name="create_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="70" parent="30" name="pause_date">
+    <column id="71" parent="30" name="pause_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="71" parent="30" name="close_date">
+    <column id="72" parent="30" name="close_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="72" parent="30" name="cost_id">
+    <column id="73" parent="30" name="cost_id">
       <mandatory>1</mandatory>
       <data-type>int(4)|0</data-type>
     </column>
-    <key id="73" parent="30" name="PRIMARY">
+    <key id="74" parent="30" name="PRIMARY">
       <columns>service_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="75" parent="31" name="role_id">
+      <mandatory>1</mandatory>
+      <data-type>int(4)|0</data-type>
+    </column>
+    <column id="76" parent="31" name="name">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <key id="77" parent="31" name="PRIMARY">
+      <columns>role_id</columns>
       <primary>1</primary>
     </key>
   </database-model>
