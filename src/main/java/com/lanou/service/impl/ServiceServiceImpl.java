@@ -19,18 +19,21 @@ public class ServiceServiceImpl implements ServiceService {
     private ServiceMapper serviceMapper;
 
     // 查询全部
+    @Override
     public List<Service> findAllService(Service service) {
 
         return serviceMapper.findAllService(service);
     }
 
     // 添加
+    @Override
     public Integer saveService(Service service) {
 
         return serviceMapper.insert(service);
     }
 
     // 分页
+    @Override
     public PageInfo<Service> getPageinfo(Integer pageNo, Integer pageSize) {
 
         return queryCostByPage(pageNo, pageSize);
@@ -39,9 +42,9 @@ public class ServiceServiceImpl implements ServiceService {
     // 参数是要查询的表所对应的实体类
     public PageInfo<Service> queryCostByPage(Integer pageNo, Integer pageSize) {
 
-        // 判断参数合法性：默认页数1 默认每页大小3
+        // 判断参数合法性：默认页数1 默认每页大小5
         pageNo = pageNo == null ? 1 : pageNo;
-        pageSize = pageSize == null ? 3 : pageSize;
+        pageSize = pageSize == null ? 5 : pageSize;
 
         PageHelper.startPage(pageNo, pageSize);
 

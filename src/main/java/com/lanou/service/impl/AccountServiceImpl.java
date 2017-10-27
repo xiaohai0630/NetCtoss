@@ -3,7 +3,6 @@ package com.lanou.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.lanou.bean.Account;
-import com.lanou.bean.Cost;
 import com.lanou.mapper.AccountMapper;
 import com.lanou.service.AccountService;
 import org.springframework.stereotype.Service;
@@ -22,36 +21,42 @@ public class AccountServiceImpl implements AccountService {
 
 
     // 查询全部、按id查询
+    @Override
     public List<Account> findAllAccount(Account account) {
 
         return accountMapper.findAllAccount(account);
     }
 
     // 根据条件查询部分内容
+    @Override
     public List<Account> findSomeAccount(Account account) {
 
         return accountMapper.findSomeAccount(account);
     }
 
     // 删除
+    @Override
     public Integer delAccount(Integer id) {
 
         return accountMapper.deleteByPrimaryKey(id);
     }
 
     // 添加
+    @Override
     public Integer addAccount(Account account) {
 
         return accountMapper.insert(account);
     }
 
     // 修改
+    @Override
     public Integer changeAccount(Account account) {
 
         return accountMapper.updateByPrimaryKeySelective(account);
     }
 
     // 获取分页信息－－为了做显示页面的部分
+    @Override
     public PageInfo<Account> getPageinfo(Integer pageNo, Integer pageSize) {
 
         return queryCostByPage(pageNo, pageSize);
@@ -60,9 +65,9 @@ public class AccountServiceImpl implements AccountService {
     // 参数是要查询的表所对应的实体类
     public PageInfo<Account> queryCostByPage(Integer pageNo, Integer pageSize) {
 
-        // 判断参数合法性：默认页数1 默认每页大小3
+        // 判断参数合法性：默认页数1 默认每页大小5
         pageNo = pageNo == null ? 1 : pageNo;
-        pageSize = pageSize == null ? 3 : pageSize;
+        pageSize = pageSize == null ? 5 : pageSize;
 
         PageHelper.startPage(pageNo, pageSize);
 

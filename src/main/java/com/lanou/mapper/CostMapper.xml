@@ -31,8 +31,11 @@
     <select id="findAllCost" resultMap="BaseResultMap">
         SELECT *FROM cost
         <where>
-            <if test="costId != null">
+            <if test="costId != null and costId != '' ">
                 AND cost_id=#{costId}
+            </if>
+            <if test="name != null and name != '' ">
+                and name=#{name}
             </if>
         </where>
     </select>

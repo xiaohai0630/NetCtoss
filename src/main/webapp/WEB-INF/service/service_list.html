@@ -37,7 +37,7 @@
 
                 data: {
                     no: pageNo,
-                    size: 3
+                    size: 5
                 },
 
                 success: function (result) {
@@ -133,6 +133,10 @@
 
             // 状态
             var td6 = $("<td></td>").html(data.status);
+
+            if (data.status == "0"){
+                td6.html("开通")
+            }
 
             // 服务器ip
             var td7 = $("<td></td>").html(data.unixHost);

@@ -49,9 +49,8 @@
             var idCardAdd = $("#idcard").val();
 
             $.ajax({
-                url: "/addService",
-
                 type: "POST",
+                url: "/addService",
 
                 data: {
                     idcard: idCardAdd,
@@ -62,11 +61,14 @@
                     loginPasswd: $("#pwd").val()
                 },
                 success: function (data) {
-
+                    // 返回值1:添加成功；返回值2:两次密码不一致；其他：有参数没写
                     if (data == 1) {
+                        $("#errorrepwd").children().remove();
                         window.location.href = '/service_list'
-                    } else {
-                        alert("有参数未填写1")
+                    } else if (data == 2){
+                        $("#errorrepwd").html("<span>两次密码必须相同</span>")
+                    }else {
+                        alert("有参数未填写")
                     }
 
                 }

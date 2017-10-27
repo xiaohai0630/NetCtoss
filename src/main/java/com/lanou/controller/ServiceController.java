@@ -46,7 +46,7 @@ public class ServiceController {
 
     // 添加1－－保存添加的信息
     @ResponseBody
-    @RequestMapping(value = "/addService",method = RequestMethod.POST)
+    @RequestMapping(value = "/addService", method = RequestMethod.POST)
     public Integer saveService(@RequestParam("idcard") String idCard,
                                @RequestParam("costname") String costName,
                                @RequestParam("repwd") String repwd,
@@ -54,34 +54,46 @@ public class ServiceController {
                                HttpServletRequest request, HttpServletResponse response)
             throws UnsupportedEncodingException {
 
+        System.out.println(repwd);
         // 处理乱码
         request.setCharacterEncoding("utf-8");
 
         // 每一条都不能为空才可以保存！
-//        if ((idCard != null) && (costName != null) && (service.getUnixHost() != null)
-//                && (service.getOsUsername() != null) && (service.getLoginPasswd() != null)
-//                && (repwd != null)){
+        try {
+            // 两次密码一致
+            if (!service.getLoginPasswd().equals(repwd)){
+                return 2;
+            }
 
-            // 查询账号id
-            Account account = new Account();
-            account.setIdcardNo(idCard);
-            Integer accountId = accountService.findAllAccount(account).get(0).getAccountId();
+            if (!idCard.equals(null) && !costName.equals(null) && !service.getUnixHost().equals(null)
+                    && !service.getOsUsername().equals(null) && !service.getLoginPasswd().equals(null)
+                    && !repwd.equals(null)) {
 
-            // 查询资费id
-            Cost cost = new Cost();
-            cost.setName(costName);
-            Integer costId = costService.findAllCost(cost).get(0).getCostId();
+                // account查询账号id
+                Account account = new Account();
+                account.setIdcardNo(idCard);
+                Integer accountId = accountService.findAllAccount(account).get(0).getAccountId();
 
-            // 添加开通时间
-            service.setCreateDate(new Date());
-            service.setAccountId(accountId);
+                // cost查询资费id，添加进service表
+                Cost cost = new Cost();
+                cost.setName(costName);
+                Integer costId = costService.findAllCost(cost).get(0).getCostId();
+                service.setCostId(costId);
 
-            return serviceService.saveService(service);
+                // 添加开通时间、开通状态（0）
+                service.setCreateDate(new Date());
+                service.setAccountId(accountId);
 
-//        }else {
-//            // 有空的值，直接返回0
-//            return 0;
-//        }
+                return serviceService.saveService(service);
+
+            } else {
+                // 有空的值，直接返回0
+                return 0;
+            }
+
+        }catch (Exception e){
+            return 0;
+        }
 
     }
 
@@ -109,11 +121,11 @@ public class ServiceController {
     @ResponseBody
     @RequestMapping(value = "/servicePwd")
     public boolean servicePwd(@RequestParam("pwd") String pwd,
-                              @RequestParam("repwd") String repwd){
+                              @RequestParam("repwd") String repwd) {
 
-        if (pwd != null && repwd != null){
+        if (pwd != null && repwd != null) {
             return pwd.equals(repwd);
-        }else {
+        } else {
             return false;
         }
 
