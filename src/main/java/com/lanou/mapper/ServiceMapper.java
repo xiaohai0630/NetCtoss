@@ -14,6 +14,7 @@ public interface ServiceMapper {
 
     Service selectByPrimaryKey(Integer serviceId);
 
+    // 修改
     int updateByPrimaryKeySelective(Service record);
 
     int updateByPrimaryKey(Service record);

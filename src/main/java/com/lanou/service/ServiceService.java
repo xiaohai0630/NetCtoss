@@ -15,6 +15,9 @@ public interface ServiceService {
     // 添加
     Integer saveService(Service service);
 
+    // 修改状态
+    Integer changeService(Service service);
+
     // 分页
     PageInfo<Service> getPageinfo(Integer pageNo, Integer pageSize);
 }

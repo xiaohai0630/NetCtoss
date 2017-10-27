@@ -61,7 +61,7 @@ public class ServiceController {
         // 每一条都不能为空才可以保存！
         try {
             // 两次密码一致
-            if (!service.getLoginPasswd().equals(repwd)){
+            if (!service.getLoginPasswd().equals(repwd)) {
                 return 2;
             }
 
@@ -83,6 +83,7 @@ public class ServiceController {
                 // 添加开通时间、开通状态（0）
                 service.setCreateDate(new Date());
                 service.setAccountId(accountId);
+                service.setStatus("0");
 
                 return serviceService.saveService(service);
 
@@ -91,7 +92,7 @@ public class ServiceController {
                 return 0;
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
 
@@ -129,6 +130,46 @@ public class ServiceController {
             return false;
         }
 
+    }
+
+    // 修改状态
+    @ResponseBody
+    @RequestMapping(value = "/changeService")
+    public Integer changeService(Service service) {
+
+        try {
+            // 开通0；暂停1－－两种状态之间切换
+            if (service.getStatus().equals("0")) {
+                // 现在是开通状态，需要改为暂停状态
+                service.setPauseDate(new Date());
+                service.setStatus("1");
+
+                // 返回1
+                return serviceService.changeService(service);
+            } else if (service.getStatus().equals("1")) {
+                // 开通状态需要暂停
+                service.setStatus("0");
+
+                // 返回1
+                return serviceService.changeService(service);
+            }
+        } catch (Exception e) {
+            //
+            return 0;
+        }
+        return 0;
+    }
+
+    // 删除－－改状态，不是真的删除
+    @ResponseBody
+    @RequestMapping(value = "/delService")
+    public Integer delService(Service service){
+
+        // 修改状态码，并且添加删除时间
+        service.setCloseDate(new Date());
+        service.setStatus("2");
+
+        return serviceService.changeService(service);
     }
 
 }

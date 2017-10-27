@@ -32,6 +32,13 @@ public class ServiceServiceImpl implements ServiceService {
         return serviceMapper.insert(service);
     }
 
+    // 修改
+    @Override
+    public Integer changeService(Service service) {
+
+        return serviceMapper.updateByPrimaryKeySelective(service);
+    }
+
     // 分页
     @Override
     public PageInfo<Service> getPageinfo(Integer pageNo, Integer pageSize) {

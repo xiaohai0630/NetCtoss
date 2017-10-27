@@ -132,10 +132,14 @@
             var td5 = $("<td></td>").html(data.osUsername);
 
             // 状态
-            var td6 = $("<td></td>").html(data.status);
+            var td6 = $("<td></td>");
 
-            if (data.status == "0"){
+            if (data.status == "0") {
                 td6.html("开通")
+            } else if (data.status == "1") {
+                td6.html("暂停")
+            } else {
+                td6.html("已删除")
             }
 
             // 服务器ip
@@ -147,16 +151,28 @@
             // 启用、修改、删除－－id
             var td9 = $("<td></td>");
 
-            var use = $("<input type='button' value='启用' class='btn_start' onclick='startFee.call(this)'/>")
-                    .attr("useId", data.serviceId);
+            // 开通之后可以暂停，暂停之后可以开通
+            var use = $("<input type='button' onclick='changeServiceStatus.call(this)'/>")
+                    .attr("useId", data.serviceId).attr("sta", data.status);
+
+            // 状态是1:暂停，需要启用
+            if (data.status == "1") {
+                use.attr("value", "启用").attr("class", "btn_start")
+            } else if (data.status == "0") {
+                use.attr("value", "暂停").attr("class", "btn_pause")
+            }
+
 
             var change = $("<input type='button' value='修改' class='btn_modify' onclick='changeCost.call(this)'/>")
                     .attr("changeId", data.serviceId);
 
-            var del = $("<input type='button' value='删除' class='btn_delete' onclick='deleteFee.call(this)'/>")
+            var del = $("<input type='button' value='删除' class='btn_delete' onclick='delService.call(this)'/>")
                     .attr("delId", data.serviceId);
 
-            td9.append(use).append(change).append(del);
+            // 删除之后不能开通、修改、删除
+            if (data.status != "2") {
+                td9.append(use).append(change).append(del);
+            }
 
             var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6)
                     .append(td7).append(td8).append(td9);
@@ -186,6 +202,41 @@
                 var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
                 return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
             }
+
+        }
+
+        // 修改状态
+        function changeServiceStatus() {
+
+            $.ajax({
+
+                url:"/changeService",
+                data:{
+                    serviceId:$(this).attr("useId"),
+                    status:$(this).attr("sta")
+                },
+                success:function (data) {
+
+                    window.location.href = '/service_list'
+                }
+
+            })
+
+        }
+
+        // 删除当前行
+        function delService() {
+
+            $.ajax({
+                url:"/delService",
+                data:{
+                    serviceId:$(this).attr("delId")
+                },
+                success:function (data) {
+                    window.location.href = '/service_list'
+                }
+
+            })
 
         }
 
