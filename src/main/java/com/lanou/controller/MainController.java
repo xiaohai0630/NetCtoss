@@ -99,4 +99,24 @@ public class MainController {
         return "service/service_add";
     }
 
+
+    // 角色表相关跳转
+    // 角色列表
+    @RequestMapping(value = "/role_list")
+    public String roleShow(){
+        return "role/role_list";
+    }
+
+    // 添加角色
+    @RequestMapping(value = "/role_add")
+    public String addRole(){
+        return "role/role_add";
+    }
+
+    // 修改角色
+    @RequestMapping(value = "/role_modi")
+    public String changeRole(){
+        return "role/role_modi";
+    }
+
 }
