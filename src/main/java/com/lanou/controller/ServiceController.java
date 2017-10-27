@@ -49,27 +49,40 @@ public class ServiceController {
     @RequestMapping(value = "/addService",method = RequestMethod.POST)
     public Integer saveService(@RequestParam("idcard") String idCard,
                                @RequestParam("costname") String costName,
+                               @RequestParam("repwd") String repwd,
                                Service service,
-                               HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+                               HttpServletRequest request, HttpServletResponse response)
+            throws UnsupportedEncodingException {
 
         // 处理乱码
         request.setCharacterEncoding("utf-8");
 
-        // 查询账号id
-        Account account = new Account();
-        account.setIdcardNo(idCard);
-        Integer accountId = accountService.findAllAccount(account).get(0).getAccountId();
+        // 每一条都不能为空才可以保存！
+//        if ((idCard != null) && (costName != null) && (service.getUnixHost() != null)
+//                && (service.getOsUsername() != null) && (service.getLoginPasswd() != null)
+//                && (repwd != null)){
 
-        // 查询资费id
-        Cost cost = new Cost();
-        cost.setName(costName);
-        Integer costId = costService.findAllCost(cost).get(0).getCostId();
+            // 查询账号id
+            Account account = new Account();
+            account.setIdcardNo(idCard);
+            Integer accountId = accountService.findAllAccount(account).get(0).getAccountId();
 
-        // 添加开通时间
-        service.setCreateDate(new Date());
-        service.setAccountId(accountId);
-        
-        return serviceService.saveService(service);
+            // 查询资费id
+            Cost cost = new Cost();
+            cost.setName(costName);
+            Integer costId = costService.findAllCost(cost).get(0).getCostId();
+
+            // 添加开通时间
+            service.setCreateDate(new Date());
+            service.setAccountId(accountId);
+
+            return serviceService.saveService(service);
+
+//        }else {
+//            // 有空的值，直接返回0
+//            return 0;
+//        }
+
     }
 
     // 添加2－－查询账务账号
@@ -92,13 +105,18 @@ public class ServiceController {
         return costService.findAllCost(cost);
     }
 
-    // 添加4－－查询账务账号
+    // 添加4－－判断密码和重复密码是否一致
     @ResponseBody
-    @RequestMapping(value = "/findAccountLoginName")
-    public Integer findAccountLoginName(Account account){
+    @RequestMapping(value = "/servicePwd")
+    public boolean servicePwd(@RequestParam("pwd") String pwd,
+                              @RequestParam("repwd") String repwd){
 
-        List<Account> accountList = accountService.findAllAccount(account);
-        return accountList.size();
+        if (pwd != null && repwd != null){
+            return pwd.equals(repwd);
+        }else {
+            return false;
+        }
+
     }
 
 }

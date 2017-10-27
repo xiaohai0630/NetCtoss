@@ -31,8 +31,8 @@
         // 返回列表
         function returnService() {
             $.ajax({
-                url:"/service_list",
-                success:function (data) {
+                url: "/service_list",
+                success: function (data) {
                     window.location.href = '/service_list'
                 }
 
@@ -49,39 +49,46 @@
             var idCardAdd = $("#idcard").val();
 
             $.ajax({
-                type:"POST",
+                url: "/addService",
 
-                url:"/addService",
-                data:{
-                    idcard:idCardAdd,
-                    costname:costAdd,
-                    unixHost:$("#ip").val(),
-                    osUsername:$("#os").val(),
-                    loginPasswd:$("#pwd").val()
+                type: "POST",
+
+                data: {
+                    idcard: idCardAdd,
+                    costname: costAdd,
+                    repwd: $("#repwd").val(),
+                    unixHost: $("#ip").val(),
+                    osUsername: $("#os").val(),
+                    loginPasswd: $("#pwd").val()
                 },
-                success:function (data) {
-                    window.location.href = '/service_list'
+                success: function (data) {
+
+                    if (data == 1) {
+                        window.location.href = '/service_list'
+                    } else {
+                        alert("有参数未填写1")
+                    }
+
                 }
 
-            })
+            });
 
         }
 
         // 查询账务账号
         function findAccountID() {
             $.ajax({
-                url:"/findAccountInService",
+                url: "/findAccountInService",
 
-                data:{
-                    idcardNo:$("#idcard").val()
+                data: {
+                    idcardNo: $("#idcard").val()
                 },
-                success:function (data) {
-                    if (data != ''){
-                        // 查询到身份证之后，清空身份证和账号的错误提示，替换账号显示的内容
+                success: function (data) {
+                    if (data != '') {
+                        // 查询到身份证之后，清空身份证的错误提示，替换账号显示的内容
                         $("#errorIdcard").children().remove();
-                        $("#errorAcc").children().remove();
-                        $("#accid").prop("value",data.loginName);
-                    }else {
+                        $("#accid").prop("value", data.loginName);
+                    } else {
                         // 没有查询到结果，提示错误信息
                         $("#errorIdcard").html("<span>没有此身份证号，请重新录入。</span>")
                     }
@@ -97,12 +104,12 @@
 
             $.ajax({
 
-                url:"/findCostNameInService",
-                success:function (data) {
+                url: "/findCostNameInService",
+                success: function (data) {
 
                     var str = "<option>--请选择--</option>";
 
-                    for (var i = 0;i < data.length;i++){
+                    for (var i = 0; i < data.length; i++) {
                         str += "<option>" + data[i].name + "</option>"
                     }
                     $("#sel").html(str)
@@ -166,11 +173,10 @@
 
     <div class="text_info clearfix"><span>账务账号：</span></div>
     <div class="input_info">
-        <input type="text" id="accid"/>
+        <input type="text" id="accid" class="readonly" readonly/>
         <span class="required">*</span>
         <div class="validate_msg_long" id="errorAcc"></div>
     </div>
-
 
     <div class="text_info clearfix"><span>资费类型：</span></div>
     <div class="input_info">
@@ -185,7 +191,6 @@
         <span class="required">*</span>
         <div class="validate_msg_long">15 长度，符合IP的地址规范</div>
     </div>
-
 
     <div class="text_info clearfix"><span>登录 OS 账号：</span></div>
     <div class="input_info">
@@ -205,7 +210,7 @@
     <div class="input_info">
         <input type="password" id="repwd"/>
         <span class="required">*</span>
-        <div class="validate_msg_long">两次密码必须相同</div>
+        <div class="validate_msg_long" id="errorrepwd"></div>
     </div>
     <!--操作按钮-->
     <div class="button_info clearfix">
@@ -226,28 +231,27 @@
 
 <script>
 
-    // 判断业务账号
-    // 业务账号输入框失去焦点的时候判断，通过身份证查询到结果自动添加的时候不判断
-    $("#accid").blur(function () {
+    // 判断重复密码和密码是否匹配
+    $("#repwd").blur(function () {
 
         $.ajax({
-            url:"/findAccountLoginName",
-            data:{
-                loginName:$("#accid").val()
+            url: "/servicePwd",
+            data: {
+                pwd: $("#pwd").val(),
+                repwd: $("#repwd").val()
             },
-            success:function (data) {
-
-                if (data > 0){
-                    $("#errorAcc").children().remove()
-                }else {
-                    $("#errorAcc").html("<span>没有此账务账号，请重新录入。</span>")
+            success: function (data) {
+                if (data) {
+                    $("#errorrepwd").children().remove()
+                } else {
+                    $("#errorrepwd").html("<span>两次密码必须相同</span>")
                 }
 
             }
 
         })
 
-    });
+    })
 
 </script>
 

@@ -26,7 +26,8 @@ public class ServiceServiceImpl implements ServiceService {
 
     // 添加
     public Integer saveService(Service service) {
-        return null;
+
+        return serviceMapper.insert(service);
     }
 
     // 分页
