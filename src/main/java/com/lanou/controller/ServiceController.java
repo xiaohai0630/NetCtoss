@@ -9,10 +9,15 @@ import com.lanou.service.CostService;
 import com.lanou.service.ServiceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,27 +46,59 @@ public class ServiceController {
 
     // 添加1－－保存添加的信息
     @ResponseBody
-    @RequestMapping(value = "/addService")
-    public Integer saveService(Service service){
+    @RequestMapping(value = "/addService",method = RequestMethod.POST)
+    public Integer saveService(@RequestParam("idcard") String idCard,
+                               @RequestParam("costname") String costName,
+                               Service service,
+                               HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 
+        // 处理乱码
+        request.setCharacterEncoding("utf-8");
+
+        // 查询账号id
+        Account account = new Account();
+        account.setIdcardNo(idCard);
+        Integer accountId = accountService.findAllAccount(account).get(0).getAccountId();
+
+        // 查询资费id
+        Cost cost = new Cost();
+        cost.setName(costName);
+        Integer costId = costService.findAllCost(cost).get(0).getCostId();
+
+        // 添加开通时间
+        service.setCreateDate(new Date());
+        service.setAccountId(accountId);
+        
         return serviceService.saveService(service);
     }
 
     // 添加2－－查询账务账号
     @ResponseBody
     @RequestMapping(value = "/findAccountInService")
-    public Account findAccountInService(Account account){
-        
+    public Account findAccountInService(Account account) {
         // 通过身份证查询账务账号
         List<Account> accountList = accountService.findAllAccount(account);
-        return accountList.get(0);
+
+        if (accountList.size() > 0) {
+            return accountList.get(0);
+        }
+        return null;
     }
 
     // 添加3－－查询资费类型
     @ResponseBody
     @RequestMapping(value = "/findCostNameInService")
-    public List<Cost> findCostNameInService(Cost cost){
+    public List<Cost> findCostNameInService(Cost cost) {
         return costService.findAllCost(cost);
+    }
+
+    // 添加4－－查询账务账号
+    @ResponseBody
+    @RequestMapping(value = "/findAccountLoginName")
+    public Integer findAccountLoginName(Account account){
+
+        List<Account> accountList = accountService.findAllAccount(account);
+        return accountList.size();
     }
 
 }

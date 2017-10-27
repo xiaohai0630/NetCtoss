@@ -43,15 +43,24 @@
         // 添加
         function saveService() {
 
+            // 资费类型－－用来查询资费id
+            var costAdd = $("#sel option:selected").val();
+            // 身份证－－用来查询账号id
+            var idCardAdd = $("#idcard").val();
+
             $.ajax({
+                type:"POST",
 
-                url:"/",
+                url:"/addService",
                 data:{
-
+                    idcard:idCardAdd,
+                    costname:costAdd,
+                    unixHost:$("#ip").val(),
+                    osUsername:$("#os").val(),
+                    loginPasswd:$("#pwd").val()
                 },
                 success:function (data) {
-
-
+                    window.location.href = '/service_list'
                 }
 
             })
@@ -60,15 +69,23 @@
 
         // 查询账务账号
         function findAccountID() {
-
             $.ajax({
                 url:"/findAccountInService",
 
                 data:{
-                    accID:$("#idcard").val()
+                    idcardNo:$("#idcard").val()
                 },
                 success:function (data) {
-                    $("#accid").attr("value",data.accountId)
+                    if (data != ''){
+                        // 查询到身份证之后，清空身份证和账号的错误提示，替换账号显示的内容
+                        $("#errorIdcard").children().remove();
+                        $("#errorAcc").children().remove();
+                        $("#accid").prop("value",data.loginName);
+                    }else {
+                        // 没有查询到结果，提示错误信息
+                        $("#errorIdcard").html("<span>没有此身份证号，请重新录入。</span>")
+                    }
+
                 }
 
             })
@@ -144,14 +161,14 @@
         <input type="text" id="idcard" class="width180"/>
         <input type="button" value="查询账务账号" class="btn_search_large" onclick="findAccountID()"/>
         <span class="required">*</span>
-        <div class="validate_msg_short">没有此身份证号，请重新录入。</div>
+        <div class="validate_msg_short" id="errorIdcard"></div>
     </div>
 
     <div class="text_info clearfix"><span>账务账号：</span></div>
     <div class="input_info">
-        <input type="text" id="accid" onkeyup="searchAccounts(this);"/>
+        <input type="text" id="accid"/>
         <span class="required">*</span>
-        <div class="validate_msg_long">没有此账务账号，请重新录入。</div>
+        <div class="validate_msg_long" id="errorAcc"></div>
     </div>
 
 
@@ -206,5 +223,32 @@
 </div>
 
 </body>
+
+<script>
+
+    // 判断业务账号
+    // 业务账号输入框失去焦点的时候判断，通过身份证查询到结果自动添加的时候不判断
+    $("#accid").blur(function () {
+
+        $.ajax({
+            url:"/findAccountLoginName",
+            data:{
+                loginName:$("#accid").val()
+            },
+            success:function (data) {
+
+                if (data > 0){
+                    $("#errorAcc").children().remove()
+                }else {
+                    $("#errorAcc").html("<span>没有此账务账号，请重新录入。</span>")
+                }
+
+            }
+
+        })
+
+    });
+
+</script>
 
 </html>

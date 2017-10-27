@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanou.mapper.CostMapper">
+
     <resultMap id="BaseResultMap" type="com.lanou.bean.Cost">
         <id column="cost_id" jdbcType="INTEGER" property="costId"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -174,4 +175,5 @@
       cost_type = #{costType,jdbcType=CHAR}
     where cost_id = #{costId,jdbcType=INTEGER}
   </update>
+
 </mapper>

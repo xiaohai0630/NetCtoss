@@ -38,7 +38,7 @@
         where account_id = #{accountId,jdbcType=INTEGER}
     </select>
 
-    <!--查询全部、按id查询-->
+    <!--查询全部、按id查询、按推荐人id查询、按登录名查询-->
     <select id="findAllAccount" resultMap="BaseResultMap">
         SELECT *FROM account
         <where>
@@ -50,6 +50,9 @@
             </if>
             <if test="recommenderId != null">
                 and recommender_id=#{recommenderId}
+            </if>
+            <if test="loginName != null">
+                and login_name=#{loginName}
             </if>
         </where>
     </select>

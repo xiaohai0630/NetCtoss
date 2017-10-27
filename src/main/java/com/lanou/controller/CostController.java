@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class CostController {
     // 一、添加
     @ResponseBody
     @RequestMapping(value = "/addCost", method = RequestMethod.POST)
-    public Integer addCost(Cost cost) throws ServletException, IOException {
+    public Integer addCost(Cost cost){
         // 默认状态是0；创建时间是系统当前时间，展示的时候需要改变格式
         cost.setStatus("0");
         cost.setCreatime(new Date());
@@ -79,11 +78,6 @@ public class CostController {
     @ResponseBody
     @RequestMapping(value = "/delCost")
     public Integer delCost(Cost cost) {
-
-        List<Cost> costList = costService.findAllCost(cost);
-        if (costList.get(0).getStatus().equals("1")){
-            return 0;
-        }
 
         // 删除成功之后返回1
         return costService.delCost(cost.getCostId());

@@ -186,45 +186,13 @@
 
                 window.location.href = '/fee_list';
             }
+
         })
 
     }
 
     // 添加cost信息
     function showResult() {
-
-//        var baseTime = $("#baseDuration").val();
-//        var baseFee= $("#baseCost").val();
-//        var unitFee = $("#unitCost").val();
-//
-//        var costType = '';
-//
-//        // 套餐
-//        if (baseTime != null){
-//            if (baseFee != null){
-//                if (unitFee != null){
-//                    costType = '套餐'
-//                }
-//            }
-//        }
-//
-//        // 包月
-//        if (baseTime == null){
-//            if (unitFee == null){
-//                if (baseFee != null){
-//                    costType = '包月'
-//                }
-//            }
-//        }
-//
-//        // 计时
-//        if (baseTime == null){
-//            if (baseFee == null){
-//                if (unitFee != null){
-//                    costType = '计时'
-//                }
-//            }
-//        }
 
         $.ajax({
             type:"POST",

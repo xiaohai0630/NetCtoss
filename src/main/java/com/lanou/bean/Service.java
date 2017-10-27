@@ -6,7 +6,7 @@ public class Service {
     // 业务表
     private Integer serviceId;  // 业务id
     private Integer accountId;  // 账号id
-    private String unixHost;    // 服务器网址
+    private String unixHost;    // 服务器ip
     private String osUsername;  // os名
     private String loginPasswd; // 登录密码
     private String status;      // 状态
