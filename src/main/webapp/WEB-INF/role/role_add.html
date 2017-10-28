@@ -54,29 +54,68 @@
 
             }
 
-            $.ajax({
-                type: "POST",
-                url: "/addNewRole",
-                data: {
-                    // 角色的名称、权限的名称（至少一个）
-                    name: $("#roleName").val(),
-                    roles: roles
-                },
-                success: function (data) {
+            if (roles != null && roles != '' && $("#roleName").val() != null) {
 
-                    if (data){
-                        // 没有空的内容就保存
+                $.ajax({
+                    type: "POST",
+                    url: "/addNewRole",
+                    data: {
+                        // 角色的名称、权限的名称（至少一个）
+                        name: $("#roleName").val(),
+                        roles: roles
+                    },
+                    success: function (data) {
 
-                    }else {
-                        // 有空的内容，就报错
+                        if (data == 1) {
+                            // 没有空的内容就保存
+                            window.location.href = '/role_list'
+                        } else {
+                            // 有空的内容，就报错
+                            alert("有内容为空")
+                        }
 
                     }
+
+                })
+            } else {
+                alert("有内容为空")
+            }
+        }
+
+        // 加载页面时显示可选的权利名称
+        function showModuleName() {
+
+            $.ajax({
+
+                url: "/findAllModuleName",
+
+                success: function (data) {
+
+                    console.log(data);
+
+                    $.each(data, function (i, m) {
+
+                        var inputli = $("<li></li>");
+
+                        // 添加复选框
+                        var inputs = $("<input name='role' type='checkbox'/>");
+
+                        // 添加value属性，属性值是权限id
+                        inputs.attr("value", m.moduleId);
+
+                        // 显示权限的名称
+                        inputli.append(inputs).append("<span>" + m.name + "</span>");
+
+                        $("#roleul").append(inputli);
+                    });
 
                 }
 
             })
 
         }
+
+        showModuleName();
 
     </script>
 
@@ -134,14 +173,8 @@
     <div class="text_info clearfix"><span>设置权限：</span></div>
     <div class="input_info_high">
         <div class="input_info_scroll" id="roleChoose">
-            <ul>
-                <li><input name="role" type="checkbox" value="管理员管理"/>管理员管理</li>
-                <li><input name="role" type="checkbox" value="角色管理"/>角色管理</li>
-                <li><input name="role" type="checkbox" value="资费管理"/>资费管理</li>
-                <li><input name="role" type="checkbox" value="账务账号"/>账务账号</li>
-                <li><input name="role" type="checkbox" value="业务账号"/>业务账号</li>
-                <li><input name="role" type="checkbox" value="账单"/>账单</li>
-                <li><input name="role" type="checkbox" value="报表"/>报表</li>
+            <ul id="roleul">
+
             </ul>
         </div>
         <span class="required">*</span>

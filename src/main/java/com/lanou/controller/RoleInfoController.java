@@ -1,10 +1,11 @@
 package com.lanou.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.lanou.bean.ModuleInfo;
 import com.lanou.bean.RoleInfo;
+import com.lanou.bean.RoleModule;
 import com.lanou.service.ModuleInfoService;
 import com.lanou.service.RoleInfoService;
+import com.lanou.service.RoleModuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,8 +16,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dllo on 17/10/27.
@@ -29,6 +28,9 @@ public class RoleInfoController {
 
     @Resource
     private ModuleInfoService moduleInfoService;
+
+    @Resource
+    private RoleModuleService roleModuleService;
 
     // 显示全部信息
     @ResponseBody
@@ -43,24 +45,39 @@ public class RoleInfoController {
     // 添加新的角色
     @ResponseBody
     @RequestMapping(value = "/addNewRole", method = RequestMethod.POST)
-    public void addNewRole(RoleInfo roleInfo,
-                           @RequestParam("roles") String moduleName,
-                           HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+    public Integer addNewRole(RoleInfo roleInfo,
+                              @RequestParam("roles") String moduleName,
+                              HttpServletRequest request, HttpServletResponse response)
+            throws UnsupportedEncodingException {
 
         // 编码
         request.setCharacterEncoding("utf-8");
 
-        // 查询到的权限id
-        List<ModuleInfo> moduleInfoList = new ArrayList<>();
+        // 数组－－获取到的是字符串类型的权限id，用逗号分割么每个id
+        String[] str = moduleName.split(",");
 
-        // 查询每个权利名称对应的权利id
-//        for (int i = 0; i < moduleName.size(); i++) {
-//
-//        }
+        // 判断是否有空的内容
+        if (str.length != 0 && roleInfo.getName() != null) {
 
+            // 往中间表中存角色和权限的关系－－都是Integer类型的
+            RoleModule roleModule = new RoleModule();
 
-        System.out.println("roleInfo：---" + roleInfo);
-        System.out.println("moduleName：---" + moduleName);
+            // 存储当前这个角色
+            Integer num = roleInfoService.savaRoleInfo(roleInfo);
+
+            for (int i = 0; i < str.length; i++) {
+
+                roleModule.setRoleId(roleInfo.getRoleId());
+                roleModule.setModuleId(Integer.valueOf(str[i]));
+
+                roleModuleService.saveRoleModule(roleModule);
+            }
+
+            return num;
+        } else {
+            return 0;
+        }
+
     }
 
 }

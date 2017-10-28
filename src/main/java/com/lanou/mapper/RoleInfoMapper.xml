@@ -48,10 +48,17 @@
     delete from role_info
     where role_id = #{roleId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="com.lanou.bean.RoleInfo">
+
+
+    <!--存储角色-->
+    <insert id="insert" parameterType="com.lanou.bean.RoleInfo"
+            useGeneratedKeys="true" keyProperty="roleId">
+
     insert into role_info (role_id, name)
     values (#{roleId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
     </insert>
+
+
     <insert id="insertSelective" parameterType="com.lanou.bean.RoleInfo">
         insert into role_info
         <trim prefix="(" suffix=")" suffixOverrides=",">

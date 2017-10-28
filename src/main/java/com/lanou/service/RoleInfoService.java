@@ -15,4 +15,8 @@ public interface RoleInfoService {
 
     // 分页
     PageInfo<RoleInfo> getPageinfo(Integer pageNo, Integer pageSize);
+
+    // 储存
+    Integer savaRoleInfo(RoleInfo roleInfo);
+
 }

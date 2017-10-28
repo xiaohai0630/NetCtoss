@@ -32,6 +32,12 @@ public class RoleInfoServiceImpl implements RoleInfoService {
         return queryCostByPage(pageNo, pageSize);
     }
 
+    // 存储
+    @Override
+    public Integer savaRoleInfo(RoleInfo roleInfo) {
+        return roleInfoMapper.insert(roleInfo);
+    }
+
     // 参数是要查询的表所对应的实体类
     public PageInfo<RoleInfo> queryCostByPage(Integer pageNo, Integer pageSize) {
 

@@ -7,6 +7,7 @@ import java.util.List;
 public interface RoleInfoMapper {
     int deleteByPrimaryKey(Integer roleId);
 
+    // 存储
     int insert(RoleInfo record);
 
     int insertSelective(RoleInfo record);
