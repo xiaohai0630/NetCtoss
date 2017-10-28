@@ -17,6 +17,9 @@ public interface ModuleInfoMapper {
 
     int updateByPrimaryKey(ModuleInfo record);
 
-    // 查询全部
+    // 查询全部－－级联
     List<ModuleInfo> findModuleInfo(ModuleInfo moduleInfo);
+
+    // 查询全部－－不级联，只是根据name查询id
+    List<ModuleInfo> findModuleInfoByName(ModuleInfo moduleInfo);
 }

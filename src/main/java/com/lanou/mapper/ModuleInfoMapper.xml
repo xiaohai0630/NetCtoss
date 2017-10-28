@@ -24,6 +24,16 @@
         (SELECT module_id FROM role_module WHERE role_id=#{roleInfoList.get(0).getRoleId})
     </select>
 
+    <!--根据name查询相应的moduleInfo-->
+    <select id="findModuleInfoByName" resultMap="BaseResultMap">
+        SELECT *FROM module_info
+        <where>
+            <if test="name != null and name != '' ">
+                AND name=#{name}
+            </if>
+        </where>
+    </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from module_info

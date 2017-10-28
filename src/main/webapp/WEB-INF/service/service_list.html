@@ -30,7 +30,7 @@
             document.getElementById("operate_result_info").style.display = "block";
         }
 
-        // 分页
+        // 分页－－每页5个
         function separatePages(pageNo) {
             $.ajax({
                 url: "/pageinfoService",
@@ -44,7 +44,7 @@
 
                     console.log(result);
 
-                    // 最开始要进行一下页面内容(tbody id=tab)和页面导航(span id=pageX)的清空
+                    // 最开始要进行一下页面内容(tbody id=tab)和页面导航(span id=pages)的清空
                     $("#tab").children().remove();
                     $("#pages").children().remove();
 
@@ -113,13 +113,14 @@
 
         // 新的一行
         function addNewTr(data) {
-
+            // service ID
             var td1 = $("<td></td>");
 
             // 展示详细信息
             $("<a href='###' onclick='showThisCost.call(this)'></a>")
                     .html(data.serviceId).appendTo(td1).attr("showId", data.serviceId);
 
+            // 账号id
             var td2 = $("<td></td>").html(data.accountId);
 
             // 身份证
@@ -162,7 +163,6 @@
                 use.attr("value", "暂停").attr("class", "btn_pause")
             }
 
-
             var change = $("<input type='button' value='修改' class='btn_modify' onclick='changeCost.call(this)'/>")
                     .attr("changeId", data.serviceId);
 
@@ -174,13 +174,11 @@
                 td9.append(use).append(change).append(del);
             }
 
-            var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4).append(td5).append(td6)
-                    .append(td7).append(td8).append(td9);
+            var trob = $("<tr></tr>").append(td1).append(td2).append(td3).append(td4)
+                    .append(td5).append(td6).append(td7).append(td8).append(td9);
 
             $("#tab").append(trob);
-
         }
-
 
         // 将时间戳修改为日期类型
         function getLocalTime(jsondate) {
