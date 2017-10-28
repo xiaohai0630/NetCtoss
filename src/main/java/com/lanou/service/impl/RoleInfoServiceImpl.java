@@ -25,6 +25,12 @@ public class RoleInfoServiceImpl implements RoleInfoService {
         return roleInfoMapper.findAllRoleInfo(roleInfo);
     }
 
+    // 删除roleId
+    @Override
+    public Integer delRole(RoleInfo roleInfo) {
+        return roleInfoMapper.deleteByPrimaryKey(roleInfo.getRoleId());
+    }
+
     // 分页
     @Override
     public PageInfo<RoleInfo> getPageinfo(Integer pageNo, Integer pageSize) {

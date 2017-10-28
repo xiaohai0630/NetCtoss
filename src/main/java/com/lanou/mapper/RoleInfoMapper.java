@@ -5,6 +5,7 @@ import com.lanou.bean.RoleInfo;
 import java.util.List;
 
 public interface RoleInfoMapper {
+    // 通过roleId删除
     int deleteByPrimaryKey(Integer roleId);
 
     // 存储

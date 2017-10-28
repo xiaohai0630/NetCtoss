@@ -125,8 +125,8 @@
                     .attr("roleId", data.roleId);
 
             // 删除
-            var del = $("<input type='button' value='删除' class='btn_delete' onclick=''/>")
-                    .attr("delId", data.serviceId);
+            var del = $("<input type='button' value='删除' class='btn_delete' onclick='delRoleInfo.call(this)'/>")
+                    .attr("delId", data.roleId);
 
             td4.append(change).append(del);
 
@@ -134,7 +134,32 @@
 
             $("#tab").append(trob);
         }
+
+        // 删除一个角色－－还要删除在中间表中对应的内容
+        function delRoleInfo() {
+
+            $.ajax({
+
+                url:"/delRoleInTwoTable",
+
+                data:{
+                    roleId:$(this).attr("delId")
+                },
+
+                success:function (data) {
+
+                    if (data != 0){
+                        window.location.href = '/role_list'
+                    }
+
+                }
+
+            })
+
+        }
+
     </script>
+
 </head>
 
 <body>

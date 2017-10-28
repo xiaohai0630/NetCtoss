@@ -44,6 +44,7 @@
     </select>
 
 
+    <!--通过roleID删除角色-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from role_info
     where role_id = #{roleId,jdbcType=INTEGER}

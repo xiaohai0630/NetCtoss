@@ -13,6 +13,9 @@ public interface RoleInfoService {
     // 显示全部
     List<RoleInfo> findAllRoleInfo(RoleInfo roleInfo);
 
+    // 删除
+    Integer delRole(RoleInfo roleInfo);
+
     // 分页
     PageInfo<RoleInfo> getPageinfo(Integer pageNo, Integer pageSize);
 

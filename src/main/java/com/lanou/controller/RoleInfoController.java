@@ -62,7 +62,7 @@ public class RoleInfoController {
             // 往中间表中存角色和权限的关系－－都是Integer类型的
             RoleModule roleModule = new RoleModule();
 
-            // 存储当前这个角色
+            // 存储当前这个角色－－返回现在存储的这个角色的id
             Integer num = roleInfoService.savaRoleInfo(roleInfo);
 
             for (int i = 0; i < str.length; i++) {
@@ -78,6 +78,18 @@ public class RoleInfoController {
             return 0;
         }
 
+    }
+
+    // 删除角色，同时删除中间表中的值
+    @ResponseBody
+    @RequestMapping(value = "/delRoleInTwoTable")
+    public Integer delRoleInTwoTable(RoleInfo roleInfo){
+
+        // 删除中间表中的内容
+        roleModuleService.delRoleInMiddleTable(roleInfo);
+
+        // 根据roleId删除
+        return roleInfoService.delRole(roleInfo);
     }
 
 }
