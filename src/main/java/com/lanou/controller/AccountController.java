@@ -24,10 +24,6 @@ import java.util.List;
 @Controller
 public class AccountController {
 
-    /**
-     * 账号管理：
-     */
-
     @Resource
     private AccountService accountService;
 
@@ -179,8 +175,7 @@ public class AccountController {
             newAccount.setPauseDate(new Date());
             newAccount.setStatus("0");
         } else if (status.equals("0")) {
-            // 清空暂停时间
-//            newAccount.setPauseDate(null);
+            // 暂停的状态下是开启
             newAccount.setStatus("1");
         }
         // 存id

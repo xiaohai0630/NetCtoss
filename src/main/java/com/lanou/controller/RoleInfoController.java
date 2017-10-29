@@ -3,7 +3,6 @@ package com.lanou.controller;
 import com.github.pagehelper.PageInfo;
 import com.lanou.bean.RoleInfo;
 import com.lanou.bean.RoleModule;
-import com.lanou.service.ModuleInfoService;
 import com.lanou.service.RoleInfoService;
 import com.lanou.service.RoleModuleService;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Created by dllo on 17/10/27.
@@ -25,10 +26,7 @@ public class RoleInfoController {
 
     @Resource
     private RoleInfoService roleInfoService;
-
-    @Resource
-    private ModuleInfoService moduleInfoService;
-
+    
     @Resource
     private RoleModuleService roleModuleService;
 
@@ -83,7 +81,7 @@ public class RoleInfoController {
     // 删除角色，同时删除中间表中的值
     @ResponseBody
     @RequestMapping(value = "/delRoleInTwoTable")
-    public Integer delRoleInTwoTable(RoleInfo roleInfo){
+    public Integer delRoleInTwoTable(RoleInfo roleInfo) {
 
         // 删除中间表中的内容
         roleModuleService.delRoleInMiddleTable(roleInfo);
@@ -92,4 +90,31 @@ public class RoleInfoController {
         return roleInfoService.delRole(roleInfo);
     }
 
+
+    // 修改角色信息－－1、存session
+    @ResponseBody
+    @RequestMapping(value = "/changeRole")
+    public Integer changeRole(RoleInfo roleInfo, HttpServletRequest request, HttpServletResponse response) {
+
+        HttpSession session = request.getSession();
+
+        // 把这个角色的信息存在session中
+        List<RoleInfo> roleInfoList = roleInfoService.findAllRoleInfo(roleInfo);
+        session.setAttribute("thisRoleInfo", roleInfoList.get(0));
+
+        return 1;
+    }
+
+    // 修改角色信息－－2、从session中找到这个角色
+    @ResponseBody
+    @RequestMapping(value = "/changeRoleFind")
+    public RoleInfo changeRoleFind(HttpServletRequest request, HttpServletResponse response) {
+        // 将session中的角色取出返回页面
+        HttpSession session = request.getSession();
+        RoleInfo roleInfo = (RoleInfo) session.getAttribute("thisRoleInfo");
+
+        return roleInfo;
+    }
+
+    // 修改角色信息－－3、保存修改信息
 }

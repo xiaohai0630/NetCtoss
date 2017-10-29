@@ -29,4 +29,5 @@ public class RoleModuleServiceImpl implements RoleModuleService {
     public Integer delRoleInMiddleTable(RoleInfo roleInfo) {
         return roleModuleMapper.delRoleInMiddleTable(roleInfo);
     }
+
 }

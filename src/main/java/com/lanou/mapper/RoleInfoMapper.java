@@ -15,8 +15,6 @@ public interface RoleInfoMapper {
 
     RoleInfo selectByPrimaryKey(Integer roleId);
 
-    int updateByPrimaryKeySelective(RoleInfo record);
-
     int updateByPrimaryKey(RoleInfo record);
 
     // 查询所有

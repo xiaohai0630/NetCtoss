@@ -9,8 +9,6 @@ import java.util.List;
  */
 public interface ModuleInfoService {
 
-
     // 查询全部
     List<ModuleInfo> findAllModuleInfo(ModuleInfo moduleInfo);
-
 }

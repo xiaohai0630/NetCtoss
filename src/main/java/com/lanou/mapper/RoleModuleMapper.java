@@ -10,7 +10,6 @@ public interface RoleModuleMapper {
 
     int insertSelective(RoleModule record);
 
-
     // 根据角色删除中间表的内容
     Integer delRoleInMiddleTable(RoleInfo roleInfo);
 

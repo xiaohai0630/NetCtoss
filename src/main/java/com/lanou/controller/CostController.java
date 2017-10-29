@@ -24,10 +24,6 @@ import java.util.List;
 @Controller
 public class CostController {
 
-    /**
-     * 资费信息：
-     */
-
     @Resource
     private CostService costService;
 
@@ -66,7 +62,7 @@ public class CostController {
     // 一、添加
     @ResponseBody
     @RequestMapping(value = "/addCost", method = RequestMethod.POST)
-    public Integer addCost(Cost cost){
+    public Integer addCost(Cost cost) {
         // 默认状态是0；创建时间是系统当前时间，展示的时候需要改变格式
         cost.setStatus("0");
         cost.setCreatime(new Date());
@@ -88,14 +84,9 @@ public class CostController {
     @ResponseBody
     @RequestMapping(value = "/changeCost")
     public Integer changeCost(Cost cost, HttpServletRequest request, HttpServletResponse response) {
-
-        List<Cost> costList = costService.findAllCost(cost);
-        if (costList.get(0).getStatus().equals("1")){
-            return 0;
-        }else {
-            HttpSession session = request.getSession();
-            session.setAttribute("changeCost", cost);
-        }
+        // 只有暂停状态下可以修改，不用判断
+        HttpSession session = request.getSession();
+        session.setAttribute("changeCost", cost);
 
         return 1;
     }
@@ -120,16 +111,11 @@ public class CostController {
         return costService.changeCost(cost);
     }
 
-
     // 四、开通
     @ResponseBody
     @RequestMapping(value = "/openCost")
-    public Integer openCost(Cost cost){
-
-        if (cost.getStatus() == "1"){
-            return 0;
-        }
-        // 将状态改成"1"
+    public Integer openCost(Cost cost) {
+        // 将状态改成"1"，开通后不能停用
         cost.setStatus("1");
         cost.setStartime(new Date());
         return costService.changeCost(cost);

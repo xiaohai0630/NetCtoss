@@ -96,14 +96,29 @@
 
         }
 
+        // 修改角色信息
+        function changeRoleModi() {
+
+            $.ajax({
+
+                url:"/changeRole",
+
+                data:{
+                    roleId:$(this).attr("roleId")
+                },
+                success:function (data) {
+                    window.location.href = '/role_modi'
+                }
+
+            })
+
+        }
+
         // 新的一行
         function addNewTr(data) {
 
             // 角色id
-            var td1 = $("<td></td>");
-
-            // 展示详细信息
-            $("<a href='###' onclick=''></a>").html(data.roleId).appendTo(td1);
+            var td1 = $("<td></td>").html(data.roleId);
 
             // 角色名称
             var td2 = $("<td></td>").html(data.name);
@@ -120,8 +135,8 @@
             // 修改、删除
             var td4 = $("<td></td>");
 
-            // 修改－－暂时不用
-            var change = $("<input type='button' value='修改' class='btn_modify' onclick=''/>")
+            // 修改
+            var change = $("<input type='button' value='修改' class='btn_modify' onclick='changeRoleModi.call(this)'/>")
                     .attr("roleId", data.roleId);
 
             // 删除

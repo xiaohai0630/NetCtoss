@@ -21,5 +21,4 @@ public interface RoleInfoService {
 
     // 储存
     Integer savaRoleInfo(RoleInfo roleInfo);
-
 }

@@ -79,15 +79,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.lanou.bean.RoleInfo">
-        update role_info
-        <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where role_id = #{roleId,jdbcType=INTEGER}
-    </update>
+
     <update id="updateByPrimaryKey" parameterType="com.lanou.bean.RoleInfo">
     update role_info
     set name = #{name,jdbcType=VARCHAR}
