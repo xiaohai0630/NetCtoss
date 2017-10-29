@@ -119,4 +119,23 @@ public class MainController {
         return "role/role_modi";
     }
 
+    // 管理员相关跳转
+    // 管理员列表
+    @RequestMapping(value = "/admin_list")
+    public String adminList(){
+        return "admin/admin_list";
+    }
+
+    // 管理员添加
+    @RequestMapping(value = "/admin_add")
+    public String adminAdd(){
+        return "admin/admin_add";
+    }
+
+    // 管理员修改
+    @RequestMapping(value = "/admin_modi")
+    public String adminModi(){
+        return "admin/admin_modi";
+    }
+
 }

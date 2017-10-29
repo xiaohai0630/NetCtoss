@@ -59,7 +59,7 @@
 
                     console.log(result);
 
-                    // 最开始要进行一下页面内容(tbody id=tab)和页面导航(span id=pageX)的清空
+                    // 最开始要进行一下页面内容(tbody id=tab)和页面导航(span id=pages)的清空
                     $("#tab").children().remove();
                     $("#pages").children().remove();
 
@@ -198,8 +198,8 @@
         <!--角色-->
         <li><a href="/role_list" class="role_off"></a></li>
 
-
-        <li><a href="../admin/admin_list.html" class="admin_off"></a></li>
+        <!--管理员-->
+        <li><a href="/admin_list" class="admin_off"></a></li>
 
         <!--当前页面：展示全部cost-->
         <li><a href="" class="fee_on"></a></li>

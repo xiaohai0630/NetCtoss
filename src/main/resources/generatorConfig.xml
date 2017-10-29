@@ -62,7 +62,7 @@
         <!--表
             tableName：表名（多个表就复制整个table，多写几个）
             其它的属性不用改-->
-        <table tableName="role_module" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+        <table tableName="" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false"/>
 
     </context>

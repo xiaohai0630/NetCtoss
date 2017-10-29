@@ -26,7 +26,7 @@ public class RoleInfoController {
 
     @Resource
     private RoleInfoService roleInfoService;
-    
+
     @Resource
     private RoleModuleService roleModuleService;
 
