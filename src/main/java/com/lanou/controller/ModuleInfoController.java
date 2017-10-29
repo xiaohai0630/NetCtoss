@@ -19,7 +19,7 @@ public class ModuleInfoController {
     private ModuleInfoService moduleInfoService;
 
 
-    // 查询全部的module的名称
+    // 查询全部的权限的名称
     @ResponseBody
     @RequestMapping(value = "/findAllModuleName")
     public List<ModuleInfo> findAllModuleName(ModuleInfo moduleInfo){
