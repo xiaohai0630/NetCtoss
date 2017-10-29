@@ -1,6 +1,9 @@
 package com.lanou.bean;
 
 public class RoleModule {
+
+    // 角色表和权限表的中间表
+
     // 角色表id
     private Integer roleId;
     // 权限表id

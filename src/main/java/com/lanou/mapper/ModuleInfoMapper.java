@@ -17,7 +17,7 @@ public interface ModuleInfoMapper {
 
     int updateByPrimaryKey(ModuleInfo record);
 
-    // 查询全部－－级联
+    // 查询全部－－通过角色级联查询权限
     List<ModuleInfo> findModuleInfo(ModuleInfo moduleInfo);
 
     // 查询全部－－不级联，只是根据name查询id

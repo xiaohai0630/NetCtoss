@@ -1,6 +1,7 @@
 package com.lanou.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class AdminInfo {
     // 管理员
@@ -13,7 +14,16 @@ public class AdminInfo {
     private String email;      // 邮件
     private Date enrolldate;   // 授权日期
 
-    // 管理员和
+    // 管理员和角色表的级联
+    private List<RoleInfo> roleInfoList;
+
+    public List<RoleInfo> getRoleInfoList() {
+        return roleInfoList;
+    }
+
+    public void setRoleInfoList(List<RoleInfo> roleInfoList) {
+        this.roleInfoList = roleInfoList;
+    }
 
     public Integer getAdminId() {
         return adminId;
@@ -69,6 +79,20 @@ public class AdminInfo {
 
     public void setEnrolldate(Date enrolldate) {
         this.enrolldate = enrolldate;
+    }
+
+    @Override
+    public String toString() {
+        return "AdminInfo{" +
+                "adminId=" + adminId +
+                ", adminCode='" + adminCode + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", email='" + email + '\'' +
+                ", enrolldate=" + enrolldate +
+                ", roleInfoList=" + roleInfoList +
+                '}';
     }
 
 }

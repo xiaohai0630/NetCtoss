@@ -58,11 +58,13 @@
                     $("#tab").children().remove();
                     $("#pages").children().remove();
 
+                    // 类型：pageInfo
                     var costPageInfo = result;
-
+                    // 类型：List<AdminInfo>
                     var costListPresent = result.list;
 
                     for (var i = 0; i < costListPresent.length; i++) {
+                        // 调用的时候用的是集合中的每一个元素，类型是AdminInfo
                         addNewTr(costListPresent[i])
                     }
                     // 分页导航栏:
@@ -123,42 +125,57 @@
 
 
         // 循环添加新一行数据
-        function addNewTr(cost) {
+        function addNewTr(data) {
             // 复选框
             var td1 = $("<td></td>").html("<input type='checkbox'>");
 
             // 管理员id
-            var td2 = $("<td></td>").html(cost.adminId);
+            var td2 = $("<td></td>").html(data.adminId);
 
             // 管理员姓名
-            var td3 = $("<td></td>").html(cost.name);
+            var td3 = $("<td></td>").html(data.name);
 
             // 登录名
-            var td4 = $("<td></td>").html(cost.adminCode);
+            var td4 = $("<td></td>").html(data.adminCode);
 
             // 电话
-            var td5 = $("<td></td>").html(cost.telephone);
+            var td5 = $("<td></td>").html(data.telephone);
 
             // 电子邮件
-            var td6 = $("<td></td>").html(cost.email);
+            var td6 = $("<td></td>").html(data.email);
 
             // 授权日期
-            var td7 = $("<td></td>").html(getLocalTime(cost.enrolldate));
+            var td7 = $("<td></td>").html(getLocalTime(data.enrolldate));
 
             // 拥有角色
             var td8 = $("<td></td>");
 
-            // 浮动的详细信息
-            td8.html("<a class='summary' onmousemove='' onmouseout=''></a>");
+
+            $.each(data.roleInfoList,function (i, m) {
+
+                // 浮动的详细信息
+                td8.html("<a class='summary' onmousemove='showDetail(true,this)' onmouseout='showDetail(false,this)'>"
+                        + m.name + "</a>");
+
+            });
+
+            td8.html("<div class='detail_info'></div>");
+
+            // 得到该管理员拥有的全部角色
+            $.each(data.roleInfoList,function (i, m) {
+
+                td8.append("<span class='aaa'>" + m.name + "</span>");
+                td8.append("<span class='aaa'>、</span>")
+            });
 
             // 启用、删除－－id
             var td9 = $("<td></td>");
 
             var change = $("<input type='button' value='修改' class='btn_modify' onclick=''/>")
-                    .attr("changeId", cost.adminId);
+                    .attr("changeId", data.adminId);
 
             var del = $("<input type='button' value='删除' class='btn_delete' onclick=''/>")
-                    .attr("delId", cost.adminId);
+                    .attr("delId", data.adminId);
 
             var trob = $("<tr></tr>").append(td1).append(td2).append(td3)
                     .append(td4).append(td5).append(td6)

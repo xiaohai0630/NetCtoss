@@ -25,6 +25,14 @@
     <sql id="Base_Column_List">
     role_id, name
     </sql>
+
+    <!--查询全部（通过管理员id查询中间表中的对应的角色id）-->
+    <select id="findRoleInfo" resultMap="BaseResultMap">
+        SELECT * FROM role_info WHERE role_id IN
+        (SELECT role_id FROM admin_role WHERE admin_id=#{adminInfoList.get(0).getAdminId})
+    </select>
+
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -42,7 +50,6 @@
             </if>
         </where>
     </select>
-
 
     <!--通过roleID删除角色-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

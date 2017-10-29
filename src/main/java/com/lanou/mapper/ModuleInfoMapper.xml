@@ -18,7 +18,7 @@
         where module_id = #{moduleId,jdbcType=INTEGER}
     </select>
 
-    <!--查询全部-->
+    <!--查询全部（通过角色id查询中间表中的对应的权限id）-->
     <select id="findModuleInfo" resultMap="BaseResultMap">
         SELECT *FROM module_info WHERE module_id IN
         (SELECT module_id FROM role_module WHERE role_id=#{roleInfoList.get(0).getRoleId})

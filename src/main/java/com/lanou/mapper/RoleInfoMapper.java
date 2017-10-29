@@ -19,4 +19,7 @@ public interface RoleInfoMapper {
 
     // 查询所有
     List<RoleInfo> findAllRoleInfo(RoleInfo roleInfo);
+
+    // 通过管理员查询角色
+    List<RoleInfo> findRoleInfo(RoleInfo roleInfo);
 }

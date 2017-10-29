@@ -12,6 +12,17 @@ public class RoleInfo {
     // 和权利ModuleInfo表多对多的关系
     private List<ModuleInfo> moduleInfoList;
 
+    // 和管理员表是多对多的关系
+    private List<AdminInfo> adminInfoList;
+
+    public List<AdminInfo> getAdminInfoList() {
+        return adminInfoList;
+    }
+
+    public void setAdminInfoList(List<AdminInfo> adminInfoList) {
+        this.adminInfoList = adminInfoList;
+    }
+
     public List<ModuleInfo> getModuleInfoList() {
         return moduleInfoList;
     }
@@ -42,6 +53,7 @@ public class RoleInfo {
                 "roleId=" + roleId +
                 ", name='" + name + '\'' +
                 ", moduleInfoList=" + moduleInfoList +
+                ", adminInfoList=" + adminInfoList +
                 '}';
     }
 

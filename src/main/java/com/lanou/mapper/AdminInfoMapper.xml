@@ -12,6 +12,25 @@
         <result column="enrolldate" jdbcType="TIMESTAMP" property="enrolldate"/>
     </resultMap>
 
+    <!--管理员表和角色表的多对多关系-->
+    <resultMap id="adminRole" type="com.lanou.bean.AdminInfo">
+        <id column="admin_id" jdbcType="INTEGER" property="adminId"/>
+        <result column="admin_code" jdbcType="VARCHAR" property="adminCode"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="telephone" jdbcType="VARCHAR" property="telephone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="enrolldate" jdbcType="TIMESTAMP" property="enrolldate"/>
+
+
+        <collection property="roleInfoList"
+                    column="admin_id"
+                    javaType="ArrayList"
+                    select="com.lanou.mapper.RoleInfoMapper.findRoleInfo"/>
+
+    </resultMap>
+
+
     <sql id="Base_Column_List">
     admin_id, admin_code, password, name, telephone, email, enrolldate
     </sql>
@@ -24,7 +43,7 @@
     </select>
 
     <!--查询全部-->
-    <select id="findAllAdminInfo" resultMap="BaseResultMap">
+    <select id="findAllAdminInfo" resultMap="adminRole">
         SELECT *FROM admin_info
         <where>
             <if test="adminId != null">
