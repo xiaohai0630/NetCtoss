@@ -3,31 +3,18 @@ package com.lanou.bean;
 import java.util.Date;
 
 public class Cost {
-    /**
-     * 资费信息：
-     * Cost：资费
-     * costId：资费id
-     * name：资费名称
-     * baseDuration：基本时长
-     * baseCost：基本费用
-     * unitCost：单位费用
-     * status：状态
-     * descr：备注说明
-     * creatime：创建时间
-     * startime：开通时间
-     * costType：类型：包月、套餐、计时
-     */
+    // 资费表
 
-    private Integer costId;
-    private String name;
-    private Integer baseDuration;
-    private Integer baseCost;
-    private Integer unitCost;
-    private String status;
-    private String descr;
-    private Date creatime;
-    private Date startime;
-    private String costType;
+    private Integer costId;        // 资费id
+    private String name;           // 资费名称
+    private Integer baseDuration;  // 基本时长
+    private Integer baseCost;      // 基本费用
+    private Integer unitCost;      // 单位费用
+    private String status;         // 状态
+    private String descr;          // 备注说明
+    private Date creatime;         // 创建时间
+    private Date startime;         // 开通时间
+    private String costType;       // 资费类型
 
     public Integer getCostId() {
         return costId;
