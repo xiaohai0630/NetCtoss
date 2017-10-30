@@ -230,9 +230,10 @@ public class ServiceController {
     @RequestMapping(value = "/showServiceSession")
     public Integer showService(Service service, HttpServletRequest request, HttpServletResponse response) {
 
-        // 存的service只是包含serviceId
+        // 存的service包含serviceId、accountId、costId
         HttpSession session = request.getSession();
         session.setAttribute("thisService", service);
+
         return 0;
     }
 
@@ -247,7 +248,22 @@ public class ServiceController {
 
         List<Service> serviceList = serviceService.findAllService(service);
 
-        return serviceList.get(0);
+        // 查询账号信息
+        Account account = new Account();
+        account.setAccountId(service.getAccountId());
+        List<Account> accountList = accountService.findAllAccount(account);
+
+        // 查询资费信息
+        Cost cost = new Cost();
+        cost.setCostId(service.getCostId());
+        List<Cost> costList = costService.findAllCost(cost);
+
+        // 把account和cost存在返回值中
+        Service serviceShow = serviceList.get(0);
+        serviceShow.setAccount(accountList.get(0));
+        serviceShow.setCost(costList.get(0));
+
+        return serviceShow;
     }
 
 }
