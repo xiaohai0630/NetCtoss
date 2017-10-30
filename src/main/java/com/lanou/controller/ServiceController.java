@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
@@ -222,6 +223,31 @@ public class ServiceController {
 
         // 返回一个集合
         return serviceService.findSomeService(service);
+    }
+
+    // 显示详细内容－－1、存session
+    @ResponseBody
+    @RequestMapping(value = "/showServiceSession")
+    public Integer showService(Service service, HttpServletRequest request, HttpServletResponse response) {
+
+        // 存的service只是包含serviceId
+        HttpSession session = request.getSession();
+        session.setAttribute("thisService", service);
+        return 0;
+    }
+
+    // 显示详细内容－－2、取session中的内容
+    @ResponseBody
+    @RequestMapping(value = "/showServiceDetail")
+    public Service showServiceDetail(HttpServletRequest request, HttpServletResponse response) {
+
+        // session中的service为了获取serviceId
+        HttpSession session = request.getSession();
+        Service service = (Service) session.getAttribute("thisService");
+
+        List<Service> serviceList = serviceService.findAllService(service);
+
+        return serviceList.get(0);
     }
 
 }

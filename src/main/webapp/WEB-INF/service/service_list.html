@@ -111,13 +111,31 @@
 
         }
 
+        // 显示详细信息
+        function showThisService() {
+
+            $.ajax({
+
+                url:"/showServiceSession",
+
+                data:{
+                    serviceId:$(this).attr("showId")
+                },
+                success:function (data) {
+                    window.location.href = '/service_detail'
+                }
+
+            })
+
+        }
+
         // 新的一行
         function addNewTr(data) {
             // service ID
             var td1 = $("<td></td>");
 
             // 展示详细信息
-            $("<a href='###' onclick='showThisCost.call(this)'></a>")
+            $("<a href='###' onclick='showThisService.call(this)'></a>")
                     .html(data.serviceId).appendTo(td1).attr("showId", data.serviceId);
 
             // 账号id

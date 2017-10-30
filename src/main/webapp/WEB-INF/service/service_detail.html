@@ -15,10 +15,24 @@
 
             $.ajax({
 
-                url:"/",
+                url:"/showServiceDetail",
 
                 success:function (data) {
 
+                    $("#sid").attr("value",data.serviceId);
+                    $("#aid").attr("value",data.accountId);
+
+                    // 客户名称、身份证号
+
+                    $("#ip").attr("value",data.unixHost);
+                    $("#os").attr("value",data.osUsername);
+
+                    // 状态
+
+                    $("#optime").attr("value",data.createDate);
+                    $("#cid").attr("value",data.costId);
+
+                    // 资费名称、资费说明
 
                 }
 
@@ -74,17 +88,23 @@
 
     <!--必填项-->
     <div class="text_info clearfix"><span>业务账号ID：</span></div>
-    <div class="input_info"><input type="text" value="1" readonly class="readonly"/></div>
+    <div class="input_info"><input type="text" id="sid" readonly class="readonly"/></div>
+
     <div class="text_info clearfix"><span>账务账号ID：</span></div>
-    <div class="input_info"><input type="text" value="101" readonly class="readonly"/></div>
+    <div class="input_info"><input type="text" id="aid" readonly class="readonly"/></div>
+
     <div class="text_info clearfix"><span>客户姓名：</span></div>
-    <div class="input_info"><input type="text" readonly class="readonly" value="张三"/></div>
+    <div class="input_info"><input type="text" readonly class="readonly" id="name"/></div>
+
     <div class="text_info clearfix"><span>身份证号码：</span></div>
-    <div class="input_info"><input type="text" readonly class="readonly" value="230111111111111111"/></div>
+    <div class="input_info"><input type="text" readonly class="readonly"id="idCard"/></div>
+
     <div class="text_info clearfix"><span>服务器 IP：</span></div>
-    <div class="input_info"><input type="text" value="192.168.0.23" readonly class="readonly"/></div>
+    <div class="input_info"><input type="text" id="ip" readonly class="readonly"/></div>
+
     <div class="text_info clearfix"><span>OS 账号：</span></div>
-    <div class="input_info"><input type="text" value="openlab1" readonly class="readonly"/></div>
+    <div class="input_info"><input type="text" id="os" readonly class="readonly"/></div>
+
     <div class="text_info clearfix"><span>状态：</span></div>
     <div class="input_info">
         <select disabled>
@@ -93,12 +113,16 @@
             <option>删除</option>
         </select>
     </div>
+
     <div class="text_info clearfix"><span>开通时间：</span></div>
-    <div class="input_info"><input type="text" readonly class="readonly"/></div>
+    <div class="input_info"><input type="text" readonly class="readonly" id="optime"/></div>
+
     <div class="text_info clearfix"><span>资费 ID：</span></div>
-    <div class="input_info"><input type="text" class="readonly" readonly/></div>
+    <div class="input_info"><input type="text" class="readonly" readonly id="cid"/></div>
+
     <div class="text_info clearfix"><span>资费名称：</span></div>
-    <div class="input_info"><input type="text" readonly class="width200 readonly"/></div>
+    <div class="input_info"><input type="text" readonly class="width200 readonly" id="feename"/></div>
+
     <div class="text_info clearfix"><span>资费说明：</span></div>
     <div class="input_info_high">
         <textarea class="width300 height70 readonly" readonly>包 20 小时，20 小时以内 24.5 元，超出部分 0.03 元/分钟</textarea>

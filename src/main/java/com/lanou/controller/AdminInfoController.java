@@ -28,4 +28,16 @@ public class AdminInfoController {
         return adminInfoService.getPageinfo(pageNo, pageSize);
     }
 
+
+    // 保存新的管理员
+    @ResponseBody
+    @RequestMapping(value = "/saveNewAdmin")
+    public Integer saveNewAdmin(AdminInfo adminInfo,@RequestParam("modules") String modules){
+
+        System.out.println(adminInfo);
+        System.out.println(modules);
+
+        return 0;
+    }
+
 }

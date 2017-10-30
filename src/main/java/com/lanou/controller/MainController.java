@@ -99,6 +99,12 @@ public class MainController {
         return "service/service_add";
     }
 
+    // 服务详细信息
+    @RequestMapping(value = "/service_detail")
+    public String detailService(){
+        return "service/service_detail";
+    }
+
 
     // 角色表相关跳转
     // 角色列表
