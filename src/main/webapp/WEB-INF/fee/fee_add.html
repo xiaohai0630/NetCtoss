@@ -10,55 +10,19 @@
 
     <script src="/js/jquery-3.2.1.js"></script>
 
-    <script language="javascript" type="text/javascript">
+    <!--<script language="javascript" type="text/javascript">-->
 
-        function showResultDiv(flag) {
+    <!--function showResultDiv(flag) {-->
 
-            var divResult = document.getElementById("save_result_info");
+    <!--var divResult = document.getElementById("save_result_info");-->
 
-            if (flag)
-                divResult.style.display = "block";
-            else
-                divResult.style.display = "none";
-        }
-
-        // 切换资费类型－－不同的资费类型有不同的选择条件
-        function feeTypeChange(type) {
-            var inputArray = document.getElementById("main").getElementsByTagName("input");
-            if (type == 1) {
-                inputArray[4].readOnly = true;
-                inputArray[4].value = "";
-                inputArray[4].className += " readonly";
-                inputArray[5].readOnly = false;
-                inputArray[5].className = "width100";
-                inputArray[6].readOnly = true;
-                inputArray[6].className += " readonly";
-                inputArray[6].value = "";
-            }
-            else if (type == 2) {
-                inputArray[4].readOnly = false;
-                inputArray[4].className = "width100";
-                inputArray[5].readOnly = false;
-                inputArray[5].className = "width100";
-                inputArray[6].readOnly = false;
-                inputArray[6].className = "width100";
-            }
-            else if (type == 3) {
-                inputArray[4].readOnly = true;
-                inputArray[4].value = "";
-                inputArray[4].className += " readonly";
-                inputArray[5].readOnly = true;
-                inputArray[5].value = "";
-                inputArray[5].className += " readonly";
-                inputArray[6].readOnly = false;
-                inputArray[6].className = "width100";
-            }
-
-        }
-
-        // 分每个部分来判断：
-
-    </script>
+    <!--if (flag)-->
+    <!--divResult.style.display = "block";-->
+    <!--else-->
+    <!--divResult.style.display = "none";-->
+    <!--}-->
+    <!---->
+    <!--</script>-->
 
 </head>
 
@@ -108,12 +72,15 @@
 
     <div class="text_info clearfix"><span>资费名称：</span></div>
 
+    <!--在输入框中显示提示信息，在div中显示错误信息-->
     <div class="input_info">
-
-        <input type="text" class="width300" value="" id="costName"/>
+        <input type="text" class="width300" id="costName" placeholder="1-10位字母、数字、汉字或下划线的组合"/>
         <span class="required">*</span>
-        <div class="validate_msg_short">50长度的字母、数字、汉字和下划线的组合</div>
+        <div id="costNameError" class="validate_msg_short error_msg"
+             hidden>1-10位字母、数字、汉字或下划线的组合
+        </div>
     </div>
+
 
     <div class="text_info clearfix"><span>资费类型：</span></div>
 
@@ -129,35 +96,42 @@
     <div class="text_info clearfix"><span>基本时长：</span></div>
 
     <div class="input_info">
-        <input type="text" value="" class="width100" id="baseDuration"/>
+        <input type="text" class="width100" id="baseDuration" placeholder="1-600之间的整数"/>
         <span class="info">小时</span>
         <span class="required">*</span>
-        <div class="validate_msg_long">1-600之间的整数</div>
+        <div id="baseDurationError" class="validate_msg_long error_msg"
+             hidden>1-600之间的整数
+        </div>
     </div>
 
     <div class="text_info clearfix"><span>基本费用：</span></div>
 
     <div class="input_info">
-        <input type="text" value="" class="width100" id="baseCost"/>
+        <input type="text" class="width100" id="baseCost" placeholder="0-99999.99之间"/>
         <span class="info">元</span>
         <span class="required">*</span>
-        <div class="validate_msg_long error_msg">0-99999.99之间的数值</div>
+        <div id="baseCostError" class="validate_msg_long error_msg"
+             hidden>0-99999.99之间的数值
+        </div>
     </div>
 
     <div class="text_info clearfix"><span>单位费用：</span></div>
-
     <div class="input_info">
-        <input type="text" value="" class="width100" id="unitCost"/>
+        <input type="text" class="width100" id="unitCost" placeholder="0-99999.99之间"/>
         <span class="info">元/小时</span>
         <span class="required">*</span>
-        <div class="validate_msg_long error_msg">0-99999.99之间的数值</div>
+        <div id="unitCostError" class="validate_msg_long error_msg"
+             hidden>0-99999.99之间的数值
+        </div>
     </div>
 
     <div class="text_info clearfix"><span>资费说明：</span></div>
 
     <div class="input_info_high">
-        <textarea class="width300 height70" id="descr"></textarea>
-        <div class="validate_msg_short error_msg">100长度的字母、数字、汉字和下划线的组合</div>
+        <textarea class="width300 height70" id="descr" placeholder="100以内的特殊字符、字母、数字、汉字或下划线的组合"></textarea>
+        <div id="descrError" class="validate_msg_short error_msg"
+             hidden>100以内的特殊字符、字母、数字、汉字或下划线的组合
+        </div>
     </div>
 
     <div class="button_info clearfix">
@@ -178,13 +152,46 @@
 
 <script>
 
+    // 切换资费类型－－不同的资费类型有不同的选择条件
+    function feeTypeChange(type) {
+        var inputArray = document.getElementById("main").getElementsByTagName("input");
+        if (type == 1) {
+            inputArray[4].readOnly = true;
+            inputArray[4].value = "";
+            inputArray[4].className += " readonly";
+            inputArray[5].readOnly = false;
+            inputArray[5].className = "width100";
+            inputArray[6].readOnly = true;
+            inputArray[6].className += " readonly";
+            inputArray[6].value = "";
+        }
+        else if (type == 2) {
+            inputArray[4].readOnly = false;
+            inputArray[4].className = "width100";
+            inputArray[5].readOnly = false;
+            inputArray[5].className = "width100";
+            inputArray[6].readOnly = false;
+            inputArray[6].className = "width100";
+        }
+        else if (type == 3) {
+            inputArray[4].readOnly = true;
+            inputArray[4].value = "";
+            inputArray[4].className += " readonly";
+            inputArray[5].readOnly = true;
+            inputArray[5].value = "";
+            inputArray[5].className += " readonly";
+            inputArray[6].readOnly = false;
+            inputArray[6].className = "width100";
+        }
+
+    }
     // 返回资费展示页面
     function returnCostList() {
 
         $.ajax({
             url: "/fee_list",
 
-            success:function (data) {
+            success: function (data) {
 
                 window.location.href = '/fee_list';
             }
@@ -193,16 +200,17 @@
 
     }
 
-    // 添加cost信息
+    // 保存当前添加的cost信息
     function showResult() {
 
         $.ajax({
-            type:"POST",
+            type: "POST",
+
             url: "/addCost",
+
             data: {
 
                 name: $("#costName").val(),
-//                costType: costType,
                 baseDuration: $("#baseDuration").val(),
                 baseCost: $("#baseCost").val(),
                 unitCost: $("#unitCost").val(),
@@ -212,11 +220,11 @@
             success: function (data) {
 
                 if (data == 1) {
-
 //                        showResultDiv(true);
                     window.location.href = '/fee_list'
 
                 } else {
+
                     window.setTimeout("showResultDiv(false);", 3000);
                 }
 
@@ -225,6 +233,68 @@
         })
 
     }
+
+    // 判断每一个输入框：
+    // 1、资费名称：1-10位字母、数字、汉字或下划线的组合
+    $("#costName").blur(function () {
+
+        var costName = $("#costName").val();
+
+        console.log(new RegExp("^[0-9A-Za-z_\u4e00-\u9fa5]{1,9}$").test(costName));
+
+        if (new RegExp("[0-9A-Za-z_\u4e00-\u9fa5]{1,10}$").test(costName)) {
+            $("#costNameError").hide()
+        } else {
+            $("#costNameError").toggle()
+        }
+
+    });
+    // 2、基本时长：1-600之间的整数
+    $("#baseDuration").blur(function () {
+
+        var baseDuration = $("#baseDuration").val();
+
+        if (new RegExp("^([1-5]\d{0,2}$|600)").test(baseDuration)) {
+            $("#baseDurationError").hide()
+        } else {
+            $("#baseDurationError").show(
+        }
+
+    });
+    // 3、基本费用：0-99999.99之间的数值
+    $("#baseCost").blur(function () {
+
+        var baseCost = $("#baseCost").val();
+
+        if (new RegExp("^\d{1,5}(\.\d{1,2})?$").test(baseCost)) {
+            $("#baseCostError").hide()
+        } else {
+            $("#baseCostError").show()
+        }
+    });
+    // 4、单位费用：0-99999.99之间的数值
+    $("#unitCost").blur(function () {
+
+        var unitCost = $("#unitCost").val();
+
+        if (new RegExp("^\d{1,5}(\.\d{1,2})?$").test(unitCost)) {
+            $("#unitCostError").hide()
+        } else {
+            $("#unitCostError").show()
+        }
+    });
+    // 5、资费说明：100以内的特殊字符、字母、数字、汉字或下划线的组合
+    $("#descr").blur(function () {
+
+        var descr = $("#descr").val();
+
+        if (new RegExp("{0,100}").test(descr)) {
+            $("#descrError").hide()
+        } else {
+            $("#descrError").show()
+        }
+
+    });
 
 </script>
 

@@ -24,6 +24,12 @@ import java.util.List;
 @Controller
 public class CostController {
 
+    /**
+     * 资费管理相关操作
+     * 分页显示、显示详细信息、添加、删除、修改、开通和删除
+     * 基费和时长排序
+     */
+
     @Resource
     private CostService costService;
 
@@ -34,6 +40,21 @@ public class CostController {
                                    @RequestParam("size") Integer pageSize) {
         return costService.getPageinfo(pageNo, pageSize);
     }
+
+
+    // 一、添加－－保存添加的内容
+    @ResponseBody
+    @RequestMapping(value = "/addCost", method = RequestMethod.POST)
+    public Integer addCost(Cost cost) {
+        // 默认状态是0；创建时间是系统当前时间，展示的时候需要改变格式
+        cost.setStatus("0");
+        cost.setCreatime(new Date());
+
+        return costService.saveCost(cost);
+    }
+
+    // 添加－－判断页面中的条件
+
 
     // 显示详细信息1－－把id存在session中
     @ResponseBody
@@ -58,17 +79,7 @@ public class CostController {
         return costList.get(0);
     }
 
-    // 添加资费页面相关操作
-    // 一、添加
-    @ResponseBody
-    @RequestMapping(value = "/addCost", method = RequestMethod.POST)
-    public Integer addCost(Cost cost) {
-        // 默认状态是0；创建时间是系统当前时间，展示的时候需要改变格式
-        cost.setStatus("0");
-        cost.setCreatime(new Date());
 
-        return costService.saveCost(cost);
-    }
 
     // 二、删除
     @ResponseBody
